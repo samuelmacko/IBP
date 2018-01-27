@@ -11,13 +11,15 @@ pouzivanych vypocetnych, pamatovycha a sietovych prostriedkov.
 3.
 - Webadminu momentalne chyba prehaldny sposob zobrazovania informacii relevantnych pre administratorov.
 - vsetky potrebne informacie sice su dostupne ale su na roznych miestach (pod roznymi subkartami, tabulkami
-a tak dalej) a preto je najma vyhladavanie vztahov medzi roznymi atributmi neefektivne
+a tak dalej) a preto je najma vyhladavanie vztahov medzi roznymi atributmi komplikovane
 - [priklady]
 - popis prikladu:
-	- z hlaneho menu ideme cez karty Compute -> Virtual Machines cim sa dostaneme na zoznam vsetkych 	nasich virtualnych pocitacov
+	- z hlaneho menu ideme cez karty Compute -> Virtual Machines cim sa dostaneme na zoznam vsetkych
+ 	nasich virtualnych pocitacov
 	- dalej rozklikneme konkretnu VMku co nam zobrazi rozne karty s informaciami o VMke
 	- preklikneme sa na kartu Disks kde konecne najdeme aky disk VMka pouziva
-	- ak chceme zistit disk dalsej VMky tak sa musime znova dostat na zoznam vsetkych a cely postup 	opakovat
+	- ak chceme zistit disk dalsej VMky tak sa musime znova dostat na zoznam vsetkych VMiek a cely postup
+ 	opakovat
 - ak mame napriklad 20 VMiek tak je tento postup velmi neefektyvny
 - toto su len 3 priklady z mnohych ukonov ktore administratory vykonavaju skoro denne a ktore su zbytocne
 zdlhave a komplikovane a dali by sa urobit ovela jednoduchsie.
@@ -35,9 +37,11 @@ zaobalujucich rest api ovirtu - poskytuje prostriedky pre automatizaciu prace s 
 
 6.
 - mojim riesenim je tabulka v ktorej budu prehladne zobrazene vsetky potrebne parametre.
-- toto je zatial hruby navrh finalneho vzhladu, uzivatel si z ponuky vyberie entitu (napriklad VMka, host, cluster, storage a tak dalej) a potom tabulka zobrazi pozadovane data.
+- toto je zatial hruby navrh finalneho vzhladu, uzivatel si z ponuky vyberie entitu 
+(napriklad VMka, host, cluster, storage a tak dalej) a potom tabulka zobrazi pozadovane data.
 - tabulka bude data iba zobrazovat, nebude umoznovat menit ziadne parametre
-- kedze o kazdej entite je vela druhov informacii a keby sme ich chceli zobrazit vsetky musela by byt tabulka neprakticky siroka tak si uzivatel bude moct vybrat ktore stlpce sa zobrazia
+- kedze o kazdej entite je vela druhov informacii a keby sme ich chceli zobrazit vsetky musela by byt tabulka 
+neprakticky siroka tak si uzivatel bude moct vybrat ktore stlpce sa zobrazia
 - kazdy stplec bude mozne filtrovat a zoradovat podla roznych parametrov
 
 7.
