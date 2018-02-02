@@ -11,7 +11,7 @@ pouzivanych vypocetnych, pamatovycha a sietovych prostriedkov.
 3.
 - Webadminu momentalne chyba prehaldny sposob zobrazovania informacii relevantnych pre administratorov.
 - vsetky potrebne informacie sice su dostupne ale su na roznych miestach (pod roznymi subkartami, tabulkami
-a tak dalej) a preto je najma vyhladavanie vztahov medzi roznymi atributmi komplikovane
+a tak dalej) niesu niekde centralne zobrazovane a preto je najma vyhladavanie vztahov medzi roznymi atributmi komplikovane
 - [priklady]
 - popis prikladu:
 	- z hlaneho menu ideme cez karty Compute -> Virtual Machines cim sa dostaneme na zoznam vsetkych
@@ -31,18 +31,18 @@ zdlhave a komplikovane a dali by sa urobit ovela jednoduchsie.
 
 5.
 - modul bude implementovany v pythne a front-endova cast bude vyuzivat pyqt.
-- data budu ziskavane pomocou ovirt-python-sdk co je subor vyvojarskych nastrojov (development kit) 
+- data budem ziskavat pomocou ovirt-python-sdk co je subor vyvojarskych nastrojov (development kit) 
 zaobalujucich rest api ovirtu - poskytuje prostriedky pre automatizaciu prace s ovirtom
 - referencnce prostredie je fedora 27
 
 6.
 - mojim riesenim je tabulka v ktorej budu prehladne zobrazene vsetky potrebne parametre.
-- toto je zatial hruby navrh finalneho vzhladu, uzivatel si z ponuky vyberie entitu 
+- toto je zatial velmi hruby navrh finalneho vzhladu, uzivatel si z ponuky vyberie entitu 
 (napriklad VMka, host, cluster, storage a tak dalej) a potom tabulka zobrazi pozadovane data.
 - tabulka bude data iba zobrazovat, nebude umoznovat menit ziadne parametre
 - kedze o kazdej entite je vela druhov informacii a keby sme ich chceli zobrazit vsetky musela by byt tabulka 
 neprakticky siroka tak si uzivatel bude moct vybrat ktore stlpce sa zobrazia
-- kazdy stplec bude mozne filtrovat a zoradovat podla roznych parametrov
+- kazdy stplec bude mozne filtrovat a zoradovat podla roznych kriterii
 
 7.
 - zatial som si nastudoval fungovanie ovirtu a teraz sa zoznamujem s pracou s ovirt-python-sdk

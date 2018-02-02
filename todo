@@ -1,0 +1,11 @@
+1. pozriet qt creator
+2. taby na entity
+3. refresh
+4. ako zobrazit napr viac diskov pre jednu vmku (jedna vmka na viacerych riadkoch? / jeden stlpec na viacero riadkov a cely riadok hrubsy?)
+5. nastavenie (tabov a tak) ukladat do nejakeho configu a z toho to pri starte nacitavat
+--------------------------------------------------
+1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
+2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,
+"hej, ktery vmko tak kurevsky zapisuje na storage?" - otazka, stejne jako "ktery vmko tak vytezuje sit?". thx. imo jsou 2 druhy pouziti -
+admnistrace, tj. zjisteni, kde co je a praci s tim - smazat/presunout/..., a investigace - co jede pomalu, co neco zere,..,
+ale jako ze chces "static" data a "dynamic" data, to byl smysl vety
