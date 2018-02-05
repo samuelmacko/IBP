@@ -72,14 +72,16 @@ class VmStatisticsList(statisctics_base.StatisticsListBase):
             vms_service().vm_service(id=vm_id).statistics_service()
         self._list = self._service.list()
 
-    def statistic_objects_list(self, flags):
+    # def statistic_objects_list(self, flags):
+    def statistic_objects_list(self):
         statistic_objects = []
-        for i, flag_val in enumerate(flags):
-            if flag_val:
-                statistic_objects.append(
-                    VmStatistic(connection=self._connection, vm_id=self._id,
-                                st_id=self._list[i].id)
-                )
+        # for i, flag_val in enumerate(flags):
+        #     if flag_val:
+        for i in range(9):
+            statistic_objects.append(
+                VmStatistic(connection=self._connection, vm_id=self._id,
+                            st_id=self._list[i].id)
+            )
         return statistic_objects
 
 

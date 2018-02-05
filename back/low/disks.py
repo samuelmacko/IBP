@@ -38,14 +38,16 @@ class DiskStatisticsList(statisctics_base.StatisticsListBase):
             disk_service(id=dk_id).statistics_service()
         self._list = self._service.list()
 
-    def statistic_objects_list(self, flags):
+    # def statistic_objects_list(self, flags):
+    def statistic_objects_list(self):
         statistic_objects = []
-        for i, flag_val in enumerate(flags):
-            if flag_val:
-                statistic_objects.append(
-                    DiskStatistic(connection=self._connection, dk_id=self._id,
-                                st_id=self._list[i].id)
-                )
+        for i in range(5):
+        # for i, flag_val in enumerate(flags):
+        #     if flag_val:
+            statistic_objects.append(
+                DiskStatistic(connection=self._connection, dk_id=self._id,
+                            st_id=self._list[i].id)
+            )
         return statistic_objects
 
 

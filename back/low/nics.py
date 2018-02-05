@@ -29,14 +29,15 @@ class NICStatisticsList(statisctics_base.StatisticsListBase):
         self._list = self._service.list()
         self._vm_id = vm_id
 
-    def statistic_objects_list(self, flags):
+    def statistic_objects_list(self):
         statistic_objects = []
-        for i, flag_val in enumerate(flags):
-            if flag_val:
-                statistic_objects.append(
-                    NICStatistic(connection=self._connection, nic_id=self._id,
-                                st_id=self._list[i].id, vm_id=self._vm_id)
-                )
+        for i in range(8):
+        # for i, flag_val in enumerate(flags):
+        #     if flag_val:
+            statistic_objects.append(
+                NICStatistic(connection=self._connection, nic_id=self._id,
+                            st_id=self._list[i].id, vm_id=self._vm_id)
+            )
         return statistic_objects
 
 

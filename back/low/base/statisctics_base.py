@@ -9,8 +9,8 @@ class StatisticsListBase(base.ListBase):
         self._connection = connection
         self._id = id
 
-    def statistic_objects_list(self, flags):
-        pass
+    # def statistic_objects_list(self, flags):
+    #     pass
 
 
 class StatisticBase(base.SpecificBase):

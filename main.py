@@ -4,7 +4,7 @@ import sys
 # from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from back.high.vm import Vm
-from front.first_draft_2 import Ui_MainWindow as mw2
+from front.main_window import Ui_MainWindow
 
 
 def main():
@@ -25,8 +25,12 @@ def main():
     # flags = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     #          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     #          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    list_headers, data_list = \
-        Vm(connection=connection, flags=flags).construct_table()
+    # headers_list, data_list = \
+    #     Vm(connection=connection, flags=flags).construct_table()
+    # vm_table = Vm(connection=connection, flags=flags)
+    vm_table = Vm(connection=connection)
+    vm_table.construct_table()
+
     # table = Table(data_list=data_list, list_headers=list_headers)
 
     # test_table = Ui_MainWindow()
@@ -37,8 +41,13 @@ def main():
     # slots = Slots(data_list=data_list, headers_list=list_headers, parent=window)
 
     # ui = win()
-    ui = mw2(data_list=data_list, headers_list=list_headers, parent=window,
-             flags=flags, connection=connection)
+    # ui = Ui_MainWindow(data_list=data_list, headers_list=headers_list,
+    #                    parent=window, flags=flags, connection=connection)
+    # ui = Ui_MainWindow(data_list=vm_table.data_list,
+    #                    headers_list=vm_table.headers_list,parent=window,
+    #                    flags=flags, connection=connection)
+    ui = Ui_MainWindow(
+        parent=window, flags=flags, connection=connection, vm_table=vm_table)
     ui.setupUi(MainWindow=window)
     # ui = Ui_MainWindow(
     #     MainWindow=window, data_list=data_list, list_headers=list_headers)
