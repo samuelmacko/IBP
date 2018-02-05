@@ -2,6 +2,7 @@ from back.low.vm import VmList, VmStatisticsList
 from back.low.vm import Vm as vm_low
 from back.low.disks import DiskStatisticsList
 from back.low.nics import NICStatisticsList
+from collections import OrderedDict
 
 
 class Vm(object):
@@ -23,11 +24,16 @@ class Vm(object):
 
             table_row.append(vm.name())
 
-            method_dict = {
-                'id': vm.id, 'cl version': vm.cl_version, 'hosts': vm.host,
-                'memory': vm.memory, 'max memory': vm.memory_max,
-                'os': vm.os, 'template': vm.template
-            }
+            # method_dict = {
+            #     'id': vm.id, 'cl version': vm.cl_version, 'hosts': vm.host,
+            #     'memory': vm.memory, 'max memory': vm.memory_max,
+            #     'os': vm.os, 'template': vm.template
+            # }
+            method_dict = OrderedDict([
+                ('id', vm.id), ('cl version', vm.cl_version), ('hosts', vm.host),
+                ('memory', vm.memory), ('max memory', vm.memory_max),
+                ('os', vm.os), ('template', vm.template)
+            ])
             for i, method in enumerate(method_dict.items()):
                 if self._flags[i]:
                     if n == 0:

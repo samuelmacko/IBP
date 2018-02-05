@@ -34,7 +34,7 @@ class Vm(base.SpecificBase):
         if self._info.host == None:
             return None
         else:
-            return self._connection.follow_link(self._info.host)
+            return self._connection.follow_link(self._info.host).name
 
     def memory(self):
         return self._info.memory
@@ -61,7 +61,7 @@ class Vm(base.SpecificBase):
             return template
 
     def st_memory_installed(self):
-        print self._connection.follow_link(self._info.statistics)
+        return self._connection.follow_link(self._info.statistics)
 
 
 class VmStatisticsList(statisctics_base.StatisticsListBase):
