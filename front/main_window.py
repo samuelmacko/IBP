@@ -8,7 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from front.table import Table
-from back.high.vm import Vm
 
 
 class Ui_MainWindow(object):
@@ -920,3 +919,22 @@ class Ui_MainWindow(object):
         sender = self.centralwidget.sender()
         text = sender.text()
         # print(text)
+
+        filter = self.vm_table.process_filter(text=text)
+        # print(filter)
+        if filter:
+            self.vm_table.apply_filter(filter=filter)
+            # print(self.vm_table.row_flags)
+            headers, data = self.vm_table.table_from_flags()
+
+            self.verticalLayout_4.removeWidget(self.tableWidget_2)
+            self.tableWidget_2 = Table(
+                parent=self.centralwidget, data_list=data,
+                headers_list=headers)
+            self.verticalLayout_4.addWidget(self.tableWidget_2)
+            self.vm_table.row_flags = [1 for _ in
+                                       range(len(self.vm_table.row_flags))]
+        else:
+            print('wrong filter')
+
+
