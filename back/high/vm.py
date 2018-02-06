@@ -2,28 +2,29 @@ from back.low.vm import VmList, VmStatisticsList
 from back.low.vm import Vm as vm_low
 from back.low.disks import DiskStatisticsList
 from back.low.nics import NICStatisticsList
+from back.high.bases.base import HighBase
 from collections import OrderedDict
-# import copy
-import re
 import operator
 
 
-class Vm(object):
+class Vm(HighBase):
 
     # def __init__(self, connection, flags):
     def __init__(self, connection):
-        self._connection = connection
-        # self.flags = flags
-        self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        self.row_flags = []
-        self.data_list = None
-        self.headers_list = None
-        self.current_data_list = self.data_list
+        super(Vm, self).__init__(connection=connection)
+        # self._connection = connection
+        self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                          1, 1, 1]
+        # self.row_flags = []
+        # self.data_list = None
+        # self.headers_list = None
+        # self.current_data_list = self.data_list
+        # self.construct_table()
 
     def construct_table(self):
         table = []
         header = ['name']
-        # table = ['name']
 
         vms_list = VmList(connection=self._connection).list()
 
@@ -36,6 +37,7 @@ class Vm(object):
             table_row.append(vm.name())
 
             method_dict = OrderedDict([
+                ('status', vm.status),
                 ('id', vm.id), ('clVersion', vm.cl_version), ('hosts', vm.host),
                 ('memory', vm.memory), ('maxMemory', vm.memory_max),
                 ('os', vm.os), ('template', vm.template)
@@ -48,13 +50,6 @@ class Vm(object):
                 table_row.append(method[1]())
 
 
-            #todo toto cele robit iba ked je zaskrtnuty nejaky flag 9-18
-            # st_flags = []
-            # for i in range(9, 18):
-            #     st_flags.append(self._flags[i])
-            # st_list = VmStatisticsList(
-            #     connection=self._connection, vm_id=vm_row.id). \
-            #     statistic_objects_list(flags=st_flags)
             st_list = VmStatisticsList(
                 connection=self._connection, vm_id=vm_row.id). \
                 statistic_objects_list()
@@ -69,58 +64,67 @@ class Vm(object):
                     )
 
 
-            #todo zatial uvazujem iba jeden disk, poriesit ako s viacerymi
-            disks = vm.disks()
+            # disks = vm.disks()
 
             # if self._flags[18]:
             if n == 0:
                 header.append('disk id')
                 # table.append('disk id')
-            table_row.append(disks[0].id)
 
-            #todo to iste aj pre disky, iba ked je nieco zaskrtnute
+            bootable_disk = vm.bootable_disk()
+            dk_st_names = ['data.current.read', 'data.current.write',
+                           'disk.read.latency', 'disk.write.latency',
+                           'disk.flush.latency']
 
-            # dk_flags = []
-            # for i in range(19, 24):
-            #     dk_flags.append(self._flags[i])
-            dk_list = DiskStatisticsList(
-                connection=self._connection, dk_id=disks[0].id).\
-                statistic_objects_list()
-
-            for i, value in enumerate(dk_list):
-                if value:
+            if bootable_disk:
+                table_row.append(bootable_disk.id)
+                dk_list = DiskStatisticsList(
+                    connection=self._connection, dk_id=bootable_disk.id).\
+                    statistic_objects_list()
+                for i, value in enumerate(dk_list):
+                    if value:
+                        if n == 0:
+                            header.append(dk_st_names[i])
+                            # table.append(dk_list[i].name())
+                        table_row.append(
+                            str(dk_list[i].value()) +' '+ str(dk_list[i].unit())
+                        )
+            else:
+                for i in range(6):
                     if n == 0:
-                        header.append(dk_list[i].name())
-                        # table.append(dk_list[i].name())
-                    table_row.append(
-                        str(dk_list[i].value()) +' '+ str(dk_list[i].unit())
-                    )
+                        header.append(dk_st_names[i])
+                    table_row.append('')
 
 
-            #todo to iste pre nics
             nics = vm.nics()
+            nics_st_names = ['data.current.rx', 'data.current.tx',
+                             'data.current.rx.bps', 'data.current.tx.bps',
+                             'errors.total.rx', 'errors.total.tx',
+                             'data.total.rx', 'data.total.tx']
 
-            # if self._flags[18]:
-            if n == 0:
-                header.append('nic id')
-                # table.append('nic id')
-            table_row.append(nics[0].id)
+            if nics:
+                if n == 0:
+                    header.append('nic id')
+                    # table.append('nic id')
+                table_row.append(nics[0].id)
 
-            # nic_flags = []
-            # for i in range(23, 31):#31
-            #     nic_flags.append(self._flags[i])
-            nic_list = NICStatisticsList(
-                connection=self._connection, nic_id=nics[0].id,
-                vm_id=vm.id()).statistic_objects_list()
+                nic_list = NICStatisticsList(
+                    connection=self._connection, nic_id=nics[0].id,
+                    vm_id=vm.id()).statistic_objects_list()
 
-            for i, value in enumerate(nic_list):
-                if value:
+                for i, value in enumerate(nic_list):
+                    if value:
+                        if n == 0:
+                            header.append(nics_st_names[i])
+                            # table.append(nic_list[i].name())
+                        table_row.append(
+                            str(nic_list[i].value()) +' '+ str(nic_list[i].unit())
+                        )
+            else:
+                for i in range(8):
                     if n == 0:
-                        header.append(nic_list[i].name())
-                        # table.append(nic_list[i].name())
-                    table_row.append(
-                        str(nic_list[i].value()) +' '+ str(nic_list[i].unit())
-                    )
+                        header.append(nics_st_names[i])
+                    table_row.append('')
 
 
             table.append(table_row)
@@ -129,62 +133,23 @@ class Vm(object):
         self.current_data_list = self.data_list
         self.headers_list = header
 
-    def table_from_flags(self):
-        headers = []
-        data = []
+    def validate_filter(self, filter):
+        str_col = [0,1,2,3,6,7,17,23]
+        float_col = [4,5,8,9,10,11,12,13,14,15,16,18,19,20,21,22,23,24
+                    ,25,26,27,28,29,30,31]
 
-        for i, flag in enumerate(self.col_flags):
-            if flag == 1:
-                headers.append(self.headers_list[i])
+        if filter.column in str_col and \
+            filter.operand is operator.eq and isinstance(filter.value, str):
+            return True
 
-        for j, row in enumerate(self.data_list):
-            data_row = []
-            for i, flag in enumerate(self.col_flags):
-                if flag == 1:
-                    data_row.append(row[i])
-            if self.row_flags[j]:
-                data.append(data_row)
+        if filter.column in float_col:
+            try:
+                float(filter.value)
+                return True
+            except ValueError:
+                return False
 
-        return headers, data
+        return False
 
-    def process_filter(self, text):
 
-        class Filter(object):
 
-            def __init__(self, column, operand, value):
-                self.column = column
-                self.operand = operand
-                self.value = value
-
-        ops = {
-            '>': operator.gt, '<': operator.lt, '=': operator.eq}
-
-        filter_regex = r'*(\s*)|(\s*(\S+)\s*(>|<|=)\s*(\S+)\s)*'
-        match = re.match(filter_regex, text, re.I)
-        attribute = match.group(1)
-        operand = ops[match.group(2)]
-        value = match.group(3)
-
-        if match:
-            attribute_column = None
-            for i, header in enumerate(self.headers_list):
-                # print(header)
-                if attribute == header:
-                    attribute_column = i
-                    break
-
-            if attribute_column is not None:
-                filter = Filter(
-                    column=attribute_column, operand=operand, value=value)
-                return filter
-            else:
-                return None
-        else:
-            return None
-
-    def apply_filter(self, filter):
-        for i, row in enumerate(self.current_data_list):
-            if filter.operand(row[filter.column], filter.value) is False:
-                # print('naslo', row[0])
-                # del self.current_data_list[i]
-                self.row_flags[i] = 0

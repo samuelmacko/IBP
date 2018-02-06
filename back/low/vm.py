@@ -1,5 +1,6 @@
 from back.low.cluster import Cluster
-from back.low.base import base, statisctics_base
+from back.low.bases import base, statisctics_base
+from ovirtsdk4 import types
 
 
 class VmList(base.ListBase):
@@ -20,6 +21,14 @@ class Vm(base.SpecificBase):
     def cl_version(self):
         cl = self._connection.follow_link(self._info.cluster)
         return Cluster(connection=self._connection, id=cl.id).version()
+
+    def bootable_disk(self):
+        disk_attachments = self._connection. \
+            follow_link(self._info.disk_attachments)
+        for attachment in disk_attachments:
+            if attachment.bootable:
+                return attachment
+        return None
 
     def disks(self):
         disk_attachments = self._connection.\
@@ -48,7 +57,10 @@ class Vm(base.SpecificBase):
         for nic in nics:
             nic = self._connection.follow_link(nic)
             nics_list.append(nic)
-        return nics_list
+        if len(nics_list) > 0:
+            return nics_list
+        else:
+            return None
 
     def os(self):
         return self._info.os.type
@@ -62,6 +74,37 @@ class Vm(base.SpecificBase):
 
     def st_memory_installed(self):
         return self._connection.follow_link(self._info.statistics)
+
+    def status(self):
+        status = self._info.status
+        if status == types.VmStatus.DOWN:
+            return 'down'
+        if status == types.VmStatus.IMAGE_LOCKED:
+            return 'image locked'
+        if status == types.VmStatus.MIGRATING:
+            return 'migrating'
+        if status == types.VmStatus.NOT_RESPONDING:
+            return 'not responding'
+        if status == types.VmStatus.PAUSED:
+            return 'paused'
+        if status == types.VmStatus.POWERING_DOWN:
+            return 'powering down'
+        if status == types.VmStatus.REBOOT_IN_PROGRESS:
+            return 'reboot in progress'
+        if status == types.VmStatus.RESTORING_STATE:
+            return 'restoring state'
+        if status == types.VmStatus.SAVING_STATE:
+            return 'saving state'
+        if status == types.VmStatus.SUSPENDED:
+            return 'suspended'
+        if status == types.VmStatus.UNASSIGNED:
+            return 'unassigned'
+        if status == types.VmStatus.UNKNOWN:
+            return 'unknown'
+        if status == types.VmStatus.UP:
+            return 'up'
+        if status == types.VmStatus.WAIT_FOR_LAUNCH:
+            return 'wait for launch'
 
 
 class VmStatisticsList(statisctics_base.StatisticsListBase):

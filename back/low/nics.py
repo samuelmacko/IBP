@@ -1,4 +1,4 @@
-from back.low.base import base, statisctics_base
+from back.low.bases import base, statisctics_base
 
 
 class NICsList(base.ListBase):

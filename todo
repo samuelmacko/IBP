@@ -1,8 +1,7 @@
-1. refresh
-2. ako zobrazit napr viac diskov pre jednu vmku (jedna vmka na viacerych riadkoch? / jeden stlpec na viacero riadkov a cely riadok hrubsy?)
-3. ukazovat statistyky hlavneho disku a average na nic? average an oboch? ako?
+1. refresh button
+2. zoradenie v stlpcoch po klinuti an sipku
+3. podavat exceptny, napr notimplemented, pretypovanie na float  atd, pocitat o tom
 4. nastavenie (tabov a tak) ukladat do nejakeho configu a z toho to pri starte nacitavat
-5. ked dam prazdny filter tak vsetky row_flags na 1
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,

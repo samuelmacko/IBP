@@ -25,19 +25,20 @@ class StatisticBase(base.SpecificBase):
         return self._info.type
 
     def unit(self):
-        if self._info.unit == types.StatisticUnit.BITS_PER_SECOND:
+        unit = self._info.unit
+        if unit == types.StatisticUnit.BITS_PER_SECOND:
             return 'b/s'
-        if self._info.unit == types.StatisticUnit.BYTES:
+        if unit == types.StatisticUnit.BYTES:
             return 'B'
-        if self._info.unit == types.StatisticUnit.BYTES_PER_SECOND:
+        if unit == types.StatisticUnit.BYTES_PER_SECOND:
             return 'B/s'
-        if self._info.unit == types.StatisticUnit.COUNT_PER_SECOND:
+        if unit == types.StatisticUnit.COUNT_PER_SECOND:
             return 'c/s'
-        if self._info.unit == types.StatisticUnit.NONE:
+        if unit == types.StatisticUnit.NONE:
             return ''
-        if self._info.unit == types.StatisticUnit.PERCENT:
+        if unit == types.StatisticUnit.PERCENT:
             return '%'
-        if self._info.unit == types.StatisticUnit.SECONDS:
+        if unit == types.StatisticUnit.SECONDS:
             return 's'
 
     def value(self):

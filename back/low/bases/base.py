@@ -1,5 +1,6 @@
 
 
+
 class EntityBase(object):
 
     def __init__(self, connection):
@@ -28,3 +29,4 @@ class SpecificBase(EntityBase):
 
     def name(self):
         return self._info.name
+

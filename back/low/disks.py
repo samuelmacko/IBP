@@ -1,4 +1,6 @@
-from back.low.base import base, statisctics_base
+from back.low.bases import base, statisctics_base
+from ovirtsdk4 import types
+from back.low.vm import Vm, VmList
 
 
 class DisksList(base.ListBase):
@@ -19,14 +21,46 @@ class Disk(base.SpecificBase):
         self._service = self._service.disks_service().disk_service(id=dk_id)
         self._info = self._service.get()
 
-    def id(self):
-        return self._info.id
-
-    def name(self):
-        return self._info.name
+    # def id(self):
+    #     return self._info.id
+    #
+    # def name(self):
+    #     return self._info.name
 
     def status(self):
-        return self._info.status
+        status = self._info.status
+        if status == types.DiskStatus.ILLEGAL:
+            return 'illegal'
+        if status == types.DiskStatus.LOCKED:
+            return 'locked'
+        if status == types.DiskStatus.OK:
+            return 'ok'
+
+    def size(self):
+        return self._info.size
+
+    def format(self):
+        return self._info.format
+
+    def type(self):
+        return self._info.type
+
+    def storage_type(self):
+        return self._info.storage_type
+
+    def vms(self):
+        vms = []
+        vm_list = VmList(connection=self._connection).list()
+        for vm in vm_list:
+            vm_disks = Vm(connection=self._connection, vm_id=vm.id).disks()
+            if self.name() in vm_disks:
+                vms.append(vm)
+        return vms
+
+
+
+
+
 
 
 class DiskStatisticsList(statisctics_base.StatisticsListBase):
