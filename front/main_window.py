@@ -7,16 +7,17 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from front.tab_sockets import VmTab
+from front.tab_sockets import VmTab, DiskTab
 
 
 class Ui_MainWindow(object):
 
     # def __init__(self, parent, data_list, flags, connection, headers_list):
-    def __init__(self, parent, connection, vm_table):
+    def __init__(self, parent, connection, vm_table, disk_table):
         self.parent = parent
         self.connection = connection
         self.vm_tab = VmTab(table=vm_table, parent=parent)
+        self.disk_tab = DiskTab(table=disk_table, parent=parent)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -35,6 +36,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
+        # ------------------------------
+        self.vm_tab.table_layout = self.verticalLayout
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
@@ -43,14 +46,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.checkBox_3 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_3.setObjectName("checkBox_3")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_3)
         self.checkBox_3.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_4.addWidget(self.checkBox_3)
         self.checkBox_2 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_2.setObjectName("checkBox_2")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_2)
         self.checkBox_2.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_4.addWidget(self.checkBox_2)
         self.checkBox = QtWidgets.QCheckBox(self.tab)
         self.checkBox.setObjectName("checkBox")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox)
         self.checkBox.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_4.addWidget(self.checkBox)
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
@@ -58,14 +67,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.checkBox_5 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_5.setObjectName("checkBox_5")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_5)
         self.checkBox_5.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_5.addWidget(self.checkBox_5)
         self.checkBox_4 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_4.setObjectName("checkBox_4")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_4)
         self.checkBox_4.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_5.addWidget(self.checkBox_4)
         self.checkBox_6 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_6.setObjectName("checkBox_6")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_6)
         self.checkBox_6.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_5.addWidget(self.checkBox_6)
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
@@ -73,27 +88,41 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.checkBox_7 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_7.setObjectName("checkBox_7")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_7)
         self.checkBox_7.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_6.addWidget(self.checkBox_7)
         self.checkBox_9 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_9.setObjectName("checkBox_9")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_9)
         self.checkBox_9.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_6.addWidget(self.checkBox_9)
         self.checkBox_8 = QtWidgets.QCheckBox(self.tab)
         self.checkBox_8.setObjectName("checkBox_8")
+        # ------------------------------
+        self.vm_tab.chbox_list.append(self.checkBox_8)
         self.checkBox_8.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_6.addWidget(self.checkBox_8)
         self.verticalLayout_3.addLayout(self.horizontalLayout_6)
         self.verticalLayout_2.addLayout(self.verticalLayout_3)
         self.lineEdit = QtWidgets.QLineEdit(self.tab)
         self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit.returnPressed.connect(self.line_edit_changed)
+        # ------------------------------
+        self.vm_tab.line_edit = self.lineEdit
         self.verticalLayout_2.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.verticalLayout_2)
-        self.tableWidget = QtWidgets.QTableWidget(self.tab)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
-        self.verticalLayout.addWidget(self.tableWidget)
+        # ------------------------------
+        # ------------------------------
+        # self.tableWidget = QtWidgets.QTableWidget(self.tab)
+        # self.tableWidget.setObjectName("tableWidget")
+        # self.tableWidget.setColumnCount(0)
+        # self.tableWidget.setRowCount(0)
+        # self.verticalLayout.addWidget(self.tableWidget)
+        self.tab_changed(tab_number=0)
+        # ------------------------------
+        # ------------------------------
         self.horizontalLayout_3.addLayout(self.verticalLayout)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
@@ -102,7 +131,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.vm_tab.table_layout = self.verticalLayout_4
+        #------------------------------
+        self.disk_tab.table_layout = self.verticalLayout_4
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
@@ -111,20 +141,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.checkBox_10 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_10.setObjectName("checkBox_10")
-        # self.vm_ch.append(self.checkBox_10)
-        self.vm_tab.chbox_list.append(self.checkBox_10)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_10)
         self.checkBox_10.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_7.addWidget(self.checkBox_10)
         self.checkBox_11 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_11.setObjectName("checkBox_11")
-        # self.vm_ch.append(self.checkBox_11)
-        self.vm_tab.chbox_list.append(self.checkBox_11)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_11)
         self.checkBox_11.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_7.addWidget(self.checkBox_11)
         self.checkBox_12 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_12.setObjectName("checkBox_12")
-        # self.vm_ch.append(self.checkBox_12)
-        self.vm_tab.chbox_list.append(self.checkBox_12)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_12)
         self.checkBox_12.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_7.addWidget(self.checkBox_12)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
@@ -132,20 +162,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.checkBox_13 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_13.setObjectName("checkBox_13")
-        # self.vm_ch.append(self.checkBox_13)
-        self.vm_tab.chbox_list.append(self.checkBox_13)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_13)
         self.checkBox_13.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_8.addWidget(self.checkBox_13)
         self.checkBox_14 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_14.setObjectName("checkBox_14")
-        # self.vm_ch.append(self.checkBox_14)
-        self.vm_tab.chbox_list.append(self.checkBox_14)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_14)
         self.checkBox_14.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_8.addWidget(self.checkBox_14)
         self.checkBox_15 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_15.setObjectName("checkBox_15")
-        # self.vm_ch.append(self.checkBox_15)
-        self.vm_tab.chbox_list.append(self.checkBox_15)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_15)
         self.checkBox_15.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_8.addWidget(self.checkBox_15)
         self.verticalLayout_6.addLayout(self.horizontalLayout_8)
@@ -153,34 +183,34 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.checkBox_16 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_16.setObjectName("checkBox_16")
-        # self.vm_ch.append(self.checkBox_16)
-        self.vm_tab.chbox_list.append(self.checkBox_16)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_16)
         self.checkBox_16.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_9.addWidget(self.checkBox_16)
         self.checkBox_17 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_17.setObjectName("checkBox_17")
-        # self.vm_ch.append(self.checkBox_17)
-        self.vm_tab.chbox_list.append(self.checkBox_17)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_17)
         self.checkBox_17.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_9.addWidget(self.checkBox_17)
         self.checkBox_18 = QtWidgets.QCheckBox(self.tab_2)
         self.checkBox_18.setObjectName("checkBox_18")
-        # self.vm_ch.append(self.checkBox_18)
-        self.vm_tab.chbox_list.append(self.checkBox_18)
+        # ------------------------------
+        self.disk_tab.chbox_list.append(self.checkBox_18)
         self.checkBox_18.stateChanged['int'].connect(self.checkbox_clicked)
         self.horizontalLayout_9.addWidget(self.checkBox_18)
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
         self.verticalLayout_5.addLayout(self.verticalLayout_6)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.tab_2)
         self.lineEdit_2.setObjectName("lineEdit_2")
-        # self.lineEdit_2.textChanged['QString'].connect(self.line_edit_changed)
         self.lineEdit_2.returnPressed.connect(self.line_edit_changed)
-        self.vm_tab.line_edit = self.lineEdit_2
+        # ------------------------------
+        self.disk_tab.line_edit = self.lineEdit_2
         self.verticalLayout_5.addWidget(self.lineEdit_2)
         self.verticalLayout_4.addLayout(self.verticalLayout_5)
-
-
-
+        # ------------------------------
+        # ------------------------------
+        # ------------------------------
         self.horizontalLayout_10.addLayout(self.verticalLayout_4)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
@@ -789,7 +819,7 @@ class Ui_MainWindow(object):
         self.checkBox_16.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_17.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_18.setText(_translate("MainWindow", "CheckBox"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Hosts"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Disks"))
         self.checkBox_19.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_20.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_21.setText(_translate("MainWindow", "CheckBox"))
@@ -799,7 +829,7 @@ class Ui_MainWindow(object):
         self.checkBox_25.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_26.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_27.setText(_translate("MainWindow", "CheckBox"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Clusters"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Hosts"))
         self.checkBox_28.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_29.setText(_translate("MainWindow", "CheckBox"))
         self.checkBox_30.setText(_translate("MainWindow", "CheckBox"))
@@ -881,15 +911,17 @@ class Ui_MainWindow(object):
         self.actionSdfsf.setText(_translate("MainWindow", "sdfsf"))
 
     def tab_changed(self, tab_number):
-        if tab_number == 1 and hasattr(self, 'tableWidget_2') is False:
+        if tab_number == 0 and hasattr(self, 'tableWidget') is False:
             self.vm_tab.print_table()
+        if tab_number == 1 and hasattr(self, 'tableWidget_2') is False:
+            self.disk_tab.print_table()
 
     def checkbox_clicked(self, number):
         sender = self.centralwidget.sender()
-        if sender in self.vm_tab.chbox_list:
-            self.vm_tab.checkbox_handle(sender=sender)
+        if sender in self.disk_tab.chbox_list:
+            self.disk_tab.checkbox_handle(sender=sender)
 
     def line_edit_changed(self):
         sender = self.centralwidget.sender()
-        self.vm_tab.line_edit_handle(sender=sender)
+        self.disk_tab.line_edit_handle(sender=sender)
 

@@ -77,33 +77,33 @@ class Vm(base.SpecificBase):
 
     def status(self):
         status = self._info.status
-        if status == types.VmStatus.DOWN:
+        if status is types.VmStatus.DOWN:
             return 'down'
-        if status == types.VmStatus.IMAGE_LOCKED:
+        if status is types.VmStatus.IMAGE_LOCKED:
             return 'image locked'
-        if status == types.VmStatus.MIGRATING:
+        if status is types.VmStatus.MIGRATING:
             return 'migrating'
-        if status == types.VmStatus.NOT_RESPONDING:
+        if status is types.VmStatus.NOT_RESPONDING:
             return 'not responding'
-        if status == types.VmStatus.PAUSED:
+        if status is types.VmStatus.PAUSED:
             return 'paused'
-        if status == types.VmStatus.POWERING_DOWN:
+        if status is types.VmStatus.POWERING_DOWN:
             return 'powering down'
-        if status == types.VmStatus.REBOOT_IN_PROGRESS:
+        if status is types.VmStatus.REBOOT_IN_PROGRESS:
             return 'reboot in progress'
-        if status == types.VmStatus.RESTORING_STATE:
+        if status is types.VmStatus.RESTORING_STATE:
             return 'restoring state'
-        if status == types.VmStatus.SAVING_STATE:
+        if status is types.VmStatus.SAVING_STATE:
             return 'saving state'
-        if status == types.VmStatus.SUSPENDED:
+        if status is types.VmStatus.SUSPENDED:
             return 'suspended'
-        if status == types.VmStatus.UNASSIGNED:
+        if status is types.VmStatus.UNASSIGNED:
             return 'unassigned'
-        if status == types.VmStatus.UNKNOWN:
+        if status is types.VmStatus.UNKNOWN:
             return 'unknown'
-        if status == types.VmStatus.UP:
+        if status is types.VmStatus.UP:
             return 'up'
-        if status == types.VmStatus.WAIT_FOR_LAUNCH:
+        if status is types.VmStatus.WAIT_FOR_LAUNCH:
             return 'wait for launch'
 
 

@@ -29,32 +29,56 @@ class Disk(base.SpecificBase):
 
     def status(self):
         status = self._info.status
-        if status == types.DiskStatus.ILLEGAL:
+        if status is types.DiskStatus.ILLEGAL:
             return 'illegal'
-        if status == types.DiskStatus.LOCKED:
+        if status is types.DiskStatus.LOCKED:
             return 'locked'
-        if status == types.DiskStatus.OK:
+        if status is types.DiskStatus.OK:
             return 'ok'
 
-    def size(self):
-        return self._info.size
+    def actual_size(self):
+        return str(self._info.actual_size)
+
+    def provisioned_size(self):
+        return str(self._info.provisioned_size)
 
     def format(self):
-        return self._info.format
+        format = self._info.format
+        if format is types.DiskFormat.RAW:
+            return 'raw'
+        if format is types.DiskFormat.COW:
+            return 'cow'
 
-    def type(self):
-        return self._info.type
+    def content_type(self):
+        content_type = self._info.content_type
+        if content_type is types.DiskContentType.DATA:
+            return 'data'
+        if content_type is types.DiskContentType.ISO:
+            return 'iso'
+        if content_type is types.DiskContentType.MEMORY_DUMP_VOLUME:
+            return 'memory dump volume'
+        if content_type is types.DiskContentType.MEMORY_METADATA_VOLUME:
+            return 'memory metadata volume'
+        if content_type is types.DiskContentType.OVF_STORE:
+            return 'ovf store'
 
     def storage_type(self):
-        return self._info.storage_type
+        storage_type = self._info.storage_type
+        if storage_type is types.DiskStorageType.CINDER:
+            return 'cinder'
+        if storage_type is types.DiskStorageType.IMAGE:
+            return 'image'
+        if storage_type is types.DiskStorageType.LUN:
+            return 'lun'
 
     def vms(self):
         vms = []
         vm_list = VmList(connection=self._connection).list()
         for vm in vm_list:
             vm_disks = Vm(connection=self._connection, vm_id=vm.id).disks()
-            if self.name() in vm_disks:
-                vms.append(vm)
+            for vm_disk in vm_disks:
+                if self._info.id == vm_disk.id:
+                    vms.append(vm.name)
         return vms
 
 

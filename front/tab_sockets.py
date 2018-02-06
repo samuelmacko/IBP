@@ -3,6 +3,7 @@ from back.low.filter_handle import FilterHandle
 from time import sleep
 
 
+
 class Tabs(object):
 
     def __init__(self, table, parent):
@@ -81,6 +82,16 @@ class VmTab(Tabs):
 
     def __init__(self, table, parent):
         super(VmTab, self).__init__(table=table, parent=parent)
+
+class DiskTab(Tabs):
+
+    def __init__(self, table, parent):
+        super(DiskTab, self).__init__(table=table, parent=parent)
+
+class HostTab(Tabs):
+
+    def __init__(self, table, parent):
+        super(HostTab, self).__init__(table=table, parent=parent)
 
 
 

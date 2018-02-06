@@ -1,7 +1,8 @@
 1. refresh button
-2. zoradenie v stlpcoch po klinuti an sipku
-3. podavat exceptny, napr notimplemented, pretypovanie na float  atd, pocitat o tom
-4. nastavenie (tabov a tak) ukladat do nejakeho configu a z toho to pri starte nacitavat
+2. ked ma jeden disk viacero vmiek tak ich vypisat vsetky do novehich riadkov
+3. zoradenie v stlpcoch po klinuti an sipku
+4. podavat exceptny, napr notimplemented, pretypovanie na float  atd, pocitat o tom
+5. nastavenie (tabov a tak) ukladat do nejakeho configu a z toho to pri starte nacitavat
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,

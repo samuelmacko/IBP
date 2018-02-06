@@ -3,7 +3,7 @@ import sys
 # from PyQt4 import QtGui
 # from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from back.high.vm import Vm
+from back.high import vm, disk
 from front.main_window import Ui_MainWindow
 
 
@@ -17,12 +17,15 @@ def main():
     )
 
     app = QApplication(sys.argv)
-    vm_table = Vm(connection=connection)
+    vm_table = vm.Vm(connection=connection)
+    disk_table = disk.Disk(connection=connection)
+
 
     window = QMainWindow()
 
     ui = Ui_MainWindow(
-        parent=window, connection=connection, vm_table=vm_table)
+        parent=window, connection=connection, vm_table=vm_table,
+        disk_table=disk_table)
     ui.setupUi(MainWindow=window)
 
     window.show()

@@ -49,7 +49,6 @@ class Vm(HighBase):
                     # table.append(method[0])
                 table_row.append(method[1]())
 
-
             st_list = VmStatisticsList(
                 connection=self._connection, vm_id=vm_row.id). \
                 statistic_objects_list()
@@ -62,7 +61,6 @@ class Vm(HighBase):
                     table_row.append(
                         str(st_list[i].value()) +' '+ str(st_list[i].unit())
                     )
-
 
             # disks = vm.disks()
 
@@ -94,7 +92,6 @@ class Vm(HighBase):
                     if n == 0:
                         header.append(dk_st_names[i])
                     table_row.append('')
-
 
             nics = vm.nics()
             nics_st_names = ['data.current.rx', 'data.current.tx',
@@ -134,9 +131,9 @@ class Vm(HighBase):
         self.headers_list = header
 
     def validate_filter(self, filter):
-        str_col = [0,1,2,3,6,7,17,23]
-        float_col = [4,5,8,9,10,11,12,13,14,15,16,18,19,20,21,22,23,24
-                    ,25,26,27,28,29,30,31]
+        str_col = [0, 1, 2, 3, 6, 7, 17, 23]
+        float_col = [4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
+                     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
 
         if filter.column in str_col and \
             filter.operand is operator.eq and isinstance(filter.value, str):
