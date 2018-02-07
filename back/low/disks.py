@@ -78,13 +78,9 @@ class Disk(base.SpecificBase):
             vm_disks = Vm(connection=self._connection, vm_id=vm.id).disks()
             for vm_disk in vm_disks:
                 if self._info.id == vm_disk.id:
-                    vms.append(vm.name)
+                    # vms.append(vm.name)
+                    vms.append(vm)
         return vms
-
-
-
-
-
 
 
 class DiskStatisticsList(statisctics_base.StatisticsListBase):

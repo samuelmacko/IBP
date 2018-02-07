@@ -12,15 +12,9 @@ class Vm(HighBase):
     # def __init__(self, connection, flags):
     def __init__(self, connection):
         super(Vm, self).__init__(connection=connection)
-        # self._connection = connection
         self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                           1, 1, 1]
-        # self.row_flags = []
-        # self.data_list = None
-        # self.headers_list = None
-        # self.current_data_list = self.data_list
-        # self.construct_table()
 
     def construct_table(self):
         table = []
@@ -92,6 +86,7 @@ class Vm(HighBase):
                     if n == 0:
                         header.append(dk_st_names[i])
                     table_row.append('')
+                    # table_row.append(None)
 
             nics = vm.nics()
             nics_st_names = ['data.current.rx', 'data.current.tx',
@@ -122,6 +117,7 @@ class Vm(HighBase):
                     if n == 0:
                         header.append(nics_st_names[i])
                     table_row.append('')
+                    # table_row.append(None)
 
 
             table.append(table_row)
@@ -131,9 +127,9 @@ class Vm(HighBase):
         self.headers_list = header
 
     def validate_filter(self, filter):
-        str_col = [0, 1, 2, 3, 6, 7, 17, 23]
-        float_col = [4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
-                     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+        str_col = [1, 2, 3, 4, 7, 8, 18, 24]
+        float_col = [5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21,
+                     22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
         if filter.column in str_col and \
             filter.operand is operator.eq and isinstance(filter.value, str):

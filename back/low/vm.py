@@ -28,7 +28,8 @@ class Vm(base.SpecificBase):
         for attachment in disk_attachments:
             if attachment.bootable:
                 return attachment
-        return None
+        # return None
+        return ''
 
     def disks(self):
         disk_attachments = self._connection.\
@@ -41,14 +42,17 @@ class Vm(base.SpecificBase):
 
     def host(self):
         if self._info.host == None:
-            return None
+            # return None
+            return ''
         else:
             return self._connection.follow_link(self._info.host).name
 
     def memory(self):
+        # return str(self._info.memory)
         return self._info.memory
 
     def memory_max(self):
+        # return str(self._info.memory_policy.max)
         return self._info.memory_policy.max
 
     def nics(self):
@@ -60,7 +64,8 @@ class Vm(base.SpecificBase):
         if len(nics_list) > 0:
             return nics_list
         else:
-            return None
+            # return None
+            return ''
 
     def os(self):
         return self._info.os.type
@@ -68,7 +73,8 @@ class Vm(base.SpecificBase):
     def template(self):
         template = self._connection.follow_link(self._info.template).name
         if template == 'Blank':
-            return None
+            # return None
+            return ''
         else:
             return template
 

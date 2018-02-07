@@ -1,6 +1,9 @@
 from front.table import Table
 from back.low.filter_handle import FilterHandle
+from operator import itemgetter
+
 from time import sleep
+from PyQt5.QtWidgets import QHeaderView
 
 
 
@@ -27,17 +30,20 @@ class Tabs(object):
                 headers_list=headers_list)
         self.table_layout.addWidget(self.printed_table)
 
-    def print_table2(self, data_list=None, headers_list=None):
-        if data_list is None:
-            data_list = self.table.data_list
-        if headers_list is None:
-            headers_list = self.table.headers_list
-
-        self.table_layout.removeWidget(self.printed_table)
-        self.printed_table = Table(
-                parent=self.parent, data_list=data_list,
-                headers_list=headers_list)
-        self.table_layout.addWidget(self.printed_table)
+    # def print_table2(self, data_list=None, headers_list=None):
+    #     if data_list is None:
+    #         data_list = self.table.data_list
+    #     if headers_list is None:
+    #         headers_list = self.table.headers_list
+    #
+    #     self.table_layout.removeWidget(self.printed_table)
+    #     self.printed_table = Table(
+    #             parent=self.parent, data_list=data_list,
+    #             headers_list=headers_list)
+    #
+    #     # self.printed_table(QHeaderView.sectionClicked['int'])
+    #     # QHeaderView.
+    #     self.table_layout.addWidget(self.printed_table)
 
     def checkbox_handle(self, sender):
         for i, ch_box in enumerate(self.chbox_list):
@@ -76,6 +82,38 @@ class Tabs(object):
                                     range(len(self.table.row_flags))]
         except Exception:
             print('wrong filter')
+
+    def sort_column(self, col):
+        # pass
+        # self.printed_table.sortByColumn(col, 1)
+        if self.printed_table.order == 0:
+            # self.table.data_list = sorted(
+                # self.table.data_list, key=lambda x: (x[0] == "", x[0].lower())
+                # , reverse=True)
+            # print(sorted(self.table.data_list, key=itemgetter(col), reverse=True))
+            # self.printed_table.order = 1
+            self.table.data_list = sorted(self.table.data_list,
+                                          key=itemgetter(col), reverse=True)
+            self.printed_table.order = 1
+
+        else:
+            # self.table.data_list = sorted(
+            #     self.table.data_list, key=itemgetter(col), reverse=False)
+
+            # self.table.data_list = sorted(
+            #     self.table.data_list, key=lambda x: (x[0] == "", x[0].lower())
+            #     , reverse=False)
+
+            self.table.data_list = sorted(self.table.data_list,
+                                          key=itemgetter(col), reverse=False)
+
+            self.printed_table.order = 0
+                # print(self.printed_table.order)
+        for row in self.table.data_list:
+            print(row)
+
+        self.print_table(headers_list=self.table.headers_list,
+                           data_list=self.table.data_list)
 
 
 class VmTab(Tabs):

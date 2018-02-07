@@ -8,6 +8,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from front.tab_sockets import VmTab, DiskTab
+from PyQt5.QtWidgets import QHeaderView
+from PyQt5.QtCore import Qt
 
 
 class Ui_MainWindow(object):
@@ -37,11 +39,12 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         # ------------------------------
-        self.vm_tab.table_layout = self.verticalLayout
+        # self.vm_tab.table_layout = self.verticalLayout
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.vm_tab.table_layout = self.verticalLayout
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.checkBox_3 = QtWidgets.QCheckBox(self.tab)
@@ -121,6 +124,10 @@ class Ui_MainWindow(object):
         # self.tableWidget.setRowCount(0)
         # self.verticalLayout.addWidget(self.tableWidget)
         self.tab_changed(tab_number=0)
+        # self.vm_tab.printed_table.header.sectionClicked.\
+        #     connect(self.header_clicked)
+        # self.vm_tab.printed_table.header.sectionClicked['int'].\
+        #     connect(self.header_clicked)
         # ------------------------------
         # ------------------------------
         self.horizontalLayout_3.addLayout(self.verticalLayout)
@@ -789,9 +796,10 @@ class Ui_MainWindow(object):
 
         self.tabWidget.tabBarClicked['int'].connect(self.tab_changed)
 
-        # self.checkBox_10.stateChanged['int'].connect(self.checkbox_clicked)
-
-        # self.tableWidget_2.setItem(0,0,QtWidgets.QTableWidgetItem('aaaaa'))
+        # if hasattr(self.vm_tab.printed_table, 'header'):
+            # self.vm_tab.printed_table.header.setObjectName("header")
+        self.vm_tab.printed_table.header.sectionClicked['int']. \
+            connect(self.header_clicked)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -913,8 +921,17 @@ class Ui_MainWindow(object):
     def tab_changed(self, tab_number):
         if tab_number == 0 and hasattr(self, 'tableWidget') is False:
             self.vm_tab.print_table()
+            self.vm_tab.printed_table.header.setObjectName("header")
+            # self.vm_tab.printed_table.header.sectionClicked['int']. \
+            #     connect(self.header_clicked)
+
+            # self.vm_tab.printed_table.header.sortIndicatorChanged['int']. \
+            #     connect(self.header_clicked)
         if tab_number == 1 and hasattr(self, 'tableWidget_2') is False:
             self.disk_tab.print_table()
+            self.disk_tab.printed_table.header.setObjectName("header_2")
+            self.disk_tab.printed_table.header.sectionClicked['int']. \
+                connect(self.header_clicked)
 
     def checkbox_clicked(self, number):
         sender = self.centralwidget.sender()
@@ -923,5 +940,15 @@ class Ui_MainWindow(object):
 
     def line_edit_changed(self):
         sender = self.centralwidget.sender()
-        self.disk_tab.line_edit_handle(sender=sender)
+        if sender.objectName() == 'lineEdit':
+            self.vm_tab.line_edit_handle(sender=sender)
+        if sender.objectName() == 'lineEdit_2':
+            self.disk_tab.line_edit_handle(sender=sender)
+
+    def header_clicked(self, col):
+        sender = self.centralwidget.sender()
+        if sender.objectName() == 'header':
+            self.vm_tab.sort_column(col=col)
+        if sender.objectName() == 'header_2':
+            self.disk_tab.sort_column(col=col)
 
