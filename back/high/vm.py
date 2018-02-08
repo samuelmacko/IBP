@@ -85,8 +85,8 @@ class Vm(HighBase):
                 for i in range(6):
                     if n == 0:
                         header.append(dk_st_names[i])
-                    table_row.append('')
-                    # table_row.append(None)
+                    # table_row.append('')
+                    table_row.append(None)
 
             nics = vm.nics()
             nics_st_names = ['data.current.rx', 'data.current.tx',
@@ -116,8 +116,8 @@ class Vm(HighBase):
                 for i in range(8):
                     if n == 0:
                         header.append(nics_st_names[i])
-                    table_row.append('')
-                    # table_row.append(None)
+                    # table_row.append('')
+                    table_row.append(None)
 
 
             table.append(table_row)

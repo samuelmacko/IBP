@@ -6,10 +6,9 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from front.tab_sockets import VmTab, DiskTab
-from PyQt5.QtWidgets import QHeaderView
-from PyQt5.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from front.suplementary.tab_sockets import VmTab, DiskTab
+from front.suplementary.decorators import header_signal
 
 
 class Ui_MainWindow(object):
@@ -124,6 +123,7 @@ class Ui_MainWindow(object):
         # self.tableWidget.setRowCount(0)
         # self.verticalLayout.addWidget(self.tableWidget)
         self.tab_changed(tab_number=0)
+        # print('aaaaaaa')
         # self.vm_tab.printed_table.header.sectionClicked.\
         #     connect(self.header_clicked)
         # self.vm_tab.printed_table.header.sectionClicked['int'].\
@@ -797,9 +797,9 @@ class Ui_MainWindow(object):
         self.tabWidget.tabBarClicked['int'].connect(self.tab_changed)
 
         # if hasattr(self.vm_tab.printed_table, 'header'):
-            # self.vm_tab.printed_table.header.setObjectName("header")
-        self.vm_tab.printed_table.header.sectionClicked['int']. \
-            connect(self.header_clicked)
+        #     self.vm_tab.printed_table.header.setObjectName("header")
+        # self.vm_tab.printed_table.header.sectionClicked['int']. \
+        #     connect(self.header_clicked)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -918,10 +918,13 @@ class Ui_MainWindow(object):
         self.actionSdff.setText(_translate("MainWindow", "sdff"))
         self.actionSdfsf.setText(_translate("MainWindow", "sdfsf"))
 
+    # @header_signal
     def tab_changed(self, tab_number):
         if tab_number == 0 and hasattr(self, 'tableWidget') is False:
             self.vm_tab.print_table()
             self.vm_tab.printed_table.header.setObjectName("header")
+            self.vm_tab.printed_table.header.sectionClicked['int']. \
+                connect(self.header_clicked)
             # self.vm_tab.printed_table.header.sectionClicked['int']. \
             #     connect(self.header_clicked)
 
@@ -933,11 +936,13 @@ class Ui_MainWindow(object):
             self.disk_tab.printed_table.header.sectionClicked['int']. \
                 connect(self.header_clicked)
 
+    @header_signal
     def checkbox_clicked(self, number):
         sender = self.centralwidget.sender()
         if sender in self.disk_tab.chbox_list:
             self.disk_tab.checkbox_handle(sender=sender)
 
+    @header_signal
     def line_edit_changed(self):
         sender = self.centralwidget.sender()
         if sender.objectName() == 'lineEdit':
@@ -945,6 +950,7 @@ class Ui_MainWindow(object):
         if sender.objectName() == 'lineEdit_2':
             self.disk_tab.line_edit_handle(sender=sender)
 
+    @header_signal
     def header_clicked(self, col):
         sender = self.centralwidget.sender()
         if sender.objectName() == 'header':

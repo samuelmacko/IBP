@@ -2,13 +2,14 @@
 2. refresh button
 3. ked ma jeden disk viacero vmiek tak ich vypisat vsetky do novehich riadkov -
     odtestovat
-4. zoradenie v stlpcoch po klinuti an sipku
+4. zoradenie v stlpcoch po klinuti an sipku - malo by ist
 5. podavat exceptny, napr notimplemented, pretypovanie na float  atd,
     pocitat o tom
 6. nastavenie (tabov a tak) ukladat do nejakeho configu a z toho to
     pri starte nacitavat
+7. do validovania filtru v diskoch zarata aj statistiky vmiek
 
-7. neukazuje na vmkach memory a max memory
+8. poriesit aby nevypisovalo 'None' ale vykreslilo prazdnu bunku
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,

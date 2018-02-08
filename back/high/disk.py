@@ -116,8 +116,10 @@ class Disk(HighBase):
                 )
 
         if first_row:
+            # print(table_row)
             return header, table_row
         else:
+            # print(table_row)
             return table_row
 
     def validate_filter(self, filter):

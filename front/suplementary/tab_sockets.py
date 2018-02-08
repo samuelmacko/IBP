@@ -1,9 +1,11 @@
 from front.table import Table
 from back.low.filter_handle import FilterHandle
-from operator import itemgetter
+from operator import methodcaller
+from back.high.bases.custom_comparsion import Comparison
 
 from time import sleep
 from PyQt5.QtWidgets import QHeaderView
+# from front.main_window import Ui_MainWindow as mw
 
 
 
@@ -17,6 +19,9 @@ class Tabs(object):
         self.printed_table = None
         self.table_layout = None
 
+        self.col = None
+        self.column_order = False
+
     def print_table(self, data_list=None, headers_list=None):
         if data_list is None:
             data_list = self.table.data_list
@@ -29,21 +34,6 @@ class Tabs(object):
                 parent=self.parent, data_list=data_list,
                 headers_list=headers_list)
         self.table_layout.addWidget(self.printed_table)
-
-    # def print_table2(self, data_list=None, headers_list=None):
-    #     if data_list is None:
-    #         data_list = self.table.data_list
-    #     if headers_list is None:
-    #         headers_list = self.table.headers_list
-    #
-    #     self.table_layout.removeWidget(self.printed_table)
-    #     self.printed_table = Table(
-    #             parent=self.parent, data_list=data_list,
-    #             headers_list=headers_list)
-    #
-    #     # self.printed_table(QHeaderView.sectionClicked['int'])
-    #     # QHeaderView.
-    #     self.table_layout.addWidget(self.printed_table)
 
     def checkbox_handle(self, sender):
         for i, ch_box in enumerate(self.chbox_list):
@@ -83,37 +73,47 @@ class Tabs(object):
         except Exception:
             print('wrong filter')
 
+    def test(self, value):
+        # print(Comparison(value[self.col]).operand)
+        return Comparison(value[self.col])
+
     def sort_column(self, col):
-        # pass
-        # self.printed_table.sortByColumn(col, 1)
-        if self.printed_table.order == 0:
-            # self.table.data_list = sorted(
-                # self.table.data_list, key=lambda x: (x[0] == "", x[0].lower())
-                # , reverse=True)
-            # print(sorted(self.table.data_list, key=itemgetter(col), reverse=True))
-            # self.printed_table.order = 1
+        print('col:', col)
+
+        self.col = col
+
+        # self.table.data_list = sorted(self.table.data_list,
+        #                               key=self.test, reverse=True)
+
+        # def test(value):
+        #     # print('value:', value)
+        #     # print('col:', col)
+        #     print(Comparison(value[col]))
+        #     return Comparison(value[col])
+
+        if self.column_order is False:
+            # print('if')
             self.table.data_list = sorted(self.table.data_list,
-                                          key=itemgetter(col), reverse=True)
-            self.printed_table.order = 1
+                                          key=self.test, reverse=True)
+            self.column_order = True
 
         else:
-            # self.table.data_list = sorted(
-            #     self.table.data_list, key=itemgetter(col), reverse=False)
-
-            # self.table.data_list = sorted(
-            #     self.table.data_list, key=lambda x: (x[0] == "", x[0].lower())
-            #     , reverse=False)
-
+            # print('else')
             self.table.data_list = sorted(self.table.data_list,
-                                          key=itemgetter(col), reverse=False)
+                                          key=self.test, reverse=False)
+            # self.table.data_list.reverse()
 
-            self.printed_table.order = 0
-                # print(self.printed_table.order)
-        for row in self.table.data_list:
-            print(row)
+            self.column_order = False
+
+        # for row in self.table.data_list:
+        #     print(row)
 
         self.print_table(headers_list=self.table.headers_list,
                            data_list=self.table.data_list)
+
+        # self.printed_table.header.sectionClicked['int']. \
+        #     connect(Ui_MainWindow.tab_changed)
+
 
 
 class VmTab(Tabs):

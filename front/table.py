@@ -8,6 +8,8 @@ class Table(QTableWidget):
     def __init__(self, parent, data_list, headers_list):
         super(Table, self).__init__(parent)
         self.header = self.horizontalHeader()
+        # self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        # self.header.setSortIndicatorShown(True)
         self.order = 0
         self._set_data(data_list=data_list, headers_list=headers_list)
 
@@ -30,7 +32,7 @@ class Table(QTableWidget):
 
             for n, line in enumerate(data_list):
                 for m, col in enumerate(data_list[n]):
-                    item = QTableWidgetItem(col)
+                    item = QTableWidgetItem(str(col))
                     # item.setData(Qt.EditR)
                     self.setItem(n, m, item)
 
