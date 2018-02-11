@@ -1,7 +1,5 @@
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
 
-from PyQt5 import Qt
-
 
 class Table(QTableWidget):
 
@@ -32,8 +30,10 @@ class Table(QTableWidget):
 
             for n, line in enumerate(data_list):
                 for m, col in enumerate(data_list[n]):
-                    item = QTableWidgetItem(str(col))
-                    # item.setData(Qt.EditR)
+                    if col:
+                        item = QTableWidgetItem(str(col))
+                    else:
+                        item = QTableWidgetItem('')
                     self.setItem(n, m, item)
 
 

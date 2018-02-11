@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QHeaderView
 # from front.main_window import Ui_MainWindow as mw
 
 
-
 class Tabs(object):
 
     def __init__(self, table, parent):
@@ -22,20 +21,18 @@ class Tabs(object):
         self.col = None
         self.column_order = False
 
-    def print_table(self, data_list=None, headers_list=None):
-        if data_list is None:
-            data_list = self.table.data_list
-        if headers_list is None:
-            headers_list = self.table.headers_list
+    def print_table(self):
+        self.table.table_from_flags()
 
         if self.table_layout.count() > 1:
             self.table_layout.removeWidget(self.printed_table)
         self.printed_table = Table(
-                parent=self.parent, data_list=data_list,
-                headers_list=headers_list)
+                parent=self.parent, data_list=self.table.current_data_list,
+                headers_list=self.table.current_headers_list)
         self.table_layout.addWidget(self.printed_table)
 
     def checkbox_handle(self, sender):
+        # print('check box handle')
         for i, ch_box in enumerate(self.chbox_list):
             if sender == ch_box and i < len(self.chbox_list):
                 if self.table.col_flags[i+1] == 1:
@@ -43,77 +40,53 @@ class Tabs(object):
                 else:
                     self.table.col_flags[i+1] = 1
 
-        headers, data = FilterHandle(table=self.table).table_from_flags()
-
-        self.print_table(headers_list=headers, data_list=data)
+        # self.table.table_from_flags()
+        self.print_table()
 
     def line_edit_handle(self, sender):
+        # print('line edit handle')
         text = sender.text()
-        headers = data = None
+        self.table.row_flags = [1 for _ in
+                                range(len(self.table.row_flags))]
+
         if text == '':
-            self.table.row_flags = [1 for _ in
-                                    range(len(self.table.row_flags))]
             self.print_table()
             return
 
         try:
             for single_filter in text.split(','):
-
                 filter_handler = FilterHandle(table=self.table)
                 filter = filter_handler.process_filter(text=single_filter)
 
                 if filter and self.table.validate_filter(filter=filter):
                     filter_handler.apply_filter(filter=filter)
-                    headers, data = filter_handler.table_from_flags()
+                    # headers, data = filter_handler.table_from_flags()
+                    self.table.table_from_flags()
                 else:
                     raise Exception
-            self.print_table(headers_list=headers, data_list=data)
-            self.table.row_flags = [1 for _ in
-                                    range(len(self.table.row_flags))]
-        except Exception:
-            print('wrong filter')
-
-    def test(self, value):
-        # print(Comparison(value[self.col]).operand)
-        return Comparison(value[self.col])
+            self.print_table()
+        except Exception as e:
+            print('wrong filter:', e)
 
     def sort_column(self, col):
-        print('col:', col)
+        # print('col:', col)
 
-        self.col = col
+        for flag in self.table.col_flags:
+            if not flag:
+                col += 1
 
-        # self.table.data_list = sorted(self.table.data_list,
-        #                               key=self.test, reverse=True)
+        def temp(value):
+            return Comparison(value[0][col])
 
-        # def test(value):
-        #     # print('value:', value)
-        #     # print('col:', col)
-        #     print(Comparison(value[col]))
-        #     return Comparison(value[col])
+        rows_flags = zip(
+            self.table.data_list, self.table.row_flags)
+        rows_flags = sorted(rows_flags, key=temp, reverse=self.column_order)
+        self.table.data_list = [x[0] for x in rows_flags]
+        self.table.row_flags = [x[1] for x in rows_flags]
+        self.column_order = not self.column_order
 
-        if self.column_order is False:
-            # print('if')
-            self.table.data_list = sorted(self.table.data_list,
-                                          key=self.test, reverse=True)
-            self.column_order = True
-
-        else:
-            # print('else')
-            self.table.data_list = sorted(self.table.data_list,
-                                          key=self.test, reverse=False)
-            # self.table.data_list.reverse()
-
-            self.column_order = False
-
-        # for row in self.table.data_list:
-        #     print(row)
-
-        self.print_table(headers_list=self.table.headers_list,
-                           data_list=self.table.data_list)
-
-        # self.printed_table.header.sectionClicked['int']. \
-        #     connect(Ui_MainWindow.tab_changed)
-
+        # self.table.table_from_flags()
+        self.print_table()
 
 
 class VmTab(Tabs):
@@ -121,15 +94,23 @@ class VmTab(Tabs):
     def __init__(self, table, parent):
         super(VmTab, self).__init__(table=table, parent=parent)
 
+
 class DiskTab(Tabs):
 
     def __init__(self, table, parent):
         super(DiskTab, self).__init__(table=table, parent=parent)
 
+
 class HostTab(Tabs):
 
     def __init__(self, table, parent):
         super(HostTab, self).__init__(table=table, parent=parent)
+
+
+class TpltTab(Tabs):
+
+    def __init__(self, table, parent):
+        super(TpltTab, self).__init__(table=table, parent=parent)
 
 
 

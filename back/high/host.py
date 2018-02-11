@@ -1,67 +1,65 @@
-from back.low.vm import Vm
-from back.low.disks import DisksList
-from back.low.disks import Disk as disk_low
-from back.low.disks import DiskStatisticsList
+from back.high.bases.base import HighBase
+from back.low.host import HostList, HostStatisticsList
+from back.low.host import Host as host_low
 from back.low.vm import VmStatisticsList
 from collections import OrderedDict
-from back.high.bases.base import HighBase
 import operator
 
 
-class Disk(HighBase):
+class Host(HighBase):
 
     def __init__(self, connection, col_flags=None):
-        super(Disk, self).__init__(connection=connection)
+        super(Host, self).__init__(connection=connection)
         if col_flags:
             self.col_flags = col_flags
         else:
             self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                              1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                              1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1]
 
     def construct_table(self):
         table = []
         header = []
 
-        disks_list = DisksList(connection=self._connection).list()
+        hosts_list = HostList(connection=self._connection).list()
 
-        for n, disk_row in enumerate(disks_list):
-
-            disk = disk_low(connection=self._connection, dk_id=disk_row.id)
+        for n, host_row in enumerate(hosts_list):
+            host = host_low(connection=self._connection,
+                            host_id=host_row.id)
             self.row_flags.append(1)
             table_row = []
 
-            vms = disk.vms()
+            vms = host.vms()
             if vms:
                 for vm in vms:
                     if n == 0:
                         header, row = self.create_row(
-                            vm=vm, disk=disk, first_row=True)
+                            vm=vm, host=host, first_row=True)
 
                     else:
                         row = self.create_row(
-                            vm=vm, disk=disk, first_row=False)
+                            vm=vm, host=host, first_row=False)
                     table_row = row
             else:
                 if n == 0:
                     header, row = self.create_row(
-                        vm=None, disk=disk, first_row=True)
+                        vm=None, host=host, first_row=True)
 
                 else:
                     row = self.create_row(
-                        vm=None, disk=disk, first_row=False)
+                        vm=None, host=host, first_row=False)
                 table_row = row
             table.append(table_row)
-
 
         self.data_list = table
         # self.current_data_list = self.data_list
         self.headers_list = header
 
-    def create_row(self, vm, disk, first_row):
+    def create_row(self, vm, host, first_row):
         table_row = []
         header = ['name']
 
-        table_row.append(disk.name())
+        table_row.append(host.name())
 
         vm_st_names = ['vm', 'memory.installed', 'memory.used',
                        'cpu.current.guest', 'cpu.current.hypervisor',
@@ -94,45 +92,39 @@ class Disk(HighBase):
                 # table_row.append('')
                 table_row.append(None)
 
-
         method_dict = OrderedDict([
-            ('status', disk.status), ('id', disk.id),
-            ('actual size', disk.actual_size),
-            ('provisioned size', disk.provisioned_size),
-            ('format', disk.format), ('content type', disk.content_type),
-            ('storage type', disk.storage_type)
+            ('status', host.status), ('id', host.id),
+            ('address', host.address), ('cluster', host.cluster),
+            ('nic', host.nics)
         ])
         for i, method in enumerate(method_dict.items()):
             if first_row:
                 header.append(method[0])
+            if method[0] == 'nic':
+                table_row.append(method[1]()[0].name)
             table_row.append(method[1]())
 
-        dk_st_list = DiskStatisticsList(
-            connection=self._connection, dk_id=disk.id()). \
+        host_st_list = HostStatisticsList(
+            connection=self._connection, host_id=host.id()). \
             statistic_objects_list()
-        for i, value in enumerate(dk_st_list):
+        for i, value in enumerate(host_st_list):
             if value:
                 if first_row:
-                    header.append(dk_st_list[i].name())
+                    header.append(host_st_list[i].name())
                 table_row.append(
-                    str(dk_st_list[i].value()) + ' '
-                    + str(dk_st_list[i].unit())
+                    str(host_st_list[i].value()) + ' '
+                    + str(host_st_list[i].unit())
                 )
 
         if first_row:
-            # print(table_row)
             return header, table_row
         else:
-            # print(table_row)
             return table_row
 
     def validate_filter(self, filter):
-        # print('col', filter.column)
-        # print('op', filter.operand)
-        # print('val', filter.value)
-        str_col = [1, 2, 11, 12, 15, 16, 17, ]
-        float_col = [3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 18, 19, 20,
-                     21, 22]
+        str_col = [1, 2, 12, 13, 14, 15, 16, ]
+        float_col = [3, 4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22, 23,
+                     24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
 
         if filter.column in str_col and \
             filter.operand is operator.eq and isinstance(filter.value, str):
@@ -145,5 +137,4 @@ class Disk(HighBase):
             except ValueError:
                 return False
 
-        print('nedostalo sa nikde')
         return False

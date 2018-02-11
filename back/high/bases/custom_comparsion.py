@@ -10,34 +10,40 @@ class Comparison(object):
             return True
         elif other.operand is None:
             return False
+        elif to_float(value=self.operand):
+            return to_float(value=self.operand) \
+                   < to_float(value=other.operand)
         else:
-            if self.is_float(value=self.operand):
-                return self.is_float(value=self.operand)\
-                       < self.is_float(value=other.operand)
-            elif self.is_int(value=self.operand):
-                return self.is_int(value=self.operand)\
-                       < self.is_int(value=other.operand)
-            else:
-                return self.operand < other.operand
+            return self.operand < other.operand
 
-    def is_float(self, value):
-        split_value = value.split(' ')
-        if split_value:
-            try:
-                float_value = float(split_value[0])
-                return float_value
-            except ValueError:
-                return False
-        else:
+    def __gt__(self, other):
+        if self.operand is None:
             return False
+        elif other.operand is None:
+            return True
+        else:
+            return to_float(value=self.operand) \
+                   > to_float(value=other.operand)
 
-    def is_int(self, value):
-        split_value = value.split(' ')
-        if split_value:
-            try:
-                int_value = int(split_value[0])
-                return int_value
-            except ValueError:
-                return False
-        else:
+    def __eq__(self, other):
+        if self.operand is None and other.operand is None:
+            return True
+        elif self.operand is None:
             return False
+        elif other.operand is None:
+            return False
+        else:
+            return to_float(value=self.operand) \
+                   == to_float(value=other.operand)
+
+
+def to_float(value):
+    split_value = value.split(' ')
+    if split_value:
+        try:
+            float_value = float(split_value[0])
+            return float_value
+        except ValueError:
+            return False
+    else:
+        return False

@@ -5,16 +5,20 @@ from back.low.nics import NICStatisticsList
 from back.high.bases.base import HighBase
 from collections import OrderedDict
 import operator
+import copy
 
 
 class Vm(HighBase):
 
     # def __init__(self, connection, flags):
-    def __init__(self, connection):
+    def __init__(self, connection, col_flags=None):
         super(Vm, self).__init__(connection=connection)
-        self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                          1, 1, 1]
+        if col_flags:
+            self.col_flags = col_flags
+        else:
+            self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                              1, 1, 1]
 
     def construct_table(self):
         table = []
@@ -32,7 +36,7 @@ class Vm(HighBase):
 
             method_dict = OrderedDict([
                 ('status', vm.status),
-                ('id', vm.id), ('clVersion', vm.cl_version), ('hosts', vm.host),
+                ('id', vm.id), ('clVersion', vm.cl_version), ('host', vm.host),
                 ('memory', vm.memory), ('maxMemory', vm.memory_max),
                 ('os', vm.os), ('template', vm.template)
             ])
@@ -41,6 +45,11 @@ class Vm(HighBase):
                 if n == 0:
                     header.append(method[0])
                     # table.append(method[0])
+                if method[0] == 'host':
+                    if method[1]():
+                        table_row.append(method[1]().name)
+                    else:
+                        table_row.append('')
                 table_row.append(method[1]())
 
             st_list = VmStatisticsList(
@@ -123,8 +132,11 @@ class Vm(HighBase):
             table.append(table_row)
 
         self.data_list = table
-        self.current_data_list = self.data_list
+        # self.current_data_list = self.data_list
+        # self.current_headers_list = copy.deepcopy(self.data_list)
         self.headers_list = header
+        # self.current_headers_list = self.headers_list
+        # self.current_headers_list = copy.copy(self.headers_list)
 
     def validate_filter(self, filter):
         str_col = [1, 2, 3, 4, 7, 8, 18, 24]

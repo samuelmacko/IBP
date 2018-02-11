@@ -20,7 +20,7 @@ class Vm(base.SpecificBase):
 
     def cl_version(self):
         cl = self._connection.follow_link(self._info.cluster)
-        return Cluster(connection=self._connection, id=cl.id).version()
+        return Cluster(connection=self._connection, cl_id=cl.id).version()
 
     def bootable_disk(self):
         disk_attachments = self._connection. \
@@ -41,11 +41,12 @@ class Vm(base.SpecificBase):
         return disks_list
 
     def host(self):
-        if self._info.host == None:
-            return None
+        if self._info.host:
+            return self._connection.follow_link(self._info.host)
             # return ''
         else:
-            return self._connection.follow_link(self._info.host).name
+            # return self._connection.follow_link(self._info.host).name
+            return None
 
     def memory(self):
         # return str(self._info.memory)
@@ -71,6 +72,7 @@ class Vm(base.SpecificBase):
         return self._info.os.type
 
     def template(self):
+        #todo vracia meno a nie objekt
         template = self._connection.follow_link(self._info.template).name
         if template == 'Blank':
             return None
@@ -111,6 +113,13 @@ class Vm(base.SpecificBase):
             return 'up'
         if status is types.VmStatus.WAIT_FOR_LAUNCH:
             return 'wait for launch'
+
+    def storage_domain(self):
+        pass
+
+    def cluster(self):
+        #todo vracia meno a nie objekt
+        return self._info.cluster.name
 
 
 class VmStatisticsList(statisctics_base.StatisticsListBase):
