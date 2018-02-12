@@ -18,7 +18,7 @@ class Tabs(object):
         self.printed_table = None
         self.table_layout = None
 
-        self.col = None
+        # self.col = None
         self.column_order = False
 
     def print_table(self):
@@ -53,27 +53,35 @@ class Tabs(object):
             self.print_table()
             return
 
-        try:
-            for single_filter in text.split(','):
-                filter_handler = FilterHandle(table=self.table)
-                filter = filter_handler.process_filter(text=single_filter)
+        # try:
+        for single_filter in text.split(','):
+            filter_handler = FilterHandle(table=self.table)
+            filter = filter_handler.process_filter(text=single_filter)
 
-                if filter and self.table.validate_filter(filter=filter):
-                    filter_handler.apply_filter(filter=filter)
-                    # headers, data = filter_handler.table_from_flags()
-                    self.table.table_from_flags()
-                else:
-                    raise Exception
-            self.print_table()
-        except Exception as e:
-            print('wrong filter:', e)
+            if filter and self.table.validate_filter(filter=filter):
+                filter_handler.apply_filter(filter=filter)
+                # headers, data = filter_handler.table_from_flags()
+                self.table.table_from_flags()
+            # else:
+            #     raise Exception
+            else:
+                print('wrong filter')
+        self.print_table()
+        # except Exception as e:
+        #     print('wrong filter:', e)
 
     def sort_column(self, col):
-        # print('col:', col)
+        print('col:', col)
 
-        for flag in self.table.col_flags:
-            if not flag:
-                col += 1
+        shift = -1
+        for i, flag in enumerate(self.table.col_flags):
+            if flag:
+                shift += 1
+            if shift == col:
+                col = i
+                break
+
+        # print('sh col:', col)
 
         def temp(value):
             return Comparison(value[0][col])

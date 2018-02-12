@@ -23,6 +23,7 @@ def main():
     host_table = host.Host(connection=connection, col_flags=flags.host_tab)
     # tplt_table =
 
+    connection.close()
 
     window = QMainWindow()
 
@@ -34,7 +35,7 @@ def main():
     window.show()
 
 
-    connection.close()
+    # connection.close()
 
     sys.exit(app.exec_())
 

@@ -9,6 +9,8 @@ class HighBase(object):
         self.row_flags = []
         self.data_list = None
         self.headers_list = None
+        # self.data_list = []
+        # self.headers_list = []
         self.current_data_list = []
         self.current_headers_list = []
         self.construct_table()

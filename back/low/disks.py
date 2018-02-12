@@ -37,12 +37,12 @@ class Disk(base.SpecificBase):
             return 'ok'
 
     def actual_size(self):
-        # return str(self._info.actual_size)
-        return self._info.actual_size
+        return str(self._info.actual_size)
+        # return self._info.actual_size
 
     def provisioned_size(self):
-        # return str(self._info.provisioned_size)
-        return self._info.provisioned_size
+        return str(self._info.provisioned_size)
+        # return self._info.provisioned_size
 
     def format(self):
         format = self._info.format

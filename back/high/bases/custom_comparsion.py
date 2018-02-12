@@ -44,6 +44,6 @@ def to_float(value):
             float_value = float(split_value[0])
             return float_value
         except ValueError:
-            return False
+            return split_value
     else:
         return False

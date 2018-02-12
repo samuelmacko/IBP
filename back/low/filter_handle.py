@@ -46,8 +46,13 @@ class FilterHandle(object):
         ops = {
             '>': operator.gt, '<': operator.lt, '=': operator.eq}
 
-        filter_regex = r'\s*(\S+)\s*(>|<|=)\s*(\S+)\s*'
+        # filter_regex = r'\s*(\S+)\s*(>|<|=)\s*(\S+)\s*'
+        filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
         match = re.match(filter_regex, text, re.I)
+
+        # print('1:', match.group(1))
+        # print('2:', match.group(2))
+        # print('3:', match.group(3))
 
         if match:
             attribute = match.group(1)

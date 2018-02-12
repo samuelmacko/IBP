@@ -6,11 +6,14 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from front.suplementary.tab_sockets import (VmTab, DiskTab, HostTab,
                                             TpltTab)
 from front.suplementary.decorators import header_signal
 from front.suplementary.config_file import create_config_file
+from back.high import vm, disk, host
+
+import ovirtsdk4 as sdk
 
 
 class CheckableComboBox(QtWidgets.QComboBox):
@@ -25,6 +28,11 @@ class CheckableComboBox(QtWidgets.QComboBox):
     def itemChecked(self, index):
         item = self.model().item(index, 0)
         return item.checkState() == QtCore.Qt.Checked
+
+# class RefreshButton(QtWidgets.QAbstractButton):
+#
+#     def __init__(self, parent):
+#         super(RefreshButton, self).__init__(parent)
 
 
 class Ui_MainWindow(object):
@@ -41,7 +49,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1500, 500)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -135,8 +143,23 @@ class Ui_MainWindow(object):
         self.lineEdit.returnPressed.connect(self.line_edit_changed)
         # ------------------------------
         self.vm_tab.line_edit = self.lineEdit
-        self.verticalLayout_2.addWidget(self.lineEdit)
+        # self.verticalLayout_2.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.verticalLayout_2)
+
+
+        self.btn_1 = QtWidgets.QPushButton(self.tab)
+        self.btn_1.setObjectName('btn_1')
+        self.btn_1.clicked['bool'].connect(self.refresh)
+        self.btn_1.setIcon(QtGui.QIcon(
+            'front/suplementary/images/refresh.gif'))
+        self.btn_1.setIconSize(QtCore.QSize(20, 20))
+        # self.verticalLayout_2.addWidget(self.btn)
+        self.horizontalLayout_81 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_81.setObjectName('horizontalLayaut_81')
+        self.verticalLayout_2.addLayout(self.horizontalLayout_81)
+        self.horizontalLayout_81.addWidget(self.btn_1)
+        self.horizontalLayout_81.addWidget(self.lineEdit)
+
         # ------------------------------
         # ------------------------------
         # self.tableWidget = QtWidgets.QTableWidget(self.tab)
@@ -244,19 +267,19 @@ class Ui_MainWindow(object):
         # self.verticalLayout_5.addWidget(self.combo)
 
         # self.menu = QtWidgets.QMenu(self.parent)
-        menu = QtWidgets.QMenu()
-        self.verticalLayout_5.addWidget(menu)
-        self.action1 = QtWidgets.QAction('action 1', menu)
-        self.action1.setCheckable(True)
-        self.action2 = QtWidgets.QAction('action 2', menu)
-        self.action2.setCheckable(True)
-        menu.addAction(self.action1)
-        menu.addAction(self.action2)
-
-        btn = QtWidgets.QPushButton('aaaa')
-        # self.btn.setCheckable(True)
-        self.verticalLayout_5.addWidget(btn)
-        btn.setMenu(menu)
+        # menu = QtWidgets.QMenu()
+        # self.verticalLayout_5.addWidget(menu)
+        # self.action1 = QtWidgets.QAction('action 1', menu)
+        # self.action1.setCheckable(True)
+        # self.action2 = QtWidgets.QAction('action 2', menu)
+        # self.action2.setCheckable(True)
+        # menu.addAction(self.action1)
+        # menu.addAction(self.action2)
+        #
+        # btn = QtWidgets.QPushButton('aaaa')
+        # # self.btn.setCheckable(True)
+        # self.verticalLayout_5.addWidget(btn)
+        # btn.setMenu(menu)
 
         # self.combo = CheckableComboBox(self.parent)
         # self.combo.addItem('item 1')
@@ -270,8 +293,21 @@ class Ui_MainWindow(object):
 
         # ------------------------------
         self.disk_tab.line_edit = self.lineEdit_2
-        self.verticalLayout_5.addWidget(self.lineEdit_2)
+        # self.verticalLayout_5.addWidget(self.lineEdit_2)
         self.verticalLayout_4.addLayout(self.verticalLayout_5)
+
+        self.btn_2 = QtWidgets.QPushButton(self.tab)
+        self.btn_2.setObjectName('btn_2')
+        self.btn_2.clicked['bool'].connect(self.refresh)
+        self.btn_2.setIcon(QtGui.QIcon(
+            'front/suplementary/images/refresh.gif'))
+        self.btn_2.setIconSize(QtCore.QSize(20, 20))
+        # self.verticalLayout_2.addWidget(self.btn)
+        self.horizontalLayout_82 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_82.setObjectName('horizontalLayaut_82')
+        self.verticalLayout_5.addLayout(self.horizontalLayout_82)
+        self.horizontalLayout_82.addWidget(self.btn_2)
+        self.horizontalLayout_82.addWidget(self.lineEdit_2)
         # ------------------------------
         # ------------------------------
         # ------------------------------
@@ -358,8 +394,22 @@ class Ui_MainWindow(object):
         self.lineEdit_3.returnPressed.connect(self.line_edit_changed)
         # ------------------------------
         self.host_tab.line_edit = self.lineEdit_3
-        self.verticalLayout_8.addWidget(self.lineEdit_3)
+        # self.verticalLayout_8.addWidget(self.lineEdit_3)
         self.verticalLayout_7.addLayout(self.verticalLayout_8)
+
+        self.btn_3 = QtWidgets.QPushButton(self.tab)
+        self.btn_3.setObjectName('btn_3')
+        self.btn_3.clicked['bool'].connect(self.refresh)
+        self.btn_3.setIcon(QtGui.QIcon(
+            'front/suplementary/images/refresh.gif'))
+        self.btn_3.setIconSize(QtCore.QSize(20, 20))
+        # self.verticalLayout_2.addWidget(self.btn)
+        self.horizontalLayout_83 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_83.setObjectName('horizontalLayaut_83')
+        self.verticalLayout_8.addLayout(self.horizontalLayout_83)
+        self.horizontalLayout_83.addWidget(self.btn_3)
+        self.horizontalLayout_83.addWidget(self.lineEdit_3)
+
         # self.tableWidget_3 = QtWidgets.QTableWidget(self.tab_3)
         # self.tableWidget_3.setObjectName("tableWidget_3")
         # self.tableWidget_3.setColumnCount(0)
@@ -1062,3 +1112,37 @@ class Ui_MainWindow(object):
             create_config_file(
                 vm_tab=self.vm_tab, disk_tab=self.disk_tab,
                 host_tab=self.host_tab)
+
+    @header_signal
+    def refresh(self, clicked):
+        sender = self.centralwidget.sender()
+        print(sender.objectName())
+        # import ovirtsdk4 as sdk
+        connection = sdk.Connection(
+            username='admin@internal', password='qum5net', insecure=True,
+            url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
+                '/ovirt-engine/api',
+            # ca_file=ca_file,
+        )
+        if sender.objectName() == 'btn_1':
+            # sender.setIcon(QtGui.QIcon(
+            #     'front/suplementary/images/x.png'))
+            # self.btn_1.setIconSize(QtCore.QSize(20, 20))
+            # self.btn_1.setEnabled(False)
+            self.vm_tab.table = vm.Vm(
+                connection=connection, col_flags=self.vm_tab.table.col_flags)
+            self.vm_tab.print_table()
+            # self.btn_1.setIcon(QtGui.QIcon(
+            #     'front/suplementary/images/refresh.gif'))
+            # self.btn_1.setEnabled(True)
+        if sender.objectName() == 'btn_2':
+            self.disk_tab.table = disk.Disk(
+                connection=connection, col_flags=self.disk_tab.table.col_flags)
+            self.disk_tab.print_table()
+        if sender.objectName() == 'btn_3':
+            self.host_tab.table = host.Host(
+                connection=connection, col_flags=self.host_tab.table.col_flags)
+            self.host_tab.print_table()
+
+
+        connection.close()

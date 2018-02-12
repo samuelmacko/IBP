@@ -15,7 +15,7 @@ class Host(HighBase):
         else:
             self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                              1, 1, 1, 1, 1]
+                              1, 1, 1, 1, 1,  1,1]
 
     def construct_table(self):
         table = []
@@ -26,7 +26,7 @@ class Host(HighBase):
         for n, host_row in enumerate(hosts_list):
             host = host_low(connection=self._connection,
                             host_id=host_row.id)
-            self.row_flags.append(1)
+            # self.row_flags.append(1)
             table_row = []
 
             vms = host.vms()
@@ -39,7 +39,9 @@ class Host(HighBase):
                     else:
                         row = self.create_row(
                             vm=vm, host=host, first_row=False)
-                    table_row = row
+                    # table_row = row
+                    table.append(row)
+                    # table_row.extend(row)
             else:
                 if n == 0:
                     header, row = self.create_row(
@@ -49,13 +51,20 @@ class Host(HighBase):
                     row = self.create_row(
                         vm=None, host=host, first_row=False)
                 table_row = row
-            table.append(table_row)
+            # table.append(table_row)
+            # table.extend(table_row)
 
         self.data_list = table
+        # self.data_list.extend(table)
         # self.current_data_list = self.data_list
         self.headers_list = header
+        self.headers_list.extend('a')
+        # self.headers_list.extend(header)
 
     def create_row(self, vm, host, first_row):
+
+        self.row_flags.append(1)
+
         table_row = []
         header = ['name']
 
@@ -102,6 +111,7 @@ class Host(HighBase):
                 header.append(method[0])
             if method[0] == 'nic':
                 table_row.append(method[1]()[0].name)
+                continue
             table_row.append(method[1]())
 
         host_st_list = HostStatisticsList(

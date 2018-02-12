@@ -35,4 +35,5 @@ class ConfigFile(object):
                     elif line_number == 2:
                         self.host_tab = flag_list
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
