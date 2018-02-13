@@ -27,8 +27,8 @@ class Disk(HighBase):
         for n, disk_row in enumerate(disks_list):
 
             disk = disk_low(connection=self._connection, dk_id=disk_row.id)
-            self.row_flags.append(1)
-            table_row = []
+            # self.row_flags.append(1)
+            # table_row = []
 
             vms = disk.vms()
             if vms:
@@ -40,7 +40,8 @@ class Disk(HighBase):
                     else:
                         row = self.create_row(
                             vm=vm, disk=disk, first_row=False)
-                    table_row = row
+                    # table_row = row
+                    table.append(row)
             else:
                 if n == 0:
                     header, row = self.create_row(
@@ -49,8 +50,9 @@ class Disk(HighBase):
                 else:
                     row = self.create_row(
                         vm=None, disk=disk, first_row=False)
-                table_row = row
-            table.append(table_row)
+                # table_row = row
+                table.append(row)
+            # table.append(table_row)
 
 
         self.data_list = table
@@ -58,6 +60,9 @@ class Disk(HighBase):
         self.headers_list = header
 
     def create_row(self, vm, disk, first_row):
+
+        self.row_flags.append(1)
+
         table_row = []
         header = ['name']
 

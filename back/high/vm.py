@@ -50,6 +50,7 @@ class Vm(HighBase):
                         table_row.append(method[1]().name)
                     else:
                         table_row.append('')
+                    continue
                 table_row.append(method[1]())
 
             st_list = VmStatisticsList(

@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1500, 500)
+        MainWindow.resize(1500, 800)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -1118,31 +1118,33 @@ class Ui_MainWindow(object):
         sender = self.centralwidget.sender()
         print(sender.objectName())
         # import ovirtsdk4 as sdk
-        connection = sdk.Connection(
-            username='admin@internal', password='qum5net', insecure=True,
-            url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
-                '/ovirt-engine/api',
-            # ca_file=ca_file,
-        )
+        # connection = sdk.Connection(
+        #     username='admin@internal', password='qum5net', insecure=True,
+        #     url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
+        #         '/ovirt-engine/api',
+        #     # ca_file=ca_file,
+        # )
         if sender.objectName() == 'btn_1':
             # sender.setIcon(QtGui.QIcon(
             #     'front/suplementary/images/x.png'))
             # self.btn_1.setIconSize(QtCore.QSize(20, 20))
             # self.btn_1.setEnabled(False)
+            # self.btn_1.setDisabled(True)
             self.vm_tab.table = vm.Vm(
-                connection=connection, col_flags=self.vm_tab.table.col_flags)
+                connection=self.connection, col_flags=self.vm_tab.table.col_flags)
             self.vm_tab.print_table()
             # self.btn_1.setIcon(QtGui.QIcon(
             #     'front/suplementary/images/refresh.gif'))
             # self.btn_1.setEnabled(True)
+            # self.btn_1.setDisabled(False)
         if sender.objectName() == 'btn_2':
             self.disk_tab.table = disk.Disk(
-                connection=connection, col_flags=self.disk_tab.table.col_flags)
+                connection=self.connection, col_flags=self.disk_tab.table.col_flags)
             self.disk_tab.print_table()
         if sender.objectName() == 'btn_3':
             self.host_tab.table = host.Host(
-                connection=connection, col_flags=self.host_tab.table.col_flags)
+                connection=self.connection, col_flags=self.host_tab.table.col_flags)
             self.host_tab.print_table()
 
 
-        connection.close()
+        # connection.close()
