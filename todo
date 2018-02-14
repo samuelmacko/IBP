@@ -17,6 +17,9 @@
 11. ked cakam an laoding, staci nejaky label ze 'please wait'?
 12, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
     zly filter, please wait, ...
+
+13. threads
+14. do config filu ulozit aj login a cestu vmky
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,

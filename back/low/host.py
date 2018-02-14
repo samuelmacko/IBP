@@ -1,7 +1,7 @@
 from back.low.bases import base, statisctics_base
 # from back.low.vm import Vm, VmList
 from ovirtsdk4 import types
-# import back.low.vm as Vm
+import back.low.vm as Vm
 
 
 class HostList(base.ListBase):
@@ -74,14 +74,16 @@ class Host(base.SpecificBase):
             return None
 
     def vms(self):
-        import back.low.vm as Vm
         vms = []
         vm_list = Vm.VmList(connection=self._connection).list()
         for vm in vm_list:
             vm_host = Vm.Vm(connection=self._connection, vm_id=vm.id).host()
             if vm_host and self._info.id == vm_host.id:
                 vms.append(vm)
-        return vms
+        if len(vms) > 0:
+            return vms
+        else:
+            return None
 
 
 class HostStatisticsList(statisctics_base.StatisticsListBase):

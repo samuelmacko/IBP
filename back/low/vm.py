@@ -1,4 +1,5 @@
-from back.low.cluster import Cluster
+# from back.low.cluster import Cluster
+import back.low.cluster as Cluster
 from back.low.bases import base, statisctics_base
 from ovirtsdk4 import types
 
@@ -20,7 +21,8 @@ class Vm(base.SpecificBase):
 
     def cl_version(self):
         cl = self._connection.follow_link(self._info.cluster)
-        return Cluster(connection=self._connection, cl_id=cl.id).version()
+        return Cluster.Cluster(connection=self._connection, cl_id=cl.id).\
+            version()
 
     def bootable_disk(self):
         disk_attachments = self._connection. \

@@ -81,3 +81,4 @@ class InputDialog(QtWidgets.QWidget):
     def closeEvent(self, QCloseEvent):
         #todo zleeeee
         exit(0)
+

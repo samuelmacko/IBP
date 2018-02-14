@@ -1,10 +1,8 @@
-from front.table import Table
-from back.low.filter_handle import FilterHandle
-from operator import methodcaller
 from back.high.bases.custom_comparsion import Comparison
+from front.suplementary.filter_handle import FilterHandle
+from front.table import Table
 
-from time import sleep
-from PyQt5.QtWidgets import QHeaderView
+
 # from front.main_window import Ui_MainWindow as mw
 
 

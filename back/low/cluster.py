@@ -1,7 +1,8 @@
 from back.low.bases import base
-from back.low.host import Host, HostList
+# from back.low.host import Host, HostList
 # from back.low.vm import Vm, VmList
 # import back.low.vm as Vm
+# import back.low.host as Host
 
 
 class ClusterList(base.ListBase):
@@ -31,10 +32,10 @@ class Cluster(base.SpecificBase):
 
     def hosts(self):
         hosts = []
-        host_list = HostList(connection=self._connection).list()
+        host_list = Host.HostList(connection=self._connection).list()
         for host in host_list:
-            host_cluster = Host(connection=self._connection, host_id=host.id).\
-                cluster()
+            host_cluster = Host.Host(
+                connection=self._connection, host_id=host.id).cluster()
             if host_cluster and self._info.name == host_cluster:
                 hosts.append(host)
         if len(hosts) > 0:

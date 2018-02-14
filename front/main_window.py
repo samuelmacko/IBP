@@ -7,13 +7,12 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtWidgets, QtGui
-from front.suplementary.tab_sockets import (VmTab, DiskTab, HostTab,
-                                            TpltTab)
-from front.suplementary.decorators import header_signal
-from front.suplementary.config_file import create_config_file
-from back.high import vm, disk, host
 
-import ovirtsdk4 as sdk
+from back.high import vm, disk, host
+from back.low.config_file import create_config_file
+from front.suplementary.decorators import header_signal
+from front.suplementary.tab_sockets import (VmTab, DiskTab, HostTab)
+import csv
 
 
 class CheckableComboBox(QtWidgets.QComboBox):
@@ -46,6 +45,7 @@ class Ui_MainWindow(object):
         self.disk_tab = DiskTab(table=disk_table, parent=parent)
         self.host_tab = HostTab(table=host_table, parent=parent)
         # self.tplt_table = TpltTab(table=tplt_table, parent=parent)
+        self.current_tab = None
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -152,6 +152,8 @@ class Ui_MainWindow(object):
         self.btn_1.clicked['bool'].connect(self.refresh)
         self.btn_1.setIcon(QtGui.QIcon(
             'front/suplementary/images/refresh.gif'))
+        self.btn_1.setIcon(QtGui.QIcon(
+            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_1.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_81 = QtWidgets.QHBoxLayout()
@@ -300,7 +302,8 @@ class Ui_MainWindow(object):
         self.btn_2.setObjectName('btn_2')
         self.btn_2.clicked['bool'].connect(self.refresh)
         self.btn_2.setIcon(QtGui.QIcon(
-            'front/suplementary/images/refresh.gif'))
+            # 'front/suplementary/images/refresh.gif'))
+            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_2.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_82 = QtWidgets.QHBoxLayout()
@@ -401,7 +404,8 @@ class Ui_MainWindow(object):
         self.btn_3.setObjectName('btn_3')
         self.btn_3.clicked['bool'].connect(self.refresh)
         self.btn_3.setIcon(QtGui.QIcon(
-            'front/suplementary/images/refresh.gif'))
+            # 'front/suplementary/images/refresh.gif'))
+            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_3.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_83 = QtWidgets.QHBoxLayout()
@@ -903,11 +907,12 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionSave = QtWidgets.QAction(MainWindow)
         self.actionSave.setObjectName("actionSave")
-
         self.actionSave.triggered['bool'].connect(self.menu_item_clicked)
 
-        self.actionFd = QtWidgets.QAction(MainWindow)
-        self.actionFd.setObjectName("actionFd")
+        self.actionExport = QtWidgets.QAction(MainWindow)
+        self.actionExport.setObjectName("actionExport")
+        self.actionExport.triggered['bool'].connect(self.export)
+
         self.actionAsd = QtWidgets.QAction(MainWindow)
         self.actionAsd.setObjectName("actionAsd")
         self.actionAsddd = QtWidgets.QAction(MainWindow)
@@ -917,7 +922,7 @@ class Ui_MainWindow(object):
         self.actionSdfsf = QtWidgets.QAction(MainWindow)
         self.actionSdfsf.setObjectName("actionSdfsf")
         self.menuFile.addAction(self.actionSave)
-        self.menuFile.addAction(self.actionFd)
+        self.menuFile.addAction(self.actionExport)
         self.menuFile.addAction(self.actionAsd)
         self.menuQwe.addAction(self.actionSdff)
         self.menuQwe.addAction(self.actionSdfsf)
@@ -1045,7 +1050,7 @@ class Ui_MainWindow(object):
         self.menuAsd_2.setTitle(_translate("MainWindow", "asd"))
         self.menuQwe.setTitle(_translate("MainWindow", "qwe"))
         self.actionSave.setText(_translate("MainWindow", "save"))
-        self.actionFd.setText(_translate("MainWindow", "fd"))
+        self.actionExport.setText(_translate("MainWindow", "export"))
         self.actionAsd.setText(_translate("MainWindow", "asd"))
         self.actionAsddd.setText(_translate("MainWindow", "asddd"))
         self.actionSdff.setText(_translate("MainWindow", "sdff"))
@@ -1053,6 +1058,7 @@ class Ui_MainWindow(object):
 
     # @header_signal
     def tab_changed(self, tab_number):
+        self.current_tab = tab_number
         if tab_number == 0 and (hasattr(self, 'tableWidget') is False):
             self.vm_tab.print_table()
             self.tableWidget = self.vm_tab.printed_table
@@ -1148,3 +1154,23 @@ class Ui_MainWindow(object):
 
 
         # connection.close()
+
+    def export(self):
+        file_name = QtWidgets.QFileDialog.getSaveFileName(
+            self.parent, 'Open file', '/home')
+        if file_name[0]:
+            with open(file_name[0], 'w') as file:
+                writer = csv.writer(file)
+                if self.current_tab == 0:
+                    self.vm_tab.table.table_from_flags()
+                    writer.writerow(self.vm_tab.table.current_headers_list)
+                    writer.writerows(self.vm_tab.table.current_data_list)
+                if self.current_tab == 1:
+                    self.disk_tab.table.table_from_flags()
+                    writer.writerow(self.disk_tab.table.current_headers_list)
+                    writer.writerows(self.disk_tab.table.current_data_list)
+                if self.current_tab == 2:
+                    self.host_tab.table.table_from_flags()
+                    writer.writerow(self.host_tab.table.current_headers_list)
+                    writer.writerows(self.host_tab.table.current_data_list)
+
