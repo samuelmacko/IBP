@@ -28,31 +28,42 @@ class Cluster(base.SpecificBase):
 
     def data_center(self):
         #todo vracia meno a nie objekt
-        return self._connection.follow_link(self._info.datacenters).name
+        return self._connection.follow_link(self._info.datacenter).name
 
     def hosts(self):
+        from back.low.host import Host, HostList
         hosts = []
-        host_list = Host.HostList(connection=self._connection).list()
+        host_list = HostList(connection=self._connection).list()
         for host in host_list:
-            host_cluster = Host.Host(
+            host_cluster = Host(
                 connection=self._connection, host_id=host.id).cluster()
             if host_cluster and self._info.name == host_cluster:
-                hosts.append(host)
+                hosts.append(host.name)
         if len(hosts) > 0:
             return hosts
         else:
             return None
 
-    # def vms(self):
-    #     vms = []
-    #     # vm_list = VmList(connection=self._connection).list()
-    #     vm_list = Vm.VmList(connection=self._connection).list()
-    #     for vm in vm_list:
-    #         vm_cluster = Vm.Vm(connection=self._connection, vm_id=vm.id).\
-    #             cluster()
-    #         if vm_cluster and self._info.name == vm_cluster:
-    #             vms.append(vm)
-    #     if len(vms) > 0:
-    #         return vms
-    #     else:
-    #         return None
+    def vms(self):
+        from back.low.vm import Vm, VmList
+        vms = []
+        vm_list = VmList(connection=self._connection).list()
+        for vm in vm_list:
+            vm_cluster = Vm(connection=self._connection, vm_id=vm.id).\
+                cluster()
+            if vm_cluster and self._info.name == vm_cluster:
+                vms.append(vm.name)
+        if len(vms) > 0:
+            return vms
+        else:
+            return None
+
+    def networks(self):
+        networks_list = []
+        networks = self._connection.follow_link(self._info.networks)
+        for network in networks:
+            networks_list.append(network.name)
+        if len(networks_list) > 0:
+            return networks_list
+        else:
+            return None

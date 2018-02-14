@@ -121,7 +121,9 @@ class Vm(base.SpecificBase):
 
     def cluster(self):
         #todo vracia meno a nie objekt
-        return self._info.cluster.name
+        return self._connection.follow_link(self._info.cluster).name
+
+    # def network
 
 
 class VmStatisticsList(statisctics_base.StatisticsListBase):
