@@ -152,8 +152,7 @@ class Ui_MainWindow(object):
         self.btn_1.clicked['bool'].connect(self.refresh)
         self.btn_1.setIcon(QtGui.QIcon(
             'front/suplementary/images/refresh.gif'))
-        self.btn_1.setIcon(QtGui.QIcon(
-            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
+            # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_1.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_81 = QtWidgets.QHBoxLayout()
@@ -302,8 +301,8 @@ class Ui_MainWindow(object):
         self.btn_2.setObjectName('btn_2')
         self.btn_2.clicked['bool'].connect(self.refresh)
         self.btn_2.setIcon(QtGui.QIcon(
-            # 'front/suplementary/images/refresh.gif'))
-            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
+            'front/suplementary/images/refresh.gif'))
+            # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_2.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_82 = QtWidgets.QHBoxLayout()
@@ -404,8 +403,8 @@ class Ui_MainWindow(object):
         self.btn_3.setObjectName('btn_3')
         self.btn_3.clicked['bool'].connect(self.refresh)
         self.btn_3.setIcon(QtGui.QIcon(
-            # 'front/suplementary/images/refresh.gif'))
-            '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
+            'front/suplementary/images/refresh.gif'))
+            # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_3.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
         self.horizontalLayout_83 = QtWidgets.QHBoxLayout()

@@ -15,8 +15,9 @@ from front.main_window import Ui_MainWindow
 def main():
     app = QApplication(sys.argv)
 
-    splash_picture = QtGui.QPixmap('/home/smacko/git/IBP/front/'
-                                   'suplementary/images/splash_screen.png')
+    # splash_picture = QtGui.QPixmap('/home/smacko/git/IBP/front/'
+    #                                'suplementary/images/splash_screen.png')
+    splash_picture = QtGui.QPixmap('front/suplementary/images/splash_screen.png')
     splash_screen = QtWidgets.QSplashScreen()
     splash_screen.setPixmap(splash_picture)
     splash_screen.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint |
