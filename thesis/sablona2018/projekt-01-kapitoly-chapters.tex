@@ -1,0 +1,252 @@
+%=========================================================================
+% (c) Michal Bidlo, Bohuslav Křena, 2008
+
+\chapter{Virtualization}
+In first chapter I will explain what virtualiszation is and how it can be implemented.
+\begin{itemize}
+\item Virtualization basics,
+\item Advantages,
+\item Disadvantages,
+\item Virtualization architectures.
+\end{itemize}
+
+\section{Virtualization basics}
+In short, virtualization means emulation of hardware within a software platform. Although it may seem that virtuaization is the invention of last few years its concept was first brought up in 1960s. It was first implemented by IBM to split resources of their massive mainframe machines among multiple virtual machines that could work independently of each other and therefore use resources more efficiently.
+
+To furher explain basics of virtualization I would like to start by brief explanation of architecture of standard computers. First, we need hardware layer which contains processing unit, storage and other hardware devices, on top of this layer is operating system which abstracts functioning of hardware layer and offers application layer medium to communicate with HW layer. Operating system runs as privilaged software which means that is generally able to perform any operation supported by hardware, its role is to create interface which simplifyes or ingores implemnentation of components on lower levels of a hierarchy to make creating and using components on application level easier. On top of operating system is application layer which consists of user programs whis are less privileged and can generally perform only operations that are permitted to them by operating system. [tu moze byt obrazok: 3, na sebe naskladane obdlzdniky s napismi hardware, operating system a applications]
+
+Virtualization allows creating multiple entities of os and application layers on single hw layer. This is done by inserting additional layer of system software between operating system and lower layers. This virtualization layer is called hypervisor or VMM (virtual machine monitor) and there are two main types of it:
+\begin{itemize}
+	\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highes level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer throught operating system thus can utilize full potencial it. Some of them need special priviledged virtual machine called Domain-0 from which it can be managed and controlled. [pride dalsi obrazok popisujuci tuto strukturu]
+
+	\item Type II hypervisor (or hosted hypervisor): can be either on same level as host operating system or on a level above. This means that hypervisor doesn't require specific drivers for I/O operations and allows running of virtual environment within alredy existing environment. [obrazok popisujuci strukturu]
+\end{itemized}
+
+\section{Advantages}
+As every other technology, virtualization have some advantages and disadvantages. Lets start with advantages:
+\begin{enumerate}
+\item Efficiency: Virtualization allows more efficient use of host machine for multiple virtual machines which can all run different services. Runnig multiple services on same server can be very dangerous multiple reasons and so it is considered a bad practice. Most obvious problem is with hardware overhead, if numerous very resource-demanding services run on single physical machine it can slow them down considerably or even crash them which makes business's services very unreliable. On the other hand, if we run only single service on whole physical host, that service can use for example only 20\% of server machine's resources (which is especially nowdays very common as hardware is becomming more and more powerful, average service utilizes only about 10\% to 15\% of all available resources). This way we waste remaining 80\% of resources which in the long unnecessarily raises expenses on managing physical hosts. Rather we can run various virtual servers on one physical hardware and on each of them run single service. Over past few years server technlogy has improved som much that wasting server's machine resources this way is very common and can by improved by virtualization. 
+
+\item Cost reducing: By concentrating virtual machines on fever hosts we can reduce expenses associated with running large numbers of physical machines in various ways. We need less physical space for storing hosts, less cooling is needed, less energy is spent on powering all the hardware, managing fewer physical devices is also easier and cheaper. Companies with fewer than 1000 employees spend up to 40\% of their IT budget on hardware[], this can be greatly reduced by virtualization. Although this benefits more larger companies using plenty of server machines even smaller companies can benefit greatly from virtualization. Using less energy/space/etc means that virtualization is also firnedlier to environment.
+
+\item Flexibility: Encreasing number of physical workstations or servers is financialy and time consuming process. We need new physical space, order new machines, set them up and so on. With virtual machines whole process is easier and faster. There are no more additional hardawe costs and administrators can easily setup and manage virtual machines using virtual machine management software. By using templates we can make creating new virtual machines even faster by automatization of setting up procedures. When hardware on which virtual machines are running becomes obsolete or it just needs to be out of service for maintenance resons we can easily migrate them to another physical hardware.
+
+\item Testing: Virtual machines are completely isolated from each other which gives us possibility of testing environmnets with completely different operating systems and configurations. Even extreme situations are easy to set up and changed. Compared to physical machines, virtual machines can be added and removed very fast. QA teams often have multiple virtual machines with which they speed up testing and therefore development process.
+
+\item Security: All virtual machines are isolated entities completely separated from every other software so when one of them gets attacked, gets virus or for any reason fails, only that one virtual machine fails and nothing other is affected. While problematic VM is diagnosed and repaired another VM can take it's place and continue running it's service which greatly reduces down-time and increases reliability of offered service.
+
+\item Isolation: Virtual machines are hardware independent which means that their current state can be captured and reproduced on another physical host in process called migration. This reduces down-time even more becasue we can run all our services temporarily from another host while former host is being down due to maintenance. For example Red Hat Enterprise Virtualization supports live migration which is the ability to move running virtual machine between physical hosts with no interruption of service. The virtual machine remains powered on and user applications continue to run while the virtual machine is relocated to a new physical host. In the background, the virtual machine's RAM is copied from the source host to the the destination host. Storage and network connectivity are not altered. (citovane zo stranky red hatu)
+\end{enumerate}
+
+\section{Disadvantages}
+Disadvantages: 
+The disagvantages of virtualization are mostly those that are associated with any transition to a new technology and can be overcame by careful planing and professional implementation.
+\begin{enumerate}
+\item Overloading: this problem lies in wrong or uncomplete estimation of amount of hardware resources needed to handle desired virtual environment. Virtualizaion carries along additional bandwidth in form of hypervisor and other components which is not neglectable. Other extreme is not utilizing full potencial of physical host capabilities and wasting resources in long run by using more hosts that are actually needed. Basic rule of thumb is to use around 80\% of physical machines resources.
+
+\item Bandwidth: the volume of data transfered through network might be noo much to handle for single network interface card (NIC), this can lead to slower network transfers. One of possible ways to solve this is to use host machine with multiple NICs.
+
+\item Need for adjustments: in some cases, adapting a virtualization technology requires rewriting or patching some pieces of software to be compatible with virtual environment. 
+
+\item Cost: To run multiple machines on single host mahine we need it to be sufficiently powerful. This means that additional investments into hardware may be needed. Another investments are into virtualization software and managing virtual machines.
+
+\item Learning curve: conversion to and managing virtual environment will require IT staff with necessary training. The beginning stages can be painful due to lack of experience with new technology.
+
+\item Vulnerability: altough virtualization brings certain security benefits it also bring a big risk in form of potencial damage cost by lower level layers corruptoion. In physical environment if operating system of one machine gets infected than only that one machine is affected but in virtualized environment if hardware, operating system or hypervisor of host gets damaged than all virtual machines running on it can potencially become unavailable. This problem can be reduced by regular backups and snapshots which allow easy transfer of virtual machines to a new host.
+
+\item Licencing: majority of software vendors consider virtual machine exactly the same as physical machine so if certain piece of software is needed on multiple virtual machines (for exmaple operating system) than we have to pay for a licence for each one of them. We can try to solve this by using open-source software. This is becoming less of a problem nowadays because more and more software vendors are adjusting their view on virtualization.
+\end{enumerate}
+
+
+\section{Virtualization architectures}
+Virtualization technology is spreading rapidly and today there are several architectures that implement this concept. Here are most used architectures and later we will discuss them in little more detail.
+\begin{enumerate}
+\item Full virtualization
+\item Paravirtualization
+\item Operating system virtualization
+\item Other types of virtualization
+\end{enumerate}
+
+\begin{enumerate}
+\item Full virtualization:  provides a total virtualization of hardware which means that every virtual entity runs as if was running on physical hardware completely unaware that its platform is virtualized. When a virtual machine wants to access hardware it access virtual hardware which access hypervisor which finally accesses physical hardware. Hypervisor thus acts as the only bridge between virtual machine and physical hardware. This is reason why full virtualization is in terms of performance behin non-virtualized machines.
+\begin{enumerate}
+\item Software assisted virtualization: [obrazok] historically first full virtualization solution introduced in 1969. This aproach has advantage in fact that if everything is simulated than any operting system or application can be run completly without modifications. On the other hand every operation made by operating system of virtual machine needs to be simulated and checked if it doesn't conflict with any other virtual machine or hypervisor which makes this process very resource-expensive.
+\item Hardware assisted virtualization: [obrazok] introduced by IBM in 1972. This aproach reduces the problem of massive overhead in software assisted virtualization by extending functionality of hardware (mainly CPU) by new instructions allowing virtual machines to directly access physical hardware withou many expensive mediators. Normally x86 operating systems need to have a direct access to hardware resources, software-based virtualization solves this problem by virtualizing entire hardware layer but for price of wasting a big chunk of hardware resources. In hardware-base virtualization is this overhead noticibly reduced because processor no longer needs to be emulated and can directly interact with application layer. Another advantage is that it will work 'right of the box' meaning that we don't neeed to upgrade or change anything, all we need to do is to use processor supporting hardware-based virtualization technology.
+\end{enumerate}
+
+\item Paravirtualization: [k tomuto obrazok na hypercall] introduced in 1972 by IBM, this technique was implemented to increace performance of virtualized environmnet closer to non-virtualized. To use paravirtualization, kernel of the operating system needs to be modified, mainly it needs to have replaced any priviledged operation running only in ring 0 by so called 'hypercalls'. Hypercalls allow guest operating system to send system calls directly to he hypervisor without the need of hardware simulation. Virtual machine can therefore access some part of the hardware straight wihtout going throught virtualized hardware on top of hypervisor, which greatly increases performance of some operations. This only works for some parts of the hardware, for other parts, virtual machine still needs to access them via virtualized hardware. Paravirtualized virtual machine is 'aware' of the fact that it is being virtualized which gives it ability to use hypercalls. On the other hand, as mentioned above, in order to use this technique, operating system needs to be altered in a non-trivial way which typically limits its use to a Linux based operating systems because they allow such source code modifications.
+Paravirtualization was popularized by Xen hypervisor, today, most virtualization solutions use it as a norm (for example Microsoft HYper-V, Red Hat Xen, VMware's family and others).
+
+\item Operating system virtualization: [znazornujuci obrazok] (also known as shared kernel virtualization) introduces 'light-weight' virtualization. To understant this concept, first we need at least very basic understandig of what are kernel and root file system and are their roles. Kernel is central part of the operating system, simply put, it mediates communication between operating system and physical hardware. Root file system contains all the files, libraries and practically all utilities necessary for operating system to work properly. In shared kernel virtualization every virtual machine has its own root file system but uses host operating system's kernel which they share among each other. Kernel has the ability to dynamically switch the current root file system to a different one without the need to reboot the whole system (technique known as 'chroot'). In this case, virtual machines are reffered to as 'containers' due to the fact that they are not completely separated but share host machine's kernel. Shared kernel means very little overhead compared to other virtualization concepts and thus high performance. Despite its light-weight nature, this concept also supports advanced features such as isolating memory space, regulating memory, network, CPU and I/O usage, some implementations even allow live migration. Biggest advantage of container-virtualization is superior efficiency and very little overhead compared to other types of virtualization because it doesn;t have to emulate all the hardware. Interactions between software and hardware are handled by operating systems kernel inside container. Major disadvantage of this technique is that container's operating system must be compatible with kernel on which it runs (container operating system must be designed for type and version of kernel that is being shared). Further, container environments cannot execute some top-level actions, mount/dismount file systems and so on whereas fully virtualized solutio gives us fully independent environment in which isn't user restricted in any way.
+Well known solutions are Linux VServer, Jail for FreeBSD, Zone for Solaris, Virtuozzo for Windows, Rosetta for Mac OS and others.
+
+\item Other types of virtualization:
+\begin{enumerate}
+\item Network virtualization: main idea is to create multiple virtual sub-networks (channels) that run on single physical network and are idependent from one another. Each one of virtual networks can have different bandwidth related, security or other restrictions and we can regulate trafic on each channel independently.  Monitoring individual networks with their own purposes and settings is also easier and faster, it increases reliability and durability of network too as if one of virtual networks is for whatever reason overloaded or down other networks are not affected. Most modern hypervisors implement virtual networking in some form. Network virtualization can be further divided into two sub-categories:
+\begin{enumerate}
+
+\item Internal: can be used for communication between software and virtual machines or to mimic network to external devices. Internal network uses virtual network devices that act as physical devices and enables single system to appear as a network.
+
+\item External: used in Virtual local area networks (VLAN) and Virtual private networks (VPN).
+\end{enumerate}
+
+\item Application virtualization: this technique separates the application layer from the underlying operating system layer which means that application runs in 'encapsulated' state independently from operating system. Application is put into a capsule into which is then put copies of al shared resources that application would need to run as well as all DLLs (dynamicaly linked libraries), driver, registry entries and so on. In practical terms it means that application created for certain operating system can run on a different one, for example native Windows applications can be run under Linux distribution or vice-versa, we can isolate suspicious or malicious software and inspect it without the danger of infectiong whole system, run simultaneously applications that would otherwise conflict each other, easily deploy applications and so on. Some well known examples are Wine which is used to run Microsoft Windows applications on Linux, ThinApp from VMware, Xenocode from Code System Corporations and others.
+
+\item Desktop virtualization: similarly as application virtualization it separates desktop environment from underlying physical computer. Desktop virtualization functions on a client-server model. Clinet desktop environments are running on virtual machines stored on servers and client can access them via client device which can be standard PC or thin client. This technique is growing on popularity mainly because of cloud computing. It allows us to access desktop from any device or location (in practical terms it means that we can work in same environment from anywhere without the need to bring 'work computer'). By isong desktop virtalization we can use cheaper client desktop devices because far less processing power is required. Of course, businesses need to first invest into server hardware so it is capable of storing and streaming desired quantities of desktop environments but will save money in a long run by cheaper user devices. Desktop environments are stored on central server so they can be also centrally managed and controlled which increases security of whole system. Disadvantage is that streaming desktop environments to plenty of end users is very demanding on network infrastracture. Desktop virtualization is mostly used by companies with a lot of off-shore employees.
+
+\item Storage virtualization: multiple separated hardware storage devices (that can be on different physical locations) abstracted into single pool of virtualized storage space that act as single sotrage device localy connected to the computer. Storage virtualization is used to ignore differences between individual storage devices and simplify using them. It is ofthen used for back-ups and archives and can be implemented with software or hybrid software-hardware solutions. Common examples are:
+\begin{enumerate}
+\item NAS: (Network-attached storage) is server dedicated to managing storage space. NAS devices have to be part of LAN and they can be added or removed dynamically meaning that after adding/removing device whole system doesn't need to be restarted but it continues functioning as if nothing have happened.
+\item SAN: (Sotrage area network) is basically a sub-network containing only storage devices. Storage space managet by SAN can be accessed by any server in LAN or WAN. When new storage devices is added it is immediately available to any server in network. In practice SAN enables anyone within network have access to network's whole storage space.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+
+\chapter{Virtualization software}
+In this chapter we will go through well known virtualization implementations divided to virtualization architectures.
+\begin{enumerate}
+\item Hardware virtualization
+\item 
+\end{enumerate}
+
+\section{Xen Project}
+Is well known type I hypervisor which means it runs directly on the host hardware. Xen Project is widely used as base for a number of open-source and commercial applications providing server virtualization, desktop virtualization, infrastracture as a service (IaaS), security aplications, embedded and hardware appliances and so on. Worlds bigest clouds today also run on Xen Project hypervisor base. All operating systems based on recent Linux kernel are capable of running Xen project and have packages containing hypervisor and basic tools.
+
+Xen is managed by a special priviledged virtula machine called Domain-0 or Dom0, priviledged means that it has device drivers and direct access to physical hardware. Domain-0 is a specially modified Linux kernel which is started by Xen hypervisor during initial stage of system start-up(OPISANE). Its role is to manage and control every other unpriviledged virtual machines (also called Domain-Us or DomU) that are running on the hypervisor. Domain-0 exposes control interface to the user and Xen project hypervisor cannot run without it. Through user interface in form of toolstack (or control stack) user can create, destroy or configure virtual machines, toolstack can by driven by command line console, graphical interface or cloud orchestration stack (for example OpenStack or CloudStack). [OBRAZOK]
+
+Originally Xen only supported Paravirtualization (see link Paravirtualization). Support for Domain-U running in paravirtualized state is now included within upstream Linux kernel but support fo Domain-0 is not which means that it is easier to use Linux machine as a guest than as a host. Nowadays Xen supportste new virtualization processor extension added to the x86 architecture(aj tu), this is known as Xen as Hardware Virtual Machine (HVM). HVM allows unmodified guest operating system to be virtualized on Xen hypervisor(aj tu) but it requires a special processors that support hardware virtualizaton extensions (Intel VT, AMD-V). These extencions allow for many of the priviledged kernel instructions to be handled directly by hardware using 'trap-and-emulate' techique, these were previously in paravirtualization converted to hypercalls.
+
+Trap-and-emulate: Operating systems running on top of the hypervisor are run as user-level processes. They are not running at the same level of privilege as a Linux operating system that is running on bare metal. But if the operating system code is unchanged, it doesn’t know that it does not have the privilege for doing certain things that it would do normally on bare metal hardware. In other words, when the operating system executes some privileged instructions, meaning they have to be in a privileged mode or kernel mode to run on bare metal in order to execute those instructions, those instructions will create a trap that goes into the hypervisor and the hypervisor will then emulate the intended functionality of the operating system. This is what is called the trap and emulate strategy. That is in some architectures, some privilege instructions may fail silently which means that you would think that the instruction actually succeeded, but it did not, and you may never know about it.
+
+Here are key features of Xen project hypervisor:
+\begin{enumerate}
+\item Minimal footprint: around 1 MB. Xen uses microkernel design which minimalizes memory footprint and interface to the guest and is also more robust and secure than other types of hypervizors.
+\item Driver isolation: hypervisor allows for the main device driver to run inside of a virtual machine. This is useful because if driver crashes it does not affect any other part of a system and virtual machine in which it runs can be rebooted and the driver restarted.
+\item Many operating systems can be used: although most installaions use Linux as the domain-0 many other operating systems can by used such as NetBSD, OpenSolaris and others.
+\end{enumerate}
+
+
+\section{KVM}
+[obrazok] KVM - Kernel-based Virtual Machine lesser known virtualization solution then Xen Project. It has host and guest support in an upstream Linux kernel released in early 2007. KVM is kernel module which when loaded turns host kernel into type I hypervisor. To run it requires Intel VT or AMD-V extensions and enabled on a host system. By converting host machine kernel into hypervisor KVM can take advantage of already implemented components instead of implementing them from the scratch, for example it uses memory manager, scheduler, I/O stack, device drivers, security manager, network manager and others. In comparason to Xen architecture which requires maintenance of both Xen hypervisor and Domain-0, KVM is loadable kernel module and is easier to patch and upgrade. From host's perspective, every virtual machine is standard linux process and is treated as such.
+
+Features:
+\begin{enumerate}
+\item Security: to improve security of virtual machines even further, KVM uses these approaches:
+\begin{enumerate}
+\item Security-enhanced Linux (SELinux) which establishes security boundaries around virtual machines.
+\item Secure virtualization (sVirt) which boosts SELinux's capabilities and allow Mandatory Access Control (MAC) security to be applied.
+\end{enumerate}
+\item Live migration: KVM supports live migration(see live migration) of virtual machines.
+\item Scheduling and resource control: every virtual machine is seen as a standard process which means that Linux scheduler allow full control over resources allocated by it and guarantees quality of service. KVM offers completely fair scheduler, control groups, network name spaces and real-time extensions.
+\item Storage: KVM supports shared file system which means that virtual machines can be shared by multiple hosts. Disk images support thin provisioning. Thin provisioning means that memory is allocated for virtual machine up to provisioned amount only when it needs it (Xen Project doesn't support thin provisioning, when vitual machine is provisioned for example 2 GB of RAM, after it starts, 2 GM of RAM are immediately allocated and can't be used elsewhere). This can lead to 'memory overcommit', state where more memory is assigned to virtual machines than is available on the system. KVM deals with memory overcommit in various ways:
+\begin{enumerate}
+\item Host can choose memory pages and write them to the disk. This leads to redcing performance as when virtual machine wants to access memory, host needs to read it from the disk which is significantly slower than RAM.
+\item With VirtIO drivers, hot can request virtual machines to shrink their cache memory in order to free as much space as needed. This is called 'ballooning' and requires cooperation among host and guests.
+\item KSM (Kernel Samepage Merging) is a process of merging identical memory pages from multiple virtual machines into a snigle read-only memory chunk while removing all duplicates of it. If any guest needs to write into one of merged pages, host creates writable copy which guest can modify.
+\end{enumerate}
+\item Lower latency: kernel divides processes with long computing times into smaller pieces which are scheduled and processes acordingly.
+\end{enumerate}
+
+
+\section{VirtualBox}
+VirtualBox is a type II hypervisor currently being developed by Oracle Corporation. Oracle VM VirtualBox runs on Microsoft Windows, Mac OS X, Linux and Oracle Solaris systems and supports wide range of guest operating systems. With thousands of downloads each day it is the most popular cross-platform open-source virtualization solution.
+
+Here are some of VirtualBox's main features:
+\begin{enumerate}
+\item Portability: VirtualBox has to run on an host operating system but its functionallity is to a very large degree identical on all of them, same files and image formats are used. This allow us to create a virtual machine on one host and run it on another host with different operating system. Virtual machines can be imported and exported using an Open Virtualization Format (OVP) with which we can import virtual machines created with different virtualization software.
+\item No hardware virtualization needed: VirtualBox doesn't require a processor support like Intel VT or AMD-V so it can be run even on older hardware not possessing those features.
+\item Guest additions: guest additions are software packages that can be installed inside of virtual machines to improve their performance or improve their integration with host system. They consist of device drivers and system applications, for example on of guest additions is 'Shared folders addition' which provides an easy way to exchange files between host and guest. We can create a folder on host system and share it to the guest.
+\item Hardware support:
+\begin{enumerate}
+\item Guest multiprocessing: VirtualBox can present up to 32 virtual CPUs to every virtual machine regardless of how many CPUs are present in host system.
+\item USB device support: virtaul USB controller allows to connect USB device to virtual machine without a need to install device-specific drivers to the host machine.
+\item ACPI support: Advanced Configuration and Power Interface is an open standard that operating systems can use to configure hardware components and to perform power management and status monitoring.
+\item Built-in iSCSI support: this allows us to connect from virtual machine directly to the iSCSI storage server without going through host system which
+highly reduces overhead.
+\item PXE support: Preboot eXecution Environment (PXE) in short is a way to boot operating system from a server on a virtual machine. Advantages are obvious, we don't need to have a operating system on a hard drive connected to the virtual machine, we just need to connect to server and boot it from there.
+\end{enumerate}
+\item Snapshots: we can create snapshots of the current state of a virtual machine and store it. When needed we can reverse current state of VM and load configuration from any snapchot. This way we can periodicly save backups for quick recovery in case of emergency.
+\item Grouping: multiple virtual machines can be collected into a group. We can than perform same operations over the group as we can over individual virtual machines (for example start, pause, shutdown, close, ...). By using groups we can manage multiple virtual machines with same configuration, purpose, etc at the same time as well as we can still manage individual VMs that are part of a group. One virtual machine can be inside multiple groups and groups can be nested into hierarchy.
+\item Remote machine display: VRDE - VirtualBox Remote Desktop Extension allows for a high-performance remote access to any running virtual machine.
+\end{enumerate}
+
+
+\section{UML}
+[obrazok] User Mode Linux (UML) allows us to run Linux kernels as user mode processes under a host Linux kernel thus allowing us to run multiple independent virtual machines. Main difference between UML and other virtualization technologies is that UML is more of a virtual OS than virtual machine. Other solutiuons like VMWare are real virtual machines in that they emulate physical hardware and any operating system that runs on physical platform can also run on emulated one. Advantage of this solution is that guest OS is host OS-independent, meaning that any OS able to run on hardware is able to run on top of VMWare. On the other hand, UML is basicaly just Linux kernel modified to run in user space, UML guest can run only on Linux platform which is serious limitation but being more of virtual OS has other advantages. Solutions such as Xen, BSD jail or Solaris zones are integrated into host operating system but UML runs as a process. This has some performance costs but gives UML host OS version independence. UML has many real-world uses but it's most popular use-case is kernel development and debugging as it was its original purpose, for that can be used normal process-level tools like gdb, gporf (profiling) or gcov (coverage testing). Another popular uses are driver development, safe kernel testing and education due its simpler nature than other solutions.
+
+
+\section{Docker Container}
+Docker container is a operating system level technology established  and promoted by Docker Inc. Docker container is operated by command-line tool called the Docker client which can run on the container host or through a remote interface connected to the container host. The main task of a Docker client is to pull images of containers from registry. Registry can be public or private and it is a repository of sources for 'ready to run' virtual workloads. Main public registry is Docker Hub which is operated by Docker Inc. but nowadays there are planty of others. We can pull a container image using Docker daemon and from that image we can build working model for that container. A container is launched by running an image. An image is an executable package that includes everything needed to run an application–the code, a runtime, libraries, environment variables, and configuration files. Images that are mostly the same, except for the last few steps, can reduce disk usage by sharing parent layers. A container is a runtime instance of an image–what the image becomes in memory when executed (that is, an image with state, or a user process). Image can also include directives for daemon to preload the container with other components prior to running or directives for the loca command line after the local container image is build. The model of images and registries created standardized ways to build, load and manage containerized applications. Docker has been very successful in building a large open-source community which has contributed to the rising number of images in public and private repositories which attracts even more developers and enlarges open-source community. Docker image is defined by text-based Dockerfile which specifies a vase operating system image to start from, commands to prepare/build the image and commands to call whne image is 'run'. (Docker runs multiple containerized workloads on the same OS. By using containers, only the programs and their immediate dependencies are hosted by containers, with critical resources provided by the underlying operating system.  This means that containerized systems can load applications faster and consume less resources.). Docker is available on many different operatin systems including most modern Linux distributions, Mac OSX and Windows.
+
+OCI: The Open Container Initiative (OCI) is a lightweight, open governance structure (project), formed under the auspices of the Linux Foundation, for the express purpose of creating open industry standards around container formats and runtime. The OCI was launched on June 22nd 2015 by Docker, CoreOS and other leaders in the container industry [citovane]. The OCI currently contains two specifications: the Runtime Specification (runtime-spec) and the Image Specification (image-spec). The Runtime Specification outlines how to run a “filesystem bundle” that is unpacked on disk. [tiez]
+
+Docker Engine is a client-server application with these major components:
+\begin{enumerate}
+\item A server which is a type of long-running program called a daemon process
+\item A REST API which specifies interfaces that programs can use to talk to the daemon
+\item A command line interface (CLI) client
+\end{enumerate}
+Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API.
+A Docker registry stores Docker images. Docker Hub and Docker Cloud are public registries and Docker is configured to look for images on Docker Hub by default. We can run our own private register. We can also buy or sell Docker images or distribute them for free in Docker store.
+
+Docker uses a technology called namespaces. When we run a container, Docker creates a set of namespaces for it. These namespaces provide a layer of isolation. Each aspect of a container runs in a separate namespace and its access is limited to that namespace.
+On Linux, Docker Engine uses these namespaces:
+\begin{enumerate}
+\item pid: process isolation
+\item net: managing network interfaces
+\item ipc: managing access to IPC resources
+\item mnt: managing filesystem mount points
+\item uts: isolationg kernel and version identifiers
+\end{enumerate}
+
+
+\chapter{Nikdy to nebude naprosto dokonalé}
+Když jsme už napsali vše, o~čem jsme přemýšleli, uděláme si den nebo dva dny volna a~pak si přečteme sami rukopis znovu. Uděláme ještě poslední úpravy a~skončíme. Jsme si vědomi toho, že vždy zůstane něco nedokončeno, vždy existuje lepší způsob, jak něco vysvětlit, ale každá etapa úprav musí být konečná.
+
+
+\chapter{Typografické a~jazykové zásady}
+Při tisku odborného textu typu {\it technická zpráva} (anglicky {\it technical report}), ke kterému patří například i~text kvalifikačních prací, se často volí formát A4 a~často se tiskne pouze po~jedné straně papíru. V~takovém případě volte levý okraj všech stránek o~něco větší než pravý -- v~tomto místě budou papíry svázány a~technologie vazby si tento požadavek vynucuje. Při vazbě s~pevným hřbetem by se levý okraj měl dělat o~něco širší pro tlusté svazky, protože se stránky budou hůře rozevírat a~levý okraj se tak bude oku méně odhalovat.
+
+Horní a~spodní okraj volte stejně veliký, případně potištěnou část posuňte mírně nahoru (horní okraj menší než dolní). Počítejte s~tím, že při vazbě budou okraje mírně oříznuty.
+
+Pro sazbu na stránku formátu A4 je vhodné používat pro základní text písmo stupně (velikosti) 11 bodů. Volte šířku sazby 15 až 16 centimetrů a~výšku 22 až 23 centimetrů (včetně případných hlaviček a~patiček). Proklad mezi řádky se volí 120 procent stupně použitého základního písma, což je optimální hodnota pro rychlost čtení souvislého textu. V~případě použití systému LaTeX ponecháme implicitní nastavení. Při psaní kvalifikační práce se řiďte příslušnými závaznými požadavky.
+
+Stupeň písma u~nadpisů různé úrovně volíme podle standardních typografických pravidel. 
+Pro všechny uvedené druhy nadpisů se obvykle používá polotučné nebo tučné písmo (jednotně buď všude polotučné nebo všude tučné). Proklad se volí tak, aby se následující text běžných odstavců sázel pokud možno na {\it pevný rejstřík}, to znamená jakoby na linky s~předem definovanou a~pevnou roztečí.
+
+Uspořádání jednotlivých částí textu musí být přehledné a~logické. Je třeba odlišit názvy kapitol a~podkapitol -- píšeme je malými písmeny kromě velkých začátečních písmen. U~jednotlivých odstavců textu odsazujeme první řádek odstavce asi o~jeden až dva čtverčíky (vždy o~stejnou, předem zvolenou hodnotu), tedy přibližně o~dvě šířky velkého písmene M základního textu. Poslední řádek předchozího odstavce a~první řádek následujícího odstavce se v~takovém případě neoddělují svislou mezerou. Proklad mezi těmito řádky je stejný jako proklad mezi řádky uvnitř odstavce.
+
+Při vkládání obrázků volte jejich rozměry tak, aby nepřesáhly oblast, do které se tiskne text (tj. okraje textu ze všech stran). Pro velké obrázky vyčleňte samostatnou stránku. Obrázky nebo tabulky o~rozměrech větších než A4 umístěte do písemné zprávy formou skládanky všité do přílohy nebo vložené do záložek na zadní desce.
+
+Obrázky i~tabulky musí být pořadově očíslovány. Číslování se volí buď průběžné v~rámci celého textu, nebo -- což bývá praktičtější -- průběžné v~rámci kapitoly. V~druhém případě se číslo tabulky nebo obrázku skládá z~čísla kapitoly a~čísla obrázku/tabulky v~rámci kapitoly -- čísla jsou oddělena tečkou. Čísla podkapitol nemají na číslování obrázků a~tabulek žádný vliv.
+
+Tabulky a~obrázky používají své vlastní, nezávislé číselné řady. Z toho vyplývá, že v~odkazech uvnitř textu musíme kromě čísla udat i~informaci o~tom, zda se jedná o~obrázek či tabulku (například \uv{\ldots {\it viz tabulka 2.7} \ldots}). Dodržování této zásady je ostatně velmi přirozené.
+
+Pro odkazy na stránky, na čísla kapitol a~podkapitol, na čísla obrázků a~tabulek a~v~dalších podobných příkladech využíváme speciálních prostředků DTP programu, které zajistí vygenerování správného čísla i~v~případě, že se text posune díky změnám samotného textu nebo díky úpravě parametrů sazby. Příkladem takového prostředku v~systému LaTeX je odkaz na číslo odpovídající umístění značky v~textu, například návěští ($\backslash${\tt ref\{navesti\}} -- podle umístění návěští se bude jednat o~číslo kapitoly, podkapitoly, obrázku, tabulky nebo podobného číslovaného prvku), na stránku, která obsahuje danou značku ($\backslash${\tt pageref\{navesti\}}), nebo na literární odkaz ($\backslash${\tt cite\{identifikator\}}).
+
+Rovnice, na které se budeme v~textu odvolávat, opatříme pořadovými čísly při pravém okraji příslušného řádku. Tato pořadová čísla se píší v~kulatých závorkách. Číslování rovnic může být průběžné v~textu nebo v~jednotlivých kapitolách.
+
+Jste-li na pochybách při sazbě matematického textu, snažte se dodržet způsob sazby definovaný systémem LaTeX. Obsahuje-li vaše práce velké množství matematických formulí, doporučujeme dát přednost použití systému LaTeX.
+
+Mezeru neděláme tam, kde se spojují číslice s~písmeny v~jedno slovo nebo v~jeden znak -- například {\it 25krát}.
+
+Členicí (interpunkční) znaménka tečka, čárka, středník, dvojtečka, otazník a~vykřičník, jakož i~uzavírací závorky a~uvozovky se přimykají k~předcházejícímu slovu bez mezery. Mezera se dělá až za nimi. To se ovšem netýká desetinné čárky (nebo desetinné tečky). Otevírací závorka a~přední uvozovky se přimykají k~následujícímu slovu a~mezera se vynechává před nimi -- (takto) a~\uv{takto}.
+
+Pro spojovací a~rozdělovací čárku a~pomlčku nepoužíváme stejný znak. Pro pomlčku je vyhrazen jiný znak (delší). V~systému TeX (LaTeX) se spojovací čárka zapisuje jako jeden znak \uv{pomlčka} (například \uv{Brno-město}), pro sázení textu ve smyslu intervalu nebo dvojic, soupeřů a~podobně se ve zdrojovém textu používá dvojice znaků \uv{pomlčka} (například \uv{zápas Sparta -- Slavie}; \uv{cena 23--25 korun}), pro výrazné oddělení části věty, pro výrazné oddělení vložené věty, pro vyjádření nevyslovené myšlenky a~v~dalších situacích (viz Pravidla českého pravopisu) se používá nejdelší typ pomlčky, která se ve zdrojovém textu zapisuje jako trojice znaků \uv{pomlčka} (například \uv{Další pojem --- jakkoliv se může zdát nevýznamný --- bude neformálně definován v~následujícím odstavci.}). Při sazbě matematického mínus se při sazbě používá rovněž odlišný znak. V~systému TeX je ve zdrojovém textu zapsán jako normální mínus (tj. znak \uv{pomlčka}). Sazba v~matematickém prostředí, kdy se vzoreček uzavírá mezi dolary, zajistí vygenerování správného výstupu.
+
+Lomítko se píše bez mezer. Například školní rok 2008/2009.
+
+Pravidla pro psaní zkratek jsou uvedena v~Pravidlech českého pravopisu \cite{Pravidla}. I~z~jiných důvodů je vhodné, abyste tuto knihu měli po ruce. 
+
+
+\section{Co to je normovaná stránka?}
+Pojem {\it normovaná stránka} se vztahuje k~posuzování objemu práce, nikoliv k~počtu vytištěných listů. Z historického hlediska jde o~počet stránek rukopisu, který se psal psacím strojem na speciální předtištěné formuláře při dodržení průměrné délky řádku 60 znaků a~při 30 řádcích na stránku rukopisu. Vzhledem k~zápisu korekturních značek se používalo řádkování 2 (ob jeden řádek). Tyto údaje (počet znaků na řádek, počet řádků a~proklad mezi nimi) se nijak nevztahují ke konečnému vytištěnému výsledku. Používají se pouze pro posouzení rozsahu. Jednou normovanou stránkou se tedy rozumí 60*30 = 1800 znaků. Obrázky zařazené do textu se započítávají do rozsahu písemné práce odhadem jako množství textu, které by ve výsledném dokumentu potisklo stejně velkou plochu.
+
+Orientační rozsah práce v~normostranách lze v~programu Microsoft Word zjistit pomocí funkce {\it Počet slov} v~menu {\it Nástroje}, když hodnotu {\it Znaky (včetně mezer)} vydělíte konstantou 1800. Do rozsahu práce se započítává pouze text uvedený v~jádru práce. Části jako abstrakt, klíčová slova, prohlášení, obsah, literatura nebo přílohy se do rozsahu práce nepočítají. Je proto nutné nejdříve označit jádro práce a~teprve pak si nechat spočítat počet znaků. Přibližný rozsah obrázků odhadnete ručně. Podobně lze postupovat i~při použití OpenOffice. Při použití systému LaTeX pro sazbu je situace trochu složitější. Pro hrubý odhad počtu normostran lze využít součet velikostí zdrojových souborů práce podělený konstantou cca 2000 (normálně bychom dělili konstantou 1800, jenže ve zdrojových souborech jsou i~vyznačovací příkazy, které se do rozsahu nepočítají). Pro přesnější odhad lze pak vyextrahovat holý text z~PDF (např. metodou cut-and-paste nebo {\it Save as Text\ldots}) a~jeho velikost podělit konstantou 1800. 
+
+
+\chapter{Závěr}
+Závěrečná kapitola obsahuje zhodnocení dosažených výsledků se zvlášť vyznačeným vlastním přínosem studenta. Povinně se zde objeví i zhodnocení z pohledu dalšího vývoje projektu, student uvede náměty vycházející ze zkušeností s řešeným projektem a uvede rovněž návaznosti na právě dokončené projekty.
+
+%=========================================================================
