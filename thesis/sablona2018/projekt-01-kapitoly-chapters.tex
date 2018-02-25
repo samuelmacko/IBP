@@ -13,11 +13,11 @@ In first chapter I will explain what virtualiszation is and how it can be implem
 \section{Virtualization basics}
 In short, virtualization means emulation of hardware within a software platform. Although it may seem that virtuaization is the invention of last few years its concept was first brought up in 1960s. It was first implemented by IBM to split resources of their massive mainframe machines among multiple virtual machines that could work independently of each other and therefore use resources more efficiently.
 
-To furher explain basics of virtualization I would like to start by brief explanation of architecture of standard computers. First, we need hardware layer which contains processing unit, storage and other hardware devices, on top of this layer is operating system which abstracts functioning of hardware layer and offers application layer medium to communicate with HW layer. Operating system runs as privilaged software which means that is generally able to perform any operation supported by hardware, its role is to create interface which simplifyes or ingores implemnentation of components on lower levels of a hierarchy to make creating and using components on application level easier. On top of operating system is application layer which consists of user programs whis are less privileged and can generally perform only operations that are permitted to them by operating system. [tu moze byt obrazok: 3, na sebe naskladane obdlzdniky s napismi hardware, operating system a applications]
+To furher explain basics of virtualization I would like to start by brief explanation of architecture of standard computers. First, we need hardware layer which contains processing unit, storage and other hardware devices, on top of this layer is operating system which abstracts functioning of hardware layer and offers application layer medium to communicate with HW layer. Operating system runs as privilaged software which means that is generally able to perform any operation supported by hardware, its role is to create interface which simplifyes or ingores implemnentation of components on lower levels of a hierarchy to make creating and using components on application level easier. On top of operating system is application layer which consists of user programs whis are less privileged and can generally perform only operations that are permitted to them by operating system. [obrazok]
 
 Virtualization allows creating multiple entities of os and application layers on single hw layer. This is done by inserting additional layer of system software between operating system and lower layers. This virtualization layer is called hypervisor or VMM (virtual machine monitor) and there are two main types of it:
 \begin{itemize}
-	\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highes level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer throught operating system thus can utilize full potencial it. Some of them need special priviledged virtual machine called Domain-0 from which it can be managed and controlled. [pride dalsi obrazok popisujuci tuto strukturu]
+	\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highes level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer throught operating system thus can utilize full potencial it. Some of them need special priviledged virtual machine called Domain-0 from which it can be managed and controlled. [obrazok]
 
 	\item Type II hypervisor (or hosted hypervisor): can be either on same level as host operating system or on a level above. This means that hypervisor doesn't require specific drivers for I/O operations and allows running of virtual environment within alredy existing environment. [obrazok popisujuci strukturu]
 \end{itemized}
@@ -77,7 +77,7 @@ Virtualization technology is spreading rapidly and today there are several archi
 \item Paravirtualization: [k tomuto obrazok na hypercall] introduced in 1972 by IBM, this technique was implemented to increace performance of virtualized environmnet closer to non-virtualized. To use paravirtualization, kernel of the operating system needs to be modified, mainly it needs to have replaced any priviledged operation running only in ring 0 by so called 'hypercalls'. Hypercalls allow guest operating system to send system calls directly to he hypervisor without the need of hardware simulation. Virtual machine can therefore access some part of the hardware straight wihtout going throught virtualized hardware on top of hypervisor, which greatly increases performance of some operations. This only works for some parts of the hardware, for other parts, virtual machine still needs to access them via virtualized hardware. Paravirtualized virtual machine is 'aware' of the fact that it is being virtualized which gives it ability to use hypercalls. On the other hand, as mentioned above, in order to use this technique, operating system needs to be altered in a non-trivial way which typically limits its use to a Linux based operating systems because they allow such source code modifications.
 Paravirtualization was popularized by Xen hypervisor, today, most virtualization solutions use it as a norm (for example Microsoft HYper-V, Red Hat Xen, VMware's family and others).
 
-\item Operating system virtualization: [znazornujuci obrazok] (also known as shared kernel virtualization) introduces 'light-weight' virtualization. To understant this concept, first we need at least very basic understandig of what are kernel and root file system and are their roles. Kernel is central part of the operating system, simply put, it mediates communication between operating system and physical hardware. Root file system contains all the files, libraries and practically all utilities necessary for operating system to work properly. In shared kernel virtualization every virtual machine has its own root file system but uses host operating system's kernel which they share among each other. Kernel has the ability to dynamically switch the current root file system to a different one without the need to reboot the whole system (technique known as 'chroot'). In this case, virtual machines are reffered to as 'containers' due to the fact that they are not completely separated but share host machine's kernel. Shared kernel means very little overhead compared to other virtualization concepts and thus high performance. Despite its light-weight nature, this concept also supports advanced features such as isolating memory space, regulating memory, network, CPU and I/O usage, some implementations even allow live migration. Biggest advantage of container-virtualization is superior efficiency and very little overhead compared to other types of virtualization because it doesn;t have to emulate all the hardware. Interactions between software and hardware are handled by operating systems kernel inside container. Major disadvantage of this technique is that container's operating system must be compatible with kernel on which it runs (container operating system must be designed for type and version of kernel that is being shared). Further, container environments cannot execute some top-level actions, mount/dismount file systems and so on whereas fully virtualized solutio gives us fully independent environment in which isn't user restricted in any way.
+\item Operating system virtualization: [obrazok] (also known as shared kernel virtualization) introduces 'light-weight' virtualization. To understant this concept, first we need at least very basic understandig of what are kernel and root file system and are their roles. Kernel is central part of the operating system, simply put, it mediates communication between operating system and physical hardware. Root file system contains all the files, libraries and practically all utilities necessary for operating system to work properly. In shared kernel virtualization every virtual machine has its own root file system but uses host operating system's kernel which they share among each other. Kernel has the ability to dynamically switch the current root file system to a different one without the need to reboot the whole system (technique known as 'chroot'). In this case, virtual machines are reffered to as 'containers' due to the fact that they are not completely separated but share host machine's kernel. Shared kernel means very little overhead compared to other virtualization concepts and thus high performance. Despite its light-weight nature, this concept also supports advanced features such as isolating memory space, regulating memory, network, CPU and I/O usage, some implementations even allow live migration. Biggest advantage of container-virtualization is superior efficiency and very little overhead compared to other types of virtualization because it doesn;t have to emulate all the hardware. Interactions between software and hardware are handled by operating systems kernel inside container. Major disadvantage of this technique is that container's operating system must be compatible with kernel on which it runs (container operating system must be designed for type and version of kernel that is being shared). Further, container environments cannot execute some top-level actions, mount/dismount file systems and so on whereas fully virtualized solutio gives us fully independent environment in which isn't user restricted in any way.
 Well known solutions are Linux VServer, Jail for FreeBSD, Zone for Solaris, Virtuozzo for Windows, Rosetta for Mac OS and others.
 
 \item Other types of virtualization:
@@ -106,8 +106,12 @@ Well known solutions are Linux VServer, Jail for FreeBSD, Zone for Solaris, Virt
 \chapter{Virtualization software}
 In this chapter we will go through well known virtualization implementations divided to virtualization architectures.
 \begin{enumerate}
-\item Hardware virtualization
-\item 
+\item Xen Project
+\item KVM
+\item VirtualBox
+\item UML
+\item Docker Container
+\item Wine
 \end{enumerate}
 
 \section{Xen Project}
@@ -201,49 +205,37 @@ On Linux, Docker Engine uses these namespaces:
 \end{enumerate}
 
 
+\section{Wine}
+Wine - Wine Is Not an Emulator acronym means that Wine is not a virtual machine, it doeas not emulate physical hardware and we are not supposed to install Windows or any Windows driver on top of it. Different software programs are designed for different operating systems and are generaly not compatible with other operating systems, for example Windows programs can't run on Linux system because they use instructions that Linux system doesn't understand thus cannot interpret them, this is the main motivation for Wine. Wine is an implementation of Windows API and can be used as a library to port Windows applications to Unix, basicaly acting as a bridge between the two. It is a compatibility layer, everytime a Windows program tries to perform an action that Linux doesn't recognize, Wine will transalte it into one that it does. Wine can also recompile Windows program source code into format understandable for Linux. Even in recompiled form, Wine is still needed to run the program but there are many performance and other advantages to this process. Wine is an open source project.
+
+Features:
+Wine is constantly growing in the features it supports, here are some of them:
+\begin{enumerate}
+\item Support for running, Win64, Win32, Win16 and Dos programs.
+\item Optional use of external vendor DLLs.
+\item MacOS and Android graphics support.
+\item DirectX for games.
+\item Support for alternative input devices such as graphics tablets
+\item Winsock TCP/IP networking support.
+\item Advances Unicode and foreign language support.
+\item Fill featured Wine debugger and configuratable trace logging messages for easier troubleshooting.
+\end{enumerate}
+
+Executables:
+Wines main task is to run Windows executebles, here are supported types:
+\begin{enumerate}
+\item DOS executable: very old programs for MS-DOS.
+\item Windows NE executable: (NE - New Executable) They were the native processes run by Windows 2.x and 3.x.
+\item Windows PE executable: (PE - Portable Executable) Introduced by Windows 95 and became the standard format for all later Windows versions. Portable Executable means that format of the esxecutable is independent of the CPU, even if the code IS dependent of the CPU.
+\item Winelib executable: aplications written by using the Windows API but compiled as a Unix executable.
+\end{enumerate}
+
+Wine architecture is close to the Windows NT architecture but several subsystems are not implemented yet.
+[obrazky]
+
+
 \chapter{Nikdy to nebude naprosto dokonalé}
-Když jsme už napsali vše, o~čem jsme přemýšleli, uděláme si den nebo dva dny volna a~pak si přečteme sami rukopis znovu. Uděláme ještě poslední úpravy a~skončíme. Jsme si vědomi toho, že vždy zůstane něco nedokončeno, vždy existuje lepší způsob, jak něco vysvětlit, ale každá etapa úprav musí být konečná.
-
-
-\chapter{Typografické a~jazykové zásady}
-Při tisku odborného textu typu {\it technická zpráva} (anglicky {\it technical report}), ke kterému patří například i~text kvalifikačních prací, se často volí formát A4 a~často se tiskne pouze po~jedné straně papíru. V~takovém případě volte levý okraj všech stránek o~něco větší než pravý -- v~tomto místě budou papíry svázány a~technologie vazby si tento požadavek vynucuje. Při vazbě s~pevným hřbetem by se levý okraj měl dělat o~něco širší pro tlusté svazky, protože se stránky budou hůře rozevírat a~levý okraj se tak bude oku méně odhalovat.
-
-Horní a~spodní okraj volte stejně veliký, případně potištěnou část posuňte mírně nahoru (horní okraj menší než dolní). Počítejte s~tím, že při vazbě budou okraje mírně oříznuty.
-
-Pro sazbu na stránku formátu A4 je vhodné používat pro základní text písmo stupně (velikosti) 11 bodů. Volte šířku sazby 15 až 16 centimetrů a~výšku 22 až 23 centimetrů (včetně případných hlaviček a~patiček). Proklad mezi řádky se volí 120 procent stupně použitého základního písma, což je optimální hodnota pro rychlost čtení souvislého textu. V~případě použití systému LaTeX ponecháme implicitní nastavení. Při psaní kvalifikační práce se řiďte příslušnými závaznými požadavky.
-
-Stupeň písma u~nadpisů různé úrovně volíme podle standardních typografických pravidel. 
-Pro všechny uvedené druhy nadpisů se obvykle používá polotučné nebo tučné písmo (jednotně buď všude polotučné nebo všude tučné). Proklad se volí tak, aby se následující text běžných odstavců sázel pokud možno na {\it pevný rejstřík}, to znamená jakoby na linky s~předem definovanou a~pevnou roztečí.
-
-Uspořádání jednotlivých částí textu musí být přehledné a~logické. Je třeba odlišit názvy kapitol a~podkapitol -- píšeme je malými písmeny kromě velkých začátečních písmen. U~jednotlivých odstavců textu odsazujeme první řádek odstavce asi o~jeden až dva čtverčíky (vždy o~stejnou, předem zvolenou hodnotu), tedy přibližně o~dvě šířky velkého písmene M základního textu. Poslední řádek předchozího odstavce a~první řádek následujícího odstavce se v~takovém případě neoddělují svislou mezerou. Proklad mezi těmito řádky je stejný jako proklad mezi řádky uvnitř odstavce.
-
-Při vkládání obrázků volte jejich rozměry tak, aby nepřesáhly oblast, do které se tiskne text (tj. okraje textu ze všech stran). Pro velké obrázky vyčleňte samostatnou stránku. Obrázky nebo tabulky o~rozměrech větších než A4 umístěte do písemné zprávy formou skládanky všité do přílohy nebo vložené do záložek na zadní desce.
-
-Obrázky i~tabulky musí být pořadově očíslovány. Číslování se volí buď průběžné v~rámci celého textu, nebo -- což bývá praktičtější -- průběžné v~rámci kapitoly. V~druhém případě se číslo tabulky nebo obrázku skládá z~čísla kapitoly a~čísla obrázku/tabulky v~rámci kapitoly -- čísla jsou oddělena tečkou. Čísla podkapitol nemají na číslování obrázků a~tabulek žádný vliv.
-
-Tabulky a~obrázky používají své vlastní, nezávislé číselné řady. Z toho vyplývá, že v~odkazech uvnitř textu musíme kromě čísla udat i~informaci o~tom, zda se jedná o~obrázek či tabulku (například \uv{\ldots {\it viz tabulka 2.7} \ldots}). Dodržování této zásady je ostatně velmi přirozené.
-
-Pro odkazy na stránky, na čísla kapitol a~podkapitol, na čísla obrázků a~tabulek a~v~dalších podobných příkladech využíváme speciálních prostředků DTP programu, které zajistí vygenerování správného čísla i~v~případě, že se text posune díky změnám samotného textu nebo díky úpravě parametrů sazby. Příkladem takového prostředku v~systému LaTeX je odkaz na číslo odpovídající umístění značky v~textu, například návěští ($\backslash${\tt ref\{navesti\}} -- podle umístění návěští se bude jednat o~číslo kapitoly, podkapitoly, obrázku, tabulky nebo podobného číslovaného prvku), na stránku, která obsahuje danou značku ($\backslash${\tt pageref\{navesti\}}), nebo na literární odkaz ($\backslash${\tt cite\{identifikator\}}).
-
-Rovnice, na které se budeme v~textu odvolávat, opatříme pořadovými čísly při pravém okraji příslušného řádku. Tato pořadová čísla se píší v~kulatých závorkách. Číslování rovnic může být průběžné v~textu nebo v~jednotlivých kapitolách.
-
-Jste-li na pochybách při sazbě matematického textu, snažte se dodržet způsob sazby definovaný systémem LaTeX. Obsahuje-li vaše práce velké množství matematických formulí, doporučujeme dát přednost použití systému LaTeX.
-
-Mezeru neděláme tam, kde se spojují číslice s~písmeny v~jedno slovo nebo v~jeden znak -- například {\it 25krát}.
-
-Členicí (interpunkční) znaménka tečka, čárka, středník, dvojtečka, otazník a~vykřičník, jakož i~uzavírací závorky a~uvozovky se přimykají k~předcházejícímu slovu bez mezery. Mezera se dělá až za nimi. To se ovšem netýká desetinné čárky (nebo desetinné tečky). Otevírací závorka a~přední uvozovky se přimykají k~následujícímu slovu a~mezera se vynechává před nimi -- (takto) a~\uv{takto}.
-
-Pro spojovací a~rozdělovací čárku a~pomlčku nepoužíváme stejný znak. Pro pomlčku je vyhrazen jiný znak (delší). V~systému TeX (LaTeX) se spojovací čárka zapisuje jako jeden znak \uv{pomlčka} (například \uv{Brno-město}), pro sázení textu ve smyslu intervalu nebo dvojic, soupeřů a~podobně se ve zdrojovém textu používá dvojice znaků \uv{pomlčka} (například \uv{zápas Sparta -- Slavie}; \uv{cena 23--25 korun}), pro výrazné oddělení části věty, pro výrazné oddělení vložené věty, pro vyjádření nevyslovené myšlenky a~v~dalších situacích (viz Pravidla českého pravopisu) se používá nejdelší typ pomlčky, která se ve zdrojovém textu zapisuje jako trojice znaků \uv{pomlčka} (například \uv{Další pojem --- jakkoliv se může zdát nevýznamný --- bude neformálně definován v~následujícím odstavci.}). Při sazbě matematického mínus se při sazbě používá rovněž odlišný znak. V~systému TeX je ve zdrojovém textu zapsán jako normální mínus (tj. znak \uv{pomlčka}). Sazba v~matematickém prostředí, kdy se vzoreček uzavírá mezi dolary, zajistí vygenerování správného výstupu.
-
-Lomítko se píše bez mezer. Například školní rok 2008/2009.
-
-Pravidla pro psaní zkratek jsou uvedena v~Pravidlech českého pravopisu \cite{Pravidla}. I~z~jiných důvodů je vhodné, abyste tuto knihu měli po ruce. 
-
-
-\section{Co to je normovaná stránka?}
-Pojem {\it normovaná stránka} se vztahuje k~posuzování objemu práce, nikoliv k~počtu vytištěných listů. Z historického hlediska jde o~počet stránek rukopisu, který se psal psacím strojem na speciální předtištěné formuláře při dodržení průměrné délky řádku 60 znaků a~při 30 řádcích na stránku rukopisu. Vzhledem k~zápisu korekturních značek se používalo řádkování 2 (ob jeden řádek). Tyto údaje (počet znaků na řádek, počet řádků a~proklad mezi nimi) se nijak nevztahují ke konečnému vytištěnému výsledku. Používají se pouze pro posouzení rozsahu. Jednou normovanou stránkou se tedy rozumí 60*30 = 1800 znaků. Obrázky zařazené do textu se započítávají do rozsahu písemné práce odhadem jako množství textu, které by ve výsledném dokumentu potisklo stejně velkou plochu.
-
-Orientační rozsah práce v~normostranách lze v~programu Microsoft Word zjistit pomocí funkce {\it Počet slov} v~menu {\it Nástroje}, když hodnotu {\it Znaky (včetně mezer)} vydělíte konstantou 1800. Do rozsahu práce se započítává pouze text uvedený v~jádru práce. Části jako abstrakt, klíčová slova, prohlášení, obsah, literatura nebo přílohy se do rozsahu práce nepočítají. Je proto nutné nejdříve označit jádro práce a~teprve pak si nechat spočítat počet znaků. Přibližný rozsah obrázků odhadnete ručně. Podobně lze postupovat i~při použití OpenOffice. Při použití systému LaTeX pro sazbu je situace trochu složitější. Pro hrubý odhad počtu normostran lze využít součet velikostí zdrojových souborů práce podělený konstantou cca 2000 (normálně bychom dělili konstantou 1800, jenže ve zdrojových souborech jsou i~vyznačovací příkazy, které se do rozsahu nepočítají). Pro přesnější odhad lze pak vyextrahovat holý text z~PDF (např. metodou cut-and-paste nebo {\it Save as Text\ldots}) a~jeho velikost podělit konstantou 1800. 
+asdf
 
 
 \chapter{Závěr}

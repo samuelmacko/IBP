@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2017.11.15)  24 FEB 2018 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2017.11.15)  25 FEB 2018 23:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1444,8 +1444,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.21 
-      [2
+l.22 	\item T
+             ype II hypervisor (or hosted hypervisor): can be either on same...
+[2
 
 ]
 
@@ -1470,57 +1471,41 @@ l.35
 Kapitola 2.
 [9
 
-] [10] [11] [12] [13] [14]
+] [10] [11] [12] [13] [14] [15]
 Kapitola 3.
-[15
-
-]
-Kapitola 4.
 [16
 
 ]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 226.
-
- (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-
-LaTeX Warning: Citation `Pravidla' on page 17 undefined on input line 240.
-
-[17] [18]
-Kapitola 5.
+Kapitola 4.
 )
 No file projekt.bbl.
 \c@ttl@toc@chapters=\count305
-(./projekt-30-prilohy-appendices.tex [19
+(./projekt-30-prilohy-appendices.tex [17
 
 ]
 P\IeC {\v r}\IeC {\'\i }loha A.
-[20
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 21.
+(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [18
 
-] [21]
+] [19]
 
-LaTeX Warning: Citation `fitWeb' on page 22 undefined on input line 85.
+LaTeX Warning: Citation `fitWeb' on page 20 undefined on input line 85.
 
-[22])
+[20])
 \tf@ptc=\write5
 \openout5 = `projekt.ptc'.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 304.
- [23]
+ [21]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 304.
  (./projekt.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 304.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 304.
+Package rerunfilecheck Info: File `projekt.out' has not changed.
+(rerunfilecheck)             Checksum: D4B4A4A2074BF7AB86780584FD78F638;1928.
 
-
-Package rerunfilecheck Warning: File `projekt.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `projekt.out':
-(rerunfilecheck)             Before: E423679B08E50A8F162305EDEF2BF3E4;2135
-(rerunfilecheck)             After:  60130FC09DB21F2268640D2914D946AD;2273.
 
 LaTeX Warning: There were undefined references.
 
@@ -1529,10 +1514,10 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 22112 strings out of 493030
- 358961 string characters out of 6136259
- 429304 words of memory out of 5000000
- 25216 multiletter control sequences out of 15000+600000
+ 22123 strings out of 493030
+ 359027 string characters out of 6136259
+ 425304 words of memory out of 5000000
+ 25214 multiletter control sequences out of 15000+600000
  121183 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,8n,44p,10404b,532s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1542,19 +1527,18 @@ ensans-03.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/opensans-
 02.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/opensans-04.enc}
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/opensans-01.enc}</usr/s
 hare/texlive/texmf-dist/fonts/type1/public/opensans/OpenSans-Bold.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/font
-s/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb
-></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/sh
-are/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/l
-m/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf
-/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt1
-0.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
-Output written on projekt.pdf (26 pages, 610375 bytes).
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx
+12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/font
+s/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pu
+blic/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share
+/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm
+/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
+Output written on projekt.pdf (24 pages, 588203 bytes).
 PDF statistics:
- 413 PDF objects out of 1000 (max. 8388607)
- 351 compressed objects within 4 object streams
- 126 named destinations out of 1000 (max. 500000)
+ 418 PDF objects out of 1000 (max. 8388607)
+ 359 compressed objects within 4 object streams
+ 139 named destinations out of 1000 (max. 500000)
  132 words of extra memory for PDF output out of 10000 (max. 10000000)
 
