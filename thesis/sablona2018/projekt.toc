@@ -11,8 +11,14 @@
 \contentsline {section}{\numberline {2.4}UML}{12}{section.2.4}
 \contentsline {section}{\numberline {2.5}Docker Container}{13}{section.2.5}
 \contentsline {section}{\numberline {2.6}Wine}{14}{section.2.6}
-\contentsline {chapter}{\numberline {3}Nikdy to nebude naprosto dokonal\IeC {\'e}}{16}{chapter.3}
-\contentsline {chapter}{\numberline {4}Z\IeC {\'a}v\IeC {\v e}r}{17}{chapter.4}
-\contentsline {chapter}{\numberline {A}Jak pracovat s touto \IeC {\v s}ablonou}{18}{appendix.A}
-\contentsline {paragraph}{Pozor na \IeC {\v c}\IeC {\'\i }slov\IeC {\'a}n\IeC {\'\i } str\IeC {\'a}nek!}{19}{section*.3}
+\contentsline {chapter}{\numberline {3}Products for virtualization}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}VMware}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2}Citrix}{18}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}XenServer}{18}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}XenDesktop}{18}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}XenApp}{19}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Oracle}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Oracle VM}{19}{subsection.3.3.1}
+\contentsline {chapter}{\numberline {A}Jak pracovat s touto \IeC {\v s}ablonou}{21}{appendix.A}
+\contentsline {paragraph}{Pozor na \IeC {\v c}\IeC {\'\i }slov\IeC {\'a}n\IeC {\'\i } str\IeC {\'a}nek!}{22}{section*.3}
 \contentsfinish 

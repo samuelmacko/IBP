@@ -234,11 +234,70 @@ Wine architecture is close to the Windows NT architecture but several subsystems
 [obrazky]
 
 
-\chapter{Nikdy to nebude naprosto dokonalé}
-asdf
+\chapter{Products for virtualization}
+
+Even though virtualization technology was introduced more than 20 years ago it experienced a big boom only in past few years. There are now many companies developing some sort of virtualization technology and offering different productsto. This is great for customers which can choose from wide variety of virtualization tools depending on type/price/scale and so on. Every year more and more companies decide to virtualize their servers for reasons we look through in chapter 1(?). In this chapter we will look at biggest or fastest growing virtualization companies today and present som of their products
+
+\begin{enumerate}
+\item VMware
+\item Citrix
+\item Oracle
+\end{enumerate}
+
+\section{VMware}
+
+Products:
+\begin{enumerate}
+\item VMware Workstation: Is basically industry standard for desktop virtualization - it is a hosted hypervisor. Workstation runs on Windows or Linux and can also run virtual machines with Windows or Linux operating system. Initially launched in 1999 is one of the longest running modern day virtualization applications. VMware Workstation Pro can save the state of a virtual machine as a snapshot which can later be restored, effectively returning the virtual machine to the saved state. It can also group multiple virtual machines into an inventory folder with which we can control (power on/off) all the virtual machines inside it at once.
+Key features:
+\begin{enumerate}
+\item High-performance 3d graphics: Workstation supports DirectX 10 and OpenGL 3.3 to run the most demanding 3D applications with near-native performance in Windovs virtual machines.
+\item Massive virtual machines: with Workstation we can create virtual machines up to 16 CPUs, 8 TB virtual disks and 64 GB of memory to run high-performance demanding desktop and server applications in virtualized environments. To improve graphics performance we can allocate  up to 2 GB of available host video memory.
+\item High resolution display support: Workstation supports high-resolution display for desktops and also multiple displays.
+\item Restricted access to virtual machines: virtual machine can be encrypted and protected by password.
+\item Cross compatibility: we can create virtual machines that can run across the VMware product portfolio or even import VMs from another vendors.
+\end{enumerate}
+\item VMware Fusion Pro: VMware Workstation Pro for Mac operating systems.
+\item Workstation Player: is 'lighter' verion of Workstaion. It runs on same core as Workstation Pro and vSphere but delivers lesser features. On the other hand it is free of charge for personal non-cmmercial use. Wokrstation player can still create and run virtual machine, but only one at a time instead of multiple virtual machines simultaneously. It aslo cannor create or manage encrypted VMs and so on. Workstation Pros is great for 'feeling up' virtualization before investing into full blown solutions or for simple personal use.
+\item VMware vSphere: serves as a complete platform for implementing and managing virtual machine infrastructure on large scale. vSphere consists of two core components: ESXi and vCenter Server.
+\begin{enumerate}
+\item ESXi is a bare-metal (type I) hypervisor. It has small footprint (150 MB) which minimizes security threats to the hypervisor. It can support up to 128 virtual CPUs, 6 TB of RAM and 120 devices and offersbuilt-in UI based on HTML5 standards, vSphere comman line interface and REST-based APIs. Thin architecture enables it to install in 10 minutes and boot 2 to 3 minutes.
+\item vCenter Server: provides a centralized platform for managing VMware vSphere enironment, allowing automation and delivery of virtual infrastructure. From single vCenter instance can be managed up to 1000 hosts and 10000 virtual machines, these numbers can be scaled by using Linked Mode for managing up to 30000 virtual machines across 10 vCenter Server instances and vSphere HA for even more hosts and VMS. Linked Mode replicates roles, permissions and licences across infrastructure so we can log in and view inventories of all vCenter Servers. We can use 3rd-party plug-ins created by VMware partners. With open Web CLient Plug-in SDK vCenter Server has largest partner ecosystem in industry which means that we can implement back-up, data protection, server, network and security management directly from vCenter. Web Client Plug-in Certification Program ensures better end-user experience. Certified Plug-ins deliver optimal performance, better security model and so on. We can also back up vCenter Appliances to a file via industry standar protocols. In case of need we can point a fresh appliance to a backup location and files will be downloaded to the new vCenter Server Appliance.
+\end{enumerate}
+\item VMware ThinApp: is VMware's solution for application virtualization. ThinApp uses a build process to package application files and registry settings into a single application container that can be executed on a variety of operating systems without installation. Applications can be executed from a user’s desktop, a network path, or removable media. Applications run entirely in user mode under the security context of the currently logged in user. To virtualize an application ThinApp uses a Capture and Build process which consists of two components:
+\begin{enumerate}
+\item Setup Capture: The Setup Capture wizard guides the process of capturing the application and applying administrator-supplied configurations specific to the package. Setup Capture takes a prescan snapshot, allows the administrator to install and configure the application, and takes a postscan snapshot. The difference between the prescan and postscan snapshots, which represents the application, is placed in the project directory.
+\item The process by which the project directories and configuration settings are compressed and embedded into the package.
+\end{enumerate}
+\end{enumerate}
+
+\section{Citrix}
+Citrix Systems, Inc. is an American multinational software company that provides server, application and desktop virtualization, networking, software as a service (SaaS), and cloud computing technologies. The company began by developing remote access products for Microsoft operating systems. It licensed source code from Microsoft and has been in partnership with the company throughout its history. Citrix came to prominence in the 1990s as a leader in thin client technology, purpose built for accessing remote servers. The company had its first initial public offering in 1995 and, with few competitors, experienced large revenue increases between 1995 and 1999. Between 2005 and 2012, Citrix acquired more than a dozen other companies, allowing it to expand into server and desktop virtualization, as well as others.
+
+\subsection{XenServer}
+XenServer is the complete server virtualization platform from Citrix. The XenServer package contains everything needed to create and manage a deployment of virtual x86 computers running on Xen, the open-source paravirtualizing hypervisor with near-native performance. XenServer is optimized for both Windows and Linux virtual servers. XenServer runs directly on server hardware without requiring an underlying operating system (type I hypervisor). There are two methods by which to administer XenServer: XenCenter and the XenServer Command-Line Interface (CLI). XenCenter is a graphical, Windows-based user interface. XenCenter allows you to manage XenServer hosts, pools and shared storage, and to deploy, manage and monitor VMs from your Windows desktop machine. Key features include creating virtual machine templates from snapshots, XenMotion which allows us to live migrate VMs between hosts. XenServer 7 provides support for high-performance enhanced 3D graphics, with the widest variety of GPU pass-through and virtualized GPU vendor options. Only XenServer includes support for Intel’s Virtual Graphics Technology (GVT-g), a CPU embedded GPU with no extra hardware required to facilitate enhanced graphics workloads. Starting with Citrix XenServer 7, the Enterprise version includes Direct Inspect APIs which allow third-party vendors to secure the OS.
+
+\subsection{XenDesktop}
+XenDesktop is a desktop virtualization software platform developed and sold by Citrix Systems, that allows multiple users to access and operate Microsoft Windows desktops. These desktops are installed at a centralized server separate from the devices from which they are accessed. Citrix XenDesktop contains a powerful profile management tool that manages profiles independently from the OS and delivers required profile data on-demand. XenDesktop also includes Citrix Receiver, a universal client built for virtually any device including Windows, Mac, Linux, iOS, Android, Chrome OS, Blackberry and for environments that desire a clientless HTML5 web Receiver. XenDesktop includes a Windows app store delivered by Citrix StoreFront to provide a single aggregation point for all IT user services. Users may subscribe to applications, desktops, or data services from any device and have access to those same services, even when already in use from any other device.
+
+\subsection{XenApp}
+Citrix XenApp is application virtualisation software that allows Windows applications access via individual devices from a shared server or a Cloud system. We can have applications installed on a XenApp server in a data centre and launch them on any device (laptop/tablet/etc.). Application can be accessed from range of operating systems but streamed applications have to run on Windows.
 
 
-\chapter{Závěr}
-Závěrečná kapitola obsahuje zhodnocení dosažených výsledků se zvlášť vyznačeným vlastním přínosem studenta. Povinně se zde objeví i zhodnocení z pohledu dalšího vývoje projektu, student uvede náměty vycházející ze zkušeností s řešeným projektem a uvede rovněž návaznosti na právě dokončené projekty.
+\section{Oracle}
+Something about Oracle.
+
+\subsection{Oracle VM}
+Oracle VM is a platform that provides a fully equipped environment with all the latest benefits of virtualization technology, it nables us to deploy operating systems and application software within a supported virtualization environment.
+Architecture of Oracle VM is composed of these parts:
+\begin{enumerate}
+\item Client Application: Oracle VM provides various user interfaces, we can use either CLI (command line interface) through SSH client, GUI accesible over web-browser or external applications such as Oracle Enterprise Manager, custom built applications or scripts using the Web Services API. All communication with Oracle VM Manager is secured using either a key or certificate based technology.
+\item Oracle VM Manager: used to manage Oracle VM Server, virtual machines and resources and is composed of mutiple subcomponents functioning as one unit. It usually runs on stand alone computer but can also run as a virtual machine however this method is restricted and not fully supported. Core application is Oracle WebLogic application running on Oracle Linux. Oracle VM Manager communicates with each Oracle VM Server via the Oracle VM Agent, using XML-RPC (Remote Procedure Call using XML) over HTTPS.  The Oracle VM Agent on each Oracle VM Server is equally able to send notifications, statistics and event information back. Even though Oracle VM Manager is critical component for configuration in Oracle VM infrastructure, the virtualized environment can run correctly even if Oracle VM Manager experiences downtime, still maintaining high availability and able to live migrate virtual machines on x86 platform.
+\item Oracle VM Manager Database:  Used by the Oracle VM Manager core application to store and track configuration, status changes and events. . Oracle VM Manager uses a MySQL Enterprise database that runs on the same host as Oracle VM Manager. The database is used exclusively by Oracle VM Manager and cannot be used by any ither application. It is automatically and periodically backed-up and can be also backed-up manually.
+\item Oracle VM Server: a virtualization environment providing a lightweight and secure server platform for running virtual machines. At least one Oracle VM Server is required, but to take advantage of clustering several are needed. Oracle VM Server is installed on a bare metal computer, and contains the 
+Oracle VM Agent to manage communication with Oracle VM Manager. On x86-based systems, Oracle VM Server is based on an updated version of Xen hypervisor technology. In case of SPARC, Oracle VM Server takes advantage of the hypervisor that is already included within SPARC firmware. Groups of Oracle VM Servers are usually clustered together to create server pools. This allows Oracle VM Manager to handle load balancing. Virtual machines running within a pool can be easily moved between servers in that pool. In Oracle VM infrastructure server pools are required even if they consist of only one server.
+\item External Shared Storage:  Provides storage for a variety of purposes and is required to enable high-availability options afforded through clustering.
+\end{enumerate}
+
 
 %=========================================================================
