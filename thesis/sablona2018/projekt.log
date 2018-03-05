@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.15)  4 MAR 2018 22:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.15)  5 MAR 2018 22:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1373,9 +1373,10 @@ File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 \@vyskaobr=\skip82
 \@sirkaobr=\skip83
 
-<template-fig/VUT_symbol_barevne_CMYK_CZ.pdf, id=77, 167.13641pt x 165.87971pt>
+<template-fig/VUT_symbol_barevne_CMYK_CZ.pdf, id=109, 167.13641pt x 165.87971pt
+>
 File: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf Graphic file (type pdf)
-<use template-fig/VUT_symbol_barevne_CMYK_CZ.pdf>
+ <use template-fig/VUT_symbol_barevne_CMYK_CZ.pdf>
 Package pdftex.def Info: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf used on in
 put line 172.
 (pdftex.def)             Requested size: 116.65646pt x 115.17995pt.
@@ -1440,91 +1441,117 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.22 	\item T
-             ype II hypervisor (or hosted hypervisor): can be either on same...
+l.21 \item T
+            ype II hypervisor (or hosted hypervisor): can be either on same ...
 [2
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.34 
+      [3] [4] [5] [6]
+Overfull \hbox (1.05193pt too wide) in paragraph at lines 94--95
+[]\T1/lmr/m/n/10.95 Desktop vir-tu-a-li-zation: si-mi-larly as ap-pli-cation vi
+r-tu-a-li-zation it se-pa-ra-tes desktop
+ []
+
+[7] [8]
+Kapitola 2.
+[9
+
+]
+Overfull \hbox (1.29025pt too wide) in paragraph at lines 140--141
+[]\T1/lmr/m/n/10.95 Security-enhanced Li-nux (SE-Li-nux) which es-tab-lishes se
+cu-rity boun-da-ries around
+ []
+
+[10] [11] [12] [13] [14] [15]
+Kapitola 3.
+
+Overfull \hbox (11.45837pt too wide) in paragraph at lines 251--253
+\T1/lmr/m/n/10.95 Is ba-si-cally in-dustry stan-dard for desktop vir-tu-a-li-za
+tion - it is a hos-ted hy-per-vi-sor. Workstation
+ []
+
+[16
 
 ]
 
-! LaTeX Error: \begin{itemize} on input line 19 ended by \end{itemized}.
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.23 \end{itemized}
-                   
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+l.260 \item V
+             Mware Fusion Pro: VMware Workstation Pro for Mac operating syst...
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.35 
-      [3] [4] [5] [6] [7] [8]
-Kapitola 2.
-[9
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-] [10] [11] [12] [13] [14] [15]
-Kapitola 3.
-[16
 
-]
-Overfull \hbox (7.6294pt too wide) in paragraph at lines 261--262
-[]\T1/lmr/m/n/10.95 Workstation Pla-yer: is 'li-gh-ter' ve-rion of Workstaion. 
-It runs on same core as Workstation
+Underfull \hbox (badness 10000) detected at line 260
+[][]
  []
 
-[17] [18] [19])
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.263 \item V
+             Mware vSphere: serves as a complete platform for implementing a...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 263
+[][]
+ []
+
+[17] [18] [19] [20])
 No file projekt.bbl.
 \c@ttl@toc@chapters=\count305
-(./projekt-30-prilohy-appendices.tex [20]
+(./projekt-30-prilohy-appendices.tex [21]
 P\IeC {\v r}\IeC {\'\i }loha A.
 LaTeX Font Info:    Try loading font information for T1+lmtt on input line 21.
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [21
+) [22
 
-] [22]
+] [23]
 
-LaTeX Warning: Citation `fitWeb' on page 23 undefined on input line 85.
+LaTeX Warning: Citation `fitWeb' on page 24 undefined on input line 85.
 
-[23])
+[24] [25])
 \tf@ptc=\write5
 \openout5 = `projekt.ptc'.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 304.
- [24]
+ [26]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 304.
  (./projekt.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 304.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 304.
+Package rerunfilecheck Info: File `projekt.out' has not changed.
+(rerunfilecheck)             Checksum: CCDCDD2658DBA364E6866E7190C48B26;3132.
 
-
-Package rerunfilecheck Warning: File `projekt.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `projekt.out':
-(rerunfilecheck)             Before: 888C5EA1E4B1E1499DFF343FCD593F55;2203
-(rerunfilecheck)             After:  E778B99CB58BF424C971249892EAF2FE;2490.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 22181 strings out of 493029
- 359829 string characters out of 6136233
+ 22206 strings out of 493029
+ 360129 string characters out of 6136233
  428645 words of memory out of 5000000
- 25168 multiletter control sequences out of 15000+600000
+ 25175 multiletter control sequences out of 15000+600000
  121183 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,8n,44p,10404b,532s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,8n,44p,10404b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/op
 ensans-03.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/opensans-
@@ -1539,10 +1566,10 @@ usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pu
 blic/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm
 /lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
-Output written on projekt.pdf (27 pages, 603894 bytes).
+Output written on projekt.pdf (29 pages, 609282 bytes).
 PDF statistics:
- 483 PDF objects out of 1000 (max. 8388607)
- 415 compressed objects within 5 object streams
- 170 named destinations out of 1000 (max. 500000)
- 176 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 543 PDF objects out of 1000 (max. 8388607)
+ 473 compressed objects within 5 object streams
+ 188 named destinations out of 1000 (max. 500000)
+ 240 words of extra memory for PDF output out of 10000 (max. 10000000)
 

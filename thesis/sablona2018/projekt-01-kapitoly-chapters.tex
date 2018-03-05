@@ -17,10 +17,9 @@ To furher explain basics of virtualization I would like to start by brief explan
 
 Virtualization allows creating multiple entities of os and application layers on single hw layer. This is done by inserting additional layer of system software between operating system and lower layers. This virtualization layer is called hypervisor or VMM (virtual machine monitor) and there are two main types of it:
 \begin{itemize}
-	\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highes level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer throught operating system thus can utilize full potencial it. Some of them need special priviledged virtual machine called Domain-0 from which it can be managed and controlled. [obrazok]
-
-	\item Type II hypervisor (or hosted hypervisor): can be either on same level as host operating system or on a level above. This means that hypervisor doesn't require specific drivers for I/O operations and allows running of virtual environment within alredy existing environment. [obrazok popisujuci strukturu]
-\end{itemized}
+\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highes level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer throught operating system thus can utilize full potencial it. Some of them need special priviledged virtual machine called Domain-0 from which it can be managed and controlled. [obrazok]
+\item Type II hypervisor (or hosted hypervisor): can be either on same level as host operating system or on a level above. This means that hypervisor doesn't require specific drivers for I/O operations and allows running of virtual environment within alredy existing environment. [obrazok popisujuci strukturu]
+\end{itemize}
 
 \section{Advantages}
 As every other technology, virtualization have some advantages and disadvantages. Lets start with advantages:
@@ -242,13 +241,14 @@ Even though virtualization technology was introduced more than 20 years ago it e
 \item VMware
 \item Citrix
 \item Oracle
+\item Microsoft
 \end{enumerate}
 
 \section{VMware}
 
 Products:
-\begin{enumerate}
-\item VMware Workstation: Is basically industry standard for desktop virtualization - it is a hosted hypervisor. Workstation runs on Windows or Linux and can also run virtual machines with Windows or Linux operating system. Initially launched in 1999 is one of the longest running modern day virtualization applications. VMware Workstation Pro can save the state of a virtual machine as a snapshot which can later be restored, effectively returning the virtual machine to the saved state. It can also group multiple virtual machines into an inventory folder with which we can control (power on/off) all the virtual machines inside it at once.
+\subsection{VMware Workstation}
+Is basically industry standard for desktop virtualization - it is a hosted hypervisor. Workstation runs on Windows or Linux and can also run virtual machines with Windows or Linux operating system. Initially launched in 1999 is one of the longest running modern day virtualization applications. VMware Workstation Pro can save the state of a virtual machine as a snapshot which can later be restored, effectively returning the virtual machine to the saved state. It can also group multiple virtual machines into an inventory folder with which we can control (power on/off) all the virtual machines inside it at once.
 Key features:
 \begin{enumerate}
 \item High-performance 3d graphics: Workstation supports DirectX 10 and OpenGL 3.3 to run the most demanding 3D applications with near-native performance in Windovs virtual machines.
@@ -258,17 +258,18 @@ Key features:
 \item Cross compatibility: we can create virtual machines that can run across the VMware product portfolio or even import VMs from another vendors.
 \end{enumerate}
 \item VMware Fusion Pro: VMware Workstation Pro for Mac operating systems.
-\item Workstation Player: is 'lighter' verion of Workstaion. It runs on same core as Workstation Pro and vSphere but delivers lesser features. On the other hand it is free of charge for personal non-cmmercial use. Wokrstation player can still create and run virtual machine, but only one at a time instead of multiple virtual machines simultaneously. It aslo cannor create or manage encrypted VMs and so on. Workstation Pros is great for 'feeling up' virtualization before investing into full blown solutions or for simple personal use.
+\subsection{Workstation Player}
+Workstation Player is 'lighter' verion of Workstaion. It runs on same core as Workstation Pro and vSphere but delivers lesser features. On the other hand it is free of charge for personal non-cmmercial use. Wokrstation player can still create and run virtual machine, but only one at a time instead of multiple virtual machines simultaneously. It aslo cannor create or manage encrypted VMs and so on. Workstation Pros is great for 'feeling up' virtualization before investing into full blown solutions or for simple personal use.
 \item VMware vSphere: serves as a complete platform for implementing and managing virtual machine infrastructure on large scale. vSphere consists of two core components: ESXi and vCenter Server.
 \begin{enumerate}
 \item ESXi is a bare-metal (type I) hypervisor. It has small footprint (150 MB) which minimizes security threats to the hypervisor. It can support up to 128 virtual CPUs, 6 TB of RAM and 120 devices and offersbuilt-in UI based on HTML5 standards, vSphere comman line interface and REST-based APIs. Thin architecture enables it to install in 10 minutes and boot 2 to 3 minutes.
 \item vCenter Server: provides a centralized platform for managing VMware vSphere enironment, allowing automation and delivery of virtual infrastructure. From single vCenter instance can be managed up to 1000 hosts and 10000 virtual machines, these numbers can be scaled by using Linked Mode for managing up to 30000 virtual machines across 10 vCenter Server instances and vSphere HA for even more hosts and VMS. Linked Mode replicates roles, permissions and licences across infrastructure so we can log in and view inventories of all vCenter Servers. We can use 3rd-party plug-ins created by VMware partners. With open Web CLient Plug-in SDK vCenter Server has largest partner ecosystem in industry which means that we can implement back-up, data protection, server, network and security management directly from vCenter. Web Client Plug-in Certification Program ensures better end-user experience. Certified Plug-ins deliver optimal performance, better security model and so on. We can also back up vCenter Appliances to a file via industry standar protocols. In case of need we can point a fresh appliance to a backup location and files will be downloaded to the new vCenter Server Appliance.
 \end{enumerate}
-\item VMware ThinApp: is VMware's solution for application virtualization. ThinApp uses a build process to package application files and registry settings into a single application container that can be executed on a variety of operating systems without installation. Applications can be executed from a user’s desktop, a network path, or removable media. Applications run entirely in user mode under the security context of the currently logged in user. To virtualize an application ThinApp uses a Capture and Build process which consists of two components:
+\subsection{VMware ThinApp}
+VMware ThinApp is VMware's solution for application virtualization. ThinApp uses a build process to package application files and registry settings into a single application container that can be executed on a variety of operating systems without installation. Applications can be executed from a user’s desktop, a network path, or removable media. Applications run entirely in user mode under the security context of the currently logged in user. To virtualize an application ThinApp uses a Capture and Build process which consists of two components:
 \begin{enumerate}
 \item Setup Capture: The Setup Capture wizard guides the process of capturing the application and applying administrator-supplied configurations specific to the package. Setup Capture takes a prescan snapshot, allows the administrator to install and configure the application, and takes a postscan snapshot. The difference between the prescan and postscan snapshots, which represents the application, is placed in the project directory.
 \item The process by which the project directories and configuration settings are compressed and embedded into the package.
-\end{enumerate}
 \end{enumerate}
 
 \section{Citrix}
@@ -285,7 +286,7 @@ Citrix XenApp is application virtualisation software that allows Windows applica
 
 
 \section{Oracle}
-Something about Oracle.
+Oracle Corporation is an American computer technology corporation headquartered in California. The primary specialization is developing and marketing database software and technology, cloud engineered systems and enterprise software products.
 
 \subsection{Oracle VM}
 Oracle VM is a platform that provides a fully equipped environment with all the latest benefits of virtualization technology, it nables us to deploy operating systems and application software within a supported virtualization environment.
@@ -297,6 +298,37 @@ Architecture of Oracle VM is composed of these parts:
 \item Oracle VM Server: a virtualization environment providing a lightweight and secure server platform for running virtual machines. At least one Oracle VM Server is required, but to take advantage of clustering several are needed. Oracle VM Server is installed on a bare metal computer, and contains the 
 Oracle VM Agent to manage communication with Oracle VM Manager. On x86-based systems, Oracle VM Server is based on an updated version of Xen hypervisor technology. In case of SPARC, Oracle VM Server takes advantage of the hypervisor that is already included within SPARC firmware. Groups of Oracle VM Servers are usually clustered together to create server pools. This allows Oracle VM Manager to handle load balancing. Virtual machines running within a pool can be easily moved between servers in that pool. In Oracle VM infrastructure server pools are required even if they consist of only one server.
 \item External Shared Storage:  Provides storage for a variety of purposes and is required to enable high-availability options afforded through clustering.
+\end{enumerate}
+
+
+\section{Microsoft}
+Microsoft Corporation is an American technology company with headquarters in Washington.
+
+\subsection{Hyper-V}
+Hyper-V is Microsoft's hardware virtualization product, it is a hypervisor-based virtualization technology for certain x64 versions of Windows. It supports isolation in form of partition. Partition is a logical unit of isolation in which operating system runs. 
+Hyper-V consists of these parts:
+\begin{enumerate}
+\item Parent partition: The microsoft hypervosor requires at elast one root (parent) partition running Windows. The parent partition and has direct access to hardware devices and the virtualization management stack runs on it. The root partition creates the child partitions, assigns hardware devices except for processor sceduling and physical memory allocation which are hadled by the hypervisor, parent also handles power management, plug and play operations and logging of any hardware occours. It is the first partition created when hypervisor is strated. The virtualization components hosted in the parent partition are referred to collectively as the virtualization stack and these are its components:
+\begin{enumerate}
+\item Virtual Machine Management Service
+\item Virtual Machine Worker Process
+\item Virtual Devices
+\item Virtualization Infrastructure Driver
+\item Windows Hypervisor Interface Library
+\item Virtualization Service Providers
+\item Virtual Machine Bus
+\end{enumerate}
+\item Child partitions: partitions which host the guest operating systems and its applications.
+\end{enumerate}
+Virtual Devices can also take advantage of a Windows Server Virtualization feature, named Enlightened I/O, for storage, networking, graphics, and input subsystems. Enlightened I/O is a specialized virtualization-aware implementation of high level communication protocols (such as SCSI) that utilize the VMBus directly. This means that VMBus can bypass any layer of device emulation thus making communication more efficient. On the other hand, this requires guests to be aware of hypervisor and VMBus. Hyper-V integration services provide Hyper-V enlightened I/O and a hypervisor aware kernel. Hyper-V requires a processor supporting hardware supported virtualization (Intel VT or AMD-V).
+Some of Hyper-V features:
+\begin{enumerate}
+\item Disaster recovery and backup: Hyper-V Replica creates copies of virtual machines which are then stored in another physical location and can be used to restore virtual machines. That is for disaster recovery, for backing-up we can use 2 approcahes. First uses saved states of virtual machines. Second uses Volumne Shadow Copy Service (VSS) which captures and copies stable images for back-up on running systems (particulary servers) without degrading performance and stability of the provided services. VSS enables creating services that can be backed-up by any vendor's back-up application using VSS.
+\item Optimization: Each supported guest operating system has a customized set of services and drivers, called integration services, that make it easier to use the operating system in a Hyper-V virtual machine.
+\item Portability: Hyper-V supports live migration, storage migration, import/export of virtual machines and other features.
+\item Remote connectivity: Virtual Machine Connection is a remote connection tool for both Windows and Linux, it gives us console access to the guest even if operating system isn't booted yet.
+\item Security: Hyper-V supports secure boot and shielded virtual machines.
+\item Network Load Balancing: Hyper-V includes virtual switch capabilities that provide the ability to use the Windows Network Load Balancing (NLB) service to load-balance across virtual machines running on different servers.
 \end{enumerate}
 
 
