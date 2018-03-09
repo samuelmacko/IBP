@@ -2,7 +2,7 @@
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
 \chapter{Virtualization}
-In first chapter I will explain what virtualiszation is and how it can be implemented.
+In first chapter I will explain what virtualization is and how it can be implemented.
 \begin{itemize}
 \item Virtualization basics,
 \item Advantages,
@@ -24,7 +24,7 @@ Virtualization allows creating multiple entities of os and application layers on
 \section{Advantages}
 As every other technology, virtualization have some advantages and disadvantages. Lets start with advantages:
 \begin{enumerate}
-\item Efficiency: Virtualization allows more efficient use of host machine for multiple virtual machines which can all run different services. Runnig multiple services on same server can be very dangerous multiple reasons and so it is considered a bad practice. Most obvious problem is with hardware overhead, if numerous very resource-demanding services run on single physical machine it can slow them down considerably or even crash them which makes business's services very unreliable. On the other hand, if we run only single service on whole physical host, that service can use for example only 20\% of server machine's resources (which is especially nowdays very common as hardware is becomming more and more powerful, average service utilizes only about 10\% to 15\% of all available resources). This way we waste remaining 80\% of resources which in the long unnecessarily raises expenses on managing physical hosts. Rather we can run various virtual servers on one physical hardware and on each of them run single service. Over past few years server technlogy has improved som much that wasting server's machine resources this way is very common and can by improved by virtualization. 
+\item Efficiency: Virtualization allows more efficient use of host machine for multiple virtual machines which can all run different services. Running multiple services on same server can be very dangerous multiple reasons and so it is considered a bad practice. Most obvious problem is with hardware overhead, if numerous very resource-demanding services run on single physical machine it can slow them down considerably or even crash them which makes business's services very unreliable. On the other hand, if we run only single service on whole physical host, that service can use for example only 20\% of server machine's resources (which is especially nowdays very common as hardware is becomming more and more powerful, average service utilizes only about 10\% to 15\% of all available resources). This way we waste remaining 80\% of resources which in the long unnecessarily raises expenses on managing physical hosts. Rather we can run various virtual servers on one physical hardware and on each of them run single service. Over past few years server technlogy has improved som much that wasting server's machine resources this way is very common and can by improved by virtualization. 
 
 \item Cost reducing: By concentrating virtual machines on fever hosts we can reduce expenses associated with running large numbers of physical machines in various ways. We need less physical space for storing hosts, less cooling is needed, less energy is spent on powering all the hardware, managing fewer physical devices is also easier and cheaper. Companies with fewer than 1000 employees spend up to 40\% of their IT budget on hardware[], this can be greatly reduced by virtualization. Although this benefits more larger companies using plenty of server machines even smaller companies can benefit greatly from virtualization. Using less energy/space/etc means that virtualization is also firnedlier to environment.
 
@@ -221,12 +221,12 @@ Wine is constantly growing in the features it supports, here are some of them:
 \end{enumerate}
 
 Executables:
-Wines main task is to run Windows executebles, here are supported types:
+Wines main task is to run Windows executables, here are supported types:
 \begin{enumerate}
 \item DOS executable: very old programs for MS-DOS.
 \item Windows NE executable: (NE - New Executable) They were the native processes run by Windows 2.x and 3.x.
-\item Windows PE executable: (PE - Portable Executable) Introduced by Windows 95 and became the standard format for all later Windows versions. Portable Executable means that format of the esxecutable is independent of the CPU, even if the code IS dependent of the CPU.
-\item Winelib executable: aplications written by using the Windows API but compiled as a Unix executable.
+\item Windows PE executable: (PE - Portable Executable) Introduced by Windows 95 and became the standard format for all later Windows versions. Portable Executable means that format of the executable is independent of the CPU, even if the code IS dependent of the CPU.
+\item Winelib executable: applications written by using the Windows API but compiled as a Unix executable.
 \end{enumerate}
 
 Wine architecture is close to the Windows NT architecture but several subsystems are not implemented yet.
@@ -242,6 +242,7 @@ Even though virtualization technology was introduced more than 20 years ago it e
 \item Citrix
 \item Oracle
 \item Microsoft
+\item Red Hat
 \end{enumerate}
 
 \section{VMware}
@@ -257,9 +258,12 @@ Key features:
 \item Restricted access to virtual machines: virtual machine can be encrypted and protected by password.
 \item Cross compatibility: we can create virtual machines that can run across the VMware product portfolio or even import VMs from another vendors.
 \end{enumerate}
-\item VMware Fusion Pro: VMware Workstation Pro for Mac operating systems.
+
+\subsection{VMware Fusion Pro}
+VMware Workstation Pro for Mac operating systems.
+
 \subsection{Workstation Player}
-Workstation Player is 'lighter' verion of Workstaion. It runs on same core as Workstation Pro and vSphere but delivers lesser features. On the other hand it is free of charge for personal non-cmmercial use. Wokrstation player can still create and run virtual machine, but only one at a time instead of multiple virtual machines simultaneously. It aslo cannor create or manage encrypted VMs and so on. Workstation Pros is great for 'feeling up' virtualization before investing into full blown solutions or for simple personal use.
+Workstation Player is 'lighter' version of Workstaion. It runs on same core as Workstation Pro and vSphere but delivers lesser features. On the other hand it is free of charge for personal non-cmmercial use. Wokrstation player can still create and run virtual machine, but only one at a time instead of multiple virtual machines simultaneously. It aslo cannor create or manage encrypted VMs and so on. Workstation Pros is great for 'feeling up' virtualization before investing into full blown solutions or for simple personal use.
 \item VMware vSphere: serves as a complete platform for implementing and managing virtual machine infrastructure on large scale. vSphere consists of two core components: ESXi and vCenter Server.
 \begin{enumerate}
 \item ESXi is a bare-metal (type I) hypervisor. It has small footprint (150 MB) which minimizes security threats to the hypervisor. It can support up to 128 virtual CPUs, 6 TB of RAM and 120 devices and offersbuilt-in UI based on HTML5 standards, vSphere comman line interface and REST-based APIs. Thin architecture enables it to install in 10 minutes and boot 2 to 3 minutes.
@@ -308,7 +312,7 @@ Microsoft Corporation is an American technology company with headquarters in Was
 Hyper-V is Microsoft's hardware virtualization product, it is a hypervisor-based virtualization technology for certain x64 versions of Windows. It supports isolation in form of partition. Partition is a logical unit of isolation in which operating system runs. 
 Hyper-V consists of these parts:
 \begin{enumerate}
-\item Parent partition: The microsoft hypervosor requires at elast one root (parent) partition running Windows. The parent partition and has direct access to hardware devices and the virtualization management stack runs on it. The root partition creates the child partitions, assigns hardware devices except for processor sceduling and physical memory allocation which are hadled by the hypervisor, parent also handles power management, plug and play operations and logging of any hardware occours. It is the first partition created when hypervisor is strated. The virtualization components hosted in the parent partition are referred to collectively as the virtualization stack and these are its components:
+\item Parent partition: The microsoft hypervosor requires at at last one root (parent) partition running Windows. The parent partition and has direct access to hardware devices and the virtualization management stack runs on it. The root partition creates the child partitions, assigns hardware devices except for processor scheduling and physical memory allocation which are handled by the hypervisor, parent also handles power management, plug and play operations and logging of any hardware occurs. It is the first partition created when hypervisor is strated. The virtualization components hosted in the parent partition are referred to collectively as the virtualization stack and these are its components:
 \begin{enumerate}
 \item Virtual Machine Management Service
 \item Virtual Machine Worker Process
@@ -323,13 +327,46 @@ Hyper-V consists of these parts:
 Virtual Devices can also take advantage of a Windows Server Virtualization feature, named Enlightened I/O, for storage, networking, graphics, and input subsystems. Enlightened I/O is a specialized virtualization-aware implementation of high level communication protocols (such as SCSI) that utilize the VMBus directly. This means that VMBus can bypass any layer of device emulation thus making communication more efficient. On the other hand, this requires guests to be aware of hypervisor and VMBus. Hyper-V integration services provide Hyper-V enlightened I/O and a hypervisor aware kernel. Hyper-V requires a processor supporting hardware supported virtualization (Intel VT or AMD-V).
 Some of Hyper-V features:
 \begin{enumerate}
-\item Disaster recovery and backup: Hyper-V Replica creates copies of virtual machines which are then stored in another physical location and can be used to restore virtual machines. That is for disaster recovery, for backing-up we can use 2 approcahes. First uses saved states of virtual machines. Second uses Volumne Shadow Copy Service (VSS) which captures and copies stable images for back-up on running systems (particulary servers) without degrading performance and stability of the provided services. VSS enables creating services that can be backed-up by any vendor's back-up application using VSS.
+\item Disaster recovery and backup: Hyper-V Replica creates copies of virtual machines which are then stored in another physical location and can be used to restore virtual machines. That is for disaster recovery, for backing-up we can use 2 approaches. First uses saved states of virtual machines. Second uses Volumne Shadow Copy Service (VSS) which captures and copies stable images for back-up on running systems (particularly servers) without degrading performance and stability of the provided services. VSS enables creating services that can be backed-up by any vendor's back-up application using VSS.
 \item Optimization: Each supported guest operating system has a customized set of services and drivers, called integration services, that make it easier to use the operating system in a Hyper-V virtual machine.
 \item Portability: Hyper-V supports live migration, storage migration, import/export of virtual machines and other features.
 \item Remote connectivity: Virtual Machine Connection is a remote connection tool for both Windows and Linux, it gives us console access to the guest even if operating system isn't booted yet.
 \item Security: Hyper-V supports secure boot and shielded virtual machines.
 \item Network Load Balancing: Hyper-V includes virtual switch capabilities that provide the ability to use the Windows Network Load Balancing (NLB) service to load-balance across virtual machines running on different servers.
 \end{enumerate}
+
+\section{Red Hat}
+Red Hat is the world’s leading provider of open source software solutions, using a community-powered approach to provide reliable and high-performing cloud, Linux, middleware, storage, and virtualization technologies.
+
+\subsection{Red Hat Virtualization}-
+Red Hat Virtualization is a complete virtualization infrastructure solution for virtualized servers and workstations. Red Hat Enterprise Virtualization is fully open source software, based on the Kernel-based Virtual Machine (KVM) hypervisor technology. It is  composed of two main components:
+
+\subsubsection{Red Hat Enterprise Virtualization Manager (RHEV-M)}
+A centralized management system allowing system administrators to view and manage virtual machines and images. It provides a graphical user interface to manage the physical and logical resources within the virtual environment infrastructure. RHEV-M is built on Red Hat Enterprise Linux and Red Hat JBoss Enterprise Application Platform (EAP) which is a Java based application server which provides a framework to support efficient development and delivery of cross-platform Java applications. RHEV-M also offers an advanced system dashboard for a deep resource utilization overview of CPU, memory, and storage host resources. We can operate it even using an open source, community-driven RESTful API. RHEV-M can be used to migrate workloads from other platforms to RHEV. It includes a data warehouse that collects monitoring data for hosts, virtual machines, and storage too. We can analyze our environments and create reports using any SQL supporting query tools.
+
+
+\subsubsection{Red Hat Enterprise Virtualization Hypervisor (RHEV-H)}
+The Red Hat Enterprise Virtualization Hypervisor is 64-bit bare metal hypervisor combining the advanced features of the KVM hypervisor with subset of packages from Red Hat Enterprise Linux 5 including only the components required to boot, run a management agent and manage virtual machines. The footprint is less than 100MB and is delivered as a single image that can run on any Red Hat Enterprise Linux 5 certified hardware platform. Host is scalable up to 288 logical CPUs and 12TB and guest up to 240 vCPU and 6TB vRAM per virtual machine. RHEV-H uses Security-Enhanced Linux (SELinux) a joint project developed by the United States National Security Agency (NSA) and the Linux community to provide a security hardened operating environment with high levels of security, resource isolation and auditing, to present even smaller attack surface it does not support running applications other than the management agent and virtual machines, thus reducing maintenance and patching. The base file system image for RHEV Hypervisor is stateless, running only in memory, preventing changes to the base image.
+
+Architecture:
+\begin{enumerate}
+\item KVM: Explained in chapter XX.
+\item QEMU: A multi-platform emulator used to provide full system emulation.
+\end{enumerate}
+
+Features:
+\begin{enumerate}
+\item Automation and integration:
+\begin{enumerate}
+\item Red Hat CloudForms: enables automation of virtual events and provides reporting, chargeback and compliance enforcemen.
+\item OpenStack Glance and Neuron: to ease traditional workload migration to private clouds or to design applications that span virtual and private cloud environments.
+\item Red Hat Ansible Automation: allows us to create/remove/update or powermanage virtual machines.
+\item Simple Network Management Protocol (SNMP) allows integration of third-party monitoring systems.
+\end{enumerate}
+\item Advanced storage performance and scale: Storage Pool Manager (SPM) can delegate storage operations to other data center hosts to improving performance. Block discard support allows reclaiming of storage space from the virtual machine and after deleting a disk from a storage domain.
+\item Cross-platform support: full support is provided for Red Hat Enterprise Linux 5, 6 (32- and 64-bit), and 7 (64-bit). Support is also available for Windows Server 2008, 2008 R2, 2012 (32- and 64-bit), and 2016 and desktop systems Windows 7 and 10 (32- and 64-bit). Vendor support is provided for SUSE Linux Enterprise Server 10, 11, and 12.
+\end{enumerate}
+
 
 
 %=========================================================================

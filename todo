@@ -14,9 +14,9 @@
 9, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
     zly filter, please wait, ...
 
-10. threads
 11. do config filu ulozit aj login a cestu vmky
 12. vztah medzi networks a nics? kolko coho vmka napr?
+13. pouzit re.compile
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,

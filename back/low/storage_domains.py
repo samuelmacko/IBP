@@ -49,7 +49,8 @@ class Storage(base.SpecificBase):
         return self._info.storage.type
 
     def storage_address(self):
-        return self._info.storage.address
+        # return self._info.storage.address
+        return self._info.storage.address + self._info.storage.path
 
     def format(self):
         return self._info.storage_format
