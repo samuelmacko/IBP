@@ -10,15 +10,15 @@ import copy
 
 class Vm(HighBase):
 
-    # def __init__(self, connection, flags):
-    def __init__(self, connection, col_flags=None):
+    def __init__(self, connection, col_flags):
+    # def __init__(self, connection, col_flags=None):
         super(Vm, self).__init__(connection=connection)
-        if col_flags:
-            self.col_flags = col_flags
-        else:
-            self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                              1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                              1, 1, 1]
+        # if col_flags:
+        self.col_flags = col_flags
+        # else:
+        #     self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                       1, 1, 1]
 
     def construct_table(self):
         table = []
@@ -145,7 +145,8 @@ class Vm(HighBase):
                      22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
         if filter.column in str_col and \
-            filter.operand is operator.eq and isinstance(filter.value, str):
+            filter.operand == '=' and isinstance(filter.value, str):
+            # filter.operand is operator.eq and isinstance(filter.value, str):
             return True
 
         if filter.column in float_col:

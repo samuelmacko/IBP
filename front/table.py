@@ -21,7 +21,8 @@ class Table(QTableWidget):
         self.setHorizontalHeaderLabels(headers_list)
 
         self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
-        self.header.setSortIndicatorShown(True)
+        # self.header.setSortIndicatorShown(True)
+        # self.header.setSortIndicator(1, 1)
 
         if data_list:
             self.setRowCount(len(data_list))

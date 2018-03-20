@@ -43,20 +43,20 @@ class FilterHandle(object):
                 self.operand = operand
                 self.value = value
 
-        ops = {
-            '>': operator.gt, '<': operator.lt, '=': operator.eq}
+        # 0
 
         # filter_regex = r'\s*(\S+)\s*(>|<|=)\s*(\S+)\s*'
         filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
         match = re.match(filter_regex, text, re.I)
-
+        #
         # print('1:', match.group(1))
         # print('2:', match.group(2))
         # print('3:', match.group(3))
 
         if match:
             attribute = match.group(1)
-            operand = ops[match.group(2)]
+            # operand = ops[match.group(2)]
+            operand = match.group(2)
             value = match.group(3)
 
             attribute_column = None
@@ -76,9 +76,17 @@ class FilterHandle(object):
             return None
 
     def apply_filter(self, filter):
-        # print(filter.operand)
+
+        ops = {
+            '>': operator.gt, '<': operator.lt, '=': operator.eq}
+        op = ops[filter.operand]
+
+        # print('apply filter')
+        print('af:', filter.operand)
         for i, row in enumerate(self.table.data_list):
             # if filter.operand(row[filter.column], filter.value) is False:
-            if filter.operand(Comparison(row[filter.column]),
+            # if filter.operand(Comparison(row[filter.column]),
+            #                   Comparison(filter.value)) is False:
+            if op(Comparison(row[filter.column]),
                               Comparison(filter.value)) is False:
                 self.table.row_flags[i] = 0

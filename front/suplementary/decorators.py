@@ -16,9 +16,11 @@ def header_signal(func):
         if sender.objectName() == 'header_2' or \
                 sender in self.disk_tab.chbox_list or \
                 sender.objectName() == 'lineEdit_2':
+            # pass
             self.disk_tab.printed_table.header.setObjectName("header_2")
             self.disk_tab.printed_table.header.sectionClicked['int']. \
                 connect(self.header_clicked)
+            # self.disk_tab.printed_table.header.setSortIndicator(1, 1)
         if sender.objectName() == 'header_3' or \
                 sender in self.host_tab.chbox_list or \
                 sender.objectName() == 'lineEdit_3':

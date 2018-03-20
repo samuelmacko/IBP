@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 
@@ -5,9 +6,11 @@ from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from back.high import vm, disk, host
-from back.low.config_file import ConfigFile
+from back.suplementary.config_file import ConfigFile
 from front.input_dialog import InputDialog
 from front.main_window import Ui_MainWindow
+
+import global_variables
 
 
 # app = QApplication(sys.argv)
@@ -15,9 +18,13 @@ from front.main_window import Ui_MainWindow
 def main():
     app = QApplication(sys.argv)
 
+    dir_name = os.path.dirname(__file__)
+
     # splash_picture = QtGui.QPixmap('/home/smacko/git/IBP/front/'
     #                                'suplementary/images/splash_screen.png')
-    splash_picture = QtGui.QPixmap('front/suplementary/images/splash_screen.png')
+    splash_picture = QtGui.QPixmap(
+        dir_name + '/front/suplementary/images/splash_screen.png')
+    # splash_picture = QtGui.QPixmap('front/suplementary/images/splash_screen.png')
     splash_screen = QtWidgets.QSplashScreen()
     splash_screen.setPixmap(splash_picture)
     splash_screen.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint |
@@ -27,10 +34,12 @@ def main():
     prog_bar = QtWidgets.QProgressBar(splash_screen)
     prog_bar.setGeometry(0, splash_screen.height() - 50,
                          splash_screen.width(), 35)
-    # prog_bar.setStyleSheet('background-color: rgb(255,255,255);\n'
-    #                        'font-')
+    prog_bar.setStyleSheet('QProgressBar::chunk {background: #9ACD32;}')
+    prog_bar.setTextVisible(False)
     prog_bar.setMaximum(3)
     prog_bar.setValue(0)
+
+
 
 
     input_dialog = InputDialog()
@@ -44,6 +53,7 @@ def main():
     t = time.time()
     while time.time() < t + 0.5:
         app.processEvents()
+
 
     # connection = sdk.Connection(
     #     username='admin@internal', password='qum5net', insecure=True,

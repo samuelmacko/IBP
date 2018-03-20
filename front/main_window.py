@@ -6,13 +6,15 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import csv
+import os
+
 from PyQt5 import QtCore, QtWidgets, QtGui
 
 from back.high import vm, disk, host
-from back.low.config_file import create_config_file
+from back.suplementary.config_file import create_config_file
 from front.suplementary.decorators import header_signal
 from front.suplementary.tab_sockets import (VmTab, DiskTab, HostTab)
-import csv
 
 
 # class CheckableComboBox(QtWidgets.QComboBox):
@@ -55,8 +57,8 @@ import csv
 class Ui_MainWindow(object):
 
     # def __init__(self, parent, data_list, flags, connection, headers_list):
-    def __init__(self, parent, connection, vm_table, disk_table, host_table,
-                 ):
+    def __init__(
+            self, parent, connection, vm_table, disk_table, host_table,):
         self.parent = parent
         self.connection = connection
         self.vm_tab = VmTab(table=vm_table, parent=parent)
@@ -66,6 +68,9 @@ class Ui_MainWindow(object):
         self.current_tab = None
 
     def setupUi(self, MainWindow):
+
+        dir_name = os.path.dirname(__file__)
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1500, 800)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -95,10 +100,11 @@ class Ui_MainWindow(object):
         self.toolbutton = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton.setText('Select Column ')
         self.toolmenu = QtWidgets.QMenu(self.centralwidget)
-        for i in range(32):
+        for i in range(len(self.vm_tab.table.col_flags)-1):
             action = self.toolmenu.addAction("Column " + str(i))
             action.setCheckable(True)
-            action.setChecked(True)
+            # action.setChecked(True)
+            action.setChecked(self.vm_tab.table.col_flags[i-1])
             action.changed.connect(self.checkbox_clicked)
             self.vm_tab.chbox_list.append(action)
         self.toolbutton.setMenu(self.toolmenu)
@@ -183,7 +189,7 @@ class Ui_MainWindow(object):
         self.btn_1.setObjectName('btn_1')
         self.btn_1.clicked['bool'].connect(self.refresh)
         self.btn_1.setIcon(QtGui.QIcon(
-            'front/suplementary/images/refresh.gif'))
+            dir_name + '/suplementary/images/refresh.gif'))
             # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_1.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
@@ -295,12 +301,10 @@ class Ui_MainWindow(object):
         self.toolbutton_2 = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton_2.setText('Select Column ')
         self.toolmenu_2 = QtWidgets.QMenu(self.centralwidget)
-        for i in range(22):
+        for i in range(len(self.disk_tab.table.col_flags)-1):
             action = self.toolmenu_2.addAction("Column " + str(i))
             action.setCheckable(True)
-            action.setChecked(True)
-            # action.changed.connect(self.aaa)
-            # action.setObjectName("uuuuuu")
+            action.setChecked(self.disk_tab.table.col_flags[i-1])
             action.changed.connect(self.checkbox_clicked)
             self.disk_tab.chbox_list.append(action)
             # self.disk_tab.chbox_list.insert(i, action)
@@ -319,7 +323,7 @@ class Ui_MainWindow(object):
         self.btn_2.setObjectName('btn_2')
         self.btn_2.clicked['bool'].connect(self.refresh)
         self.btn_2.setIcon(QtGui.QIcon(
-            'front/suplementary/images/refresh.gif'))
+            dir_name + '/suplementary/images/refresh.gif'))
             # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_2.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
@@ -351,10 +355,10 @@ class Ui_MainWindow(object):
         self.toolbutton_3 = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton_3.setText('Select Column ')
         self.toolmenu_3 = QtWidgets.QMenu(self.centralwidget)
-        for i in range(33):
+        for i in range(len(self.host_tab.table.col_flags)-1):
             action = self.toolmenu_3.addAction("Column " + str(i))
             action.setCheckable(True)
-            action.setChecked(True)
+            action.setChecked(self.host_tab.table.col_flags[i-1])
             action.changed.connect(self.checkbox_clicked)
             self.host_tab.chbox_list.append(action)
         self.toolbutton_3.setMenu(self.toolmenu_3)
@@ -435,7 +439,7 @@ class Ui_MainWindow(object):
         self.btn_3.setObjectName('btn_3')
         self.btn_3.clicked['bool'].connect(self.refresh)
         self.btn_3.setIcon(QtGui.QIcon(
-            'front/suplementary/images/refresh.gif'))
+            dir_name + '/suplementary/images/refresh.gif'))
             # '/home/smacko/git/IBP/front/suplementary/images/refresh.gif'))
         self.btn_3.setIconSize(QtCore.QSize(20, 20))
         # self.verticalLayout_2.addWidget(self.btn)
@@ -1087,7 +1091,6 @@ class Ui_MainWindow(object):
         self.actionSdff.setText(_translate("MainWindow", "sdff"))
         self.actionSdfsf.setText(_translate("MainWindow", "sdfsf"))
 
-    # @header_signal
     def tab_changed(self, tab_number):
         self.current_tab = tab_number
         if tab_number == 0 and (hasattr(self, 'tableWidget') is False):
@@ -1137,6 +1140,7 @@ class Ui_MainWindow(object):
     @header_signal
     def header_clicked(self, col):
         sender = self.centralwidget.sender()
+        # print(sender.objectName())
         if sender.objectName() == 'header':
             self.vm_tab.sort_column(col=col)
         if sender.objectName() == 'header_2':

@@ -17,7 +17,7 @@ class Tabs(object):
         self.table_layout = None
 
         # self.col = None
-        self.column_order = False
+        self.column_order = {}
 
     def print_table(self):
         self.table.table_from_flags()
@@ -57,6 +57,7 @@ class Tabs(object):
             filter = filter_handler.process_filter(text=single_filter)
 
             if filter and self.table.validate_filter(filter=filter):
+            # if filter:
                 filter_handler.apply_filter(filter=filter)
                 # headers, data = filter_handler.table_from_flags()
                 self.table.table_from_flags()
@@ -76,23 +77,32 @@ class Tabs(object):
             if flag:
                 shift += 1
             if shift == col:
-                col = i
+                col_shift = i
                 break
+        # col_shift = col
 
-        # print('sh col:', col)
+        if col_shift not in self.column_order:
+            self.column_order[col_shift] = True
+
+        print('col_shift:', col_shift)
 
         def temp(value):
-            return Comparison(value[0][col])
+            return Comparison(value[0][col_shift])
 
         rows_flags = zip(
             self.table.data_list, self.table.row_flags)
-        rows_flags = sorted(rows_flags, key=temp, reverse=self.column_order)
+        rows_flags = sorted(
+            rows_flags, key=temp, reverse=self.column_order[col_shift])
         self.table.data_list = [x[0] for x in rows_flags]
         self.table.row_flags = [x[1] for x in rows_flags]
-        self.column_order = not self.column_order
 
         # self.table.table_from_flags()
         self.print_table()
+
+        self.printed_table.header.setSortIndicator(
+            col, self.column_order[col_shift])
+        # self.column_order = not self.column_order
+        self.column_order[col_shift] = not self.column_order[col_shift]
 
 
 class VmTab(Tabs):

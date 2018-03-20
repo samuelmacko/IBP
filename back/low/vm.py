@@ -49,6 +49,7 @@ class Vm(base.SpecificBase):
         else:
             # return self._connection.follow_link(self._info.host).name
             return None
+            # return ''
 
     def memory(self):
         # return str(self._info.memory)
