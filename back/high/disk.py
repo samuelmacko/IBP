@@ -135,12 +135,12 @@ class Disk(HighBase):
         # print('col', filter.column)
         # print('op', filter.operand)
         # print('val', filter.value)
-        str_col = [1, 2, 11, 12, 15, 16, 17, ]
+        str_col = [0, 1, 2, 11, 12, 15, 16, 17]
         float_col = [3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 18, 19, 20,
                      21, 22]
 
         if filter.column in str_col and \
-            filter.operand is operator.eq and isinstance(filter.value, str):
+            filter.operand == '=' and isinstance(filter.value, str):
             return True
 
         if filter.column in float_col:
@@ -150,5 +150,4 @@ class Disk(HighBase):
             except ValueError:
                 return False
 
-        print('nedostalo sa nikde')
         return False

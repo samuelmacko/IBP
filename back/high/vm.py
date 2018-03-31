@@ -73,15 +73,23 @@ class Vm(HighBase):
                 header.append('disk id')
                 # table.append('disk id')
 
-            bootable_disk = vm.bootable_disk()
+            # bootable_disk = vm.bootable_disk()
+
+            disks = vm.disks()
+
             dk_st_names = ['data.current.read', 'data.current.write',
                            'disk.read.latency', 'disk.write.latency',
                            'disk.flush.latency']
 
-            if bootable_disk:
-                table_row.append(bootable_disk.id)
+            # if bootable_disk:
+            if disks:
+                # table_row.append(bootable_disk.id)
+                table_row.append(disks)
+                # dk_list = DiskStatisticsList(
+                #     connection=self._connection, dk_id=bootable_disk.id).\
+                #     statistic_objects_list()
                 dk_list = DiskStatisticsList(
-                    connection=self._connection, dk_id=bootable_disk.id).\
+                    connection=self._connection, dk_id=disks[0].id). \
                     statistic_objects_list()
                 for i, value in enumerate(dk_list):
                     if value:

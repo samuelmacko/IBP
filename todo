@@ -1,18 +1,21 @@
-2. odavat exceptny, napr notimplemented, pretypovanie na float  atd,
+1. odavat exceptny, napr notimplemented, pretypovanie na float  atd,
     pocitat o tom
-
-3. ako je to so storage domainamy? kolko sd moze mat vmka? kolko vmiek moze mat sd?
+2. ako je to so storage domainamy? kolko sd moze mat vmka? kolko vmiek moze mat sd?
     to iste pre disky
-4. pools?
-5. instance types?
-6. users, groups?
-
-7. ako je to s certifikatom? treba? staci insecure?
-8, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
+3. ako je to s certifikatom? treba? staci insecure?
+4, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
     zly filter, please wait, ...
+5. vztah medzi networks a nics? kolko coho vmka napr?
+6. pouzit re.compile
 
-9. vztah medzi networks a nics? kolko coho vmka napr?
-10. pouzit re.compile
+7. ako riesit filter a zoradenie poloziek v liste? ked je napr viac vmiek ale
+    ukazuje iba 1.
+8. nejde zoradovanie koli listu a bude treba vsetko prerobit na 1. prvok listu
+9. prebrat s lukasom ze nieje dory napad mat column checkboxy v topmenu
+
+--------------------------------------------------
+napady:
+
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png
 2. vms/<vm_guid>/statistics. jako psycho, ale bylo by gut - vms/<vm_guid>/diskattachments - ulozit id disku, pak disks/<id>/statistics a ty latency,
@@ -25,3 +28,57 @@ ked pridavam nieco do toho co sa ma zobrazovat tak:
     2. pridam vypisanie do high
     3. v hight pridam flag (1 na viac)
     4. vo validate_filter poposuvam listy str a float
+
+------------------------------------------------------------
+
+imo toto:
+- vms
+- disks
+- hosts
+- storage domains
+- clusters
+- data centers
++ snapshots, obcas je se snapshoty problem, takze nejaky query na to jestli jsou s pameti,
+  v preview atp...
+
+object view:
+- vms + sloupce, prvne "staticke", pak "dynamicke" (statistics) + snapshot name|snapshot date|snaphost status
+  + console type urcite
+    pokud ma napr. vice disku, vypsat v GUI vzdy prvni plus nejaky symbol znazornujici, ze existuje vice zaznamu
+      priklad: foo_disk1[+]
+      kliknuti na [+] by mohlo prepnout object view na typ sloupce, eg. disks view, a aplikovalo by to filter
+        napr. kde vmnane = foo
+- disks, vicemene ok
+- hosts - nedaval bych vypis vsech vm v tomto view, spis 'pocet vm' 113[+] => odkaz na vms view a filter kde hostname = $host
+- clusters - podobne jako hosts, rozhodne macrange a vypocitat allocation mac adres!
+- data centers - podobne jako vyse
+- templates = vms vlastne, ale nebezi
+- nics + mac address, driver (virtio/em/rltk)...
+
+
+typicke sysadmin "pohledy":
+
+- hosty s urcitou verzi vdsm/libvirtu/kernelu => ktere jsou ready na update?
+  tedy takovy pre-upgrade investigation
+- storage, nejaky storage se zaplnuje nebo je potreba decommision urciteho
+  storage hw a tudiz zmigrovata data na jinou storage
+  priklad: storage Foo je 1TB, kolik tam zabiraji disky vmek data? kolik budeme potrebovat
+  mista na novou storage?
+
+
+------- znacky ---------------
+* = vypisat len 1. alebo vypisat kazde do noveho riadku?
+info = ake dalsie info?, vypisat statistiky?
+------- vv toto uz je --------
+vms - name, status, id, cluster version, host, memory, max memmory, os, template, statistiky vm (9), disk id (bootable), statisktiky disku (5), nic id (1.), stat. nic (8)
+disks - name, vm name (pre kazdu vm novy riadok), stat. vm (9), status, id, actual size, provisioned size, format, content type, storage type, stat. disk (5)
+hosts - name, vm name (pre kazdu vm novy riadok), stat. vm (9), status, id, address, cluster, nic (1.), stat. host (17)
+------- vv toto este nie -----
+clusters - name, version, error handling, cpu, fencing policy, firewall type, data center (info), hosts (*, info), vms (*, info), networks (*, info), affinity groups/labels
+data centers - name, status, version, supported version, storage domains (*, info), networks (*, info), clusters (*, info)
+storage domains - name, status, master, type, storage type, storage address, format, available space, used space, data center (info), vms (*, info), disks (*. info)
+templates - name, status, version, mem. guaranteed, mem. max, cluster (info), data center (info), vms (*, info), nics (*, info), disks (*, info), storage domain (info)
+nics - name, network (info), data center (info), version, vms (*, info), tempaltes (*, info)
+networks - name, data center (info), nics (*, info), clusters (*, info), hosts (*, info), vms (*, info), templates (*, info)
+pools - ?
+volumnes - ?

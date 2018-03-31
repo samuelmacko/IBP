@@ -61,10 +61,15 @@ class Ui_MainWindow(object):
             self, parent, connection, vm_table, disk_table, host_table,):
         self.parent = parent
         self.connection = connection
-        self.vm_tab = VmTab(table=vm_table, parent=parent)
-        self.disk_tab = DiskTab(table=disk_table, parent=parent)
-        self.host_tab = HostTab(table=host_table, parent=parent)
+        # self.vm_tab = VmTab(table=vm_table, parent=parent)
+        # self.disk_tab = DiskTab(table=disk_table, parent=parent)
+        # self.host_tab = HostTab(table=host_table, parent=parent)
         # self.tplt_table = TpltTab(table=tplt_table, parent=parent)
+
+        self.tabs_dict = {0: VmTab(table=vm_table, parent=parent),
+                          1: DiskTab(table=disk_table, parent=parent),
+                          2: HostTab(table=host_table, parent=parent)
+                          }
         self.current_tab = None
 
     def setupUi(self, MainWindow):
@@ -93,20 +98,24 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.vm_tab.table_layout = self.verticalLayout
+        # self.vm_tab.table_layout = self.verticalLayout
+        self.tabs_dict[0].table_layout = self.verticalLayout
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
 
         self.toolbutton = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton.setText('Select Column ')
         self.toolmenu = QtWidgets.QMenu(self.centralwidget)
-        for i in range(len(self.vm_tab.table.col_flags)-1):
+        # for i in range(len(self.vm_tab.values_table.col_flags)-1):
+        for i in range(len(self.tabs_dict[0].values_table.col_flags) - 1):
             action = self.toolmenu.addAction("Column " + str(i))
             action.setCheckable(True)
             # action.setChecked(True)
-            action.setChecked(self.vm_tab.table.col_flags[i-1])
+            # action.setChecked(self.vm_tab.values_table.col_flags[i - 1])
+            action.setChecked(self.tabs_dict[0].values_table.col_flags[i + 1])
             action.changed.connect(self.checkbox_clicked)
-            self.vm_tab.chbox_list.append(action)
+            # self.vm_tab.chbox_list.append(action)
+            self.tabs_dict[0].chbox_list.append(action)
         self.toolbutton.setMenu(self.toolmenu)
         self.toolbutton.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.verticalLayout_2.addWidget(self.toolbutton)
@@ -180,7 +189,8 @@ class Ui_MainWindow(object):
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.returnPressed.connect(self.line_edit_changed)
         # ------------------------------
-        self.vm_tab.line_edit = self.lineEdit
+        # self.vm_tab.line_edit = self.lineEdit
+        self.tabs_dict[0].line_edit = self.lineEdit
         # self.verticalLayout_2.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.verticalLayout_2)
 
@@ -223,7 +233,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         #------------------------------
-        self.disk_tab.table_layout = self.verticalLayout_4
+        # self.disk_tab.table_layout = self.verticalLayout_4
+        self.tabs_dict[1].table_layout = self.verticalLayout_4
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
@@ -301,12 +312,15 @@ class Ui_MainWindow(object):
         self.toolbutton_2 = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton_2.setText('Select Column ')
         self.toolmenu_2 = QtWidgets.QMenu(self.centralwidget)
-        for i in range(len(self.disk_tab.table.col_flags)-1):
+        # for i in range(len(self.disk_tab.values_table.col_flags)-1):
+        for i in range(len(self.tabs_dict[1].values_table.col_flags) - 1):
             action = self.toolmenu_2.addAction("Column " + str(i))
             action.setCheckable(True)
-            action.setChecked(self.disk_tab.table.col_flags[i-1])
+            # action.setChecked(self.disk_tab.values_table.col_flags[i - 1])
+            action.setChecked(self.tabs_dict[1].values_table.col_flags[i + 1])
             action.changed.connect(self.checkbox_clicked)
-            self.disk_tab.chbox_list.append(action)
+            # self.disk_tab.chbox_list.append(action)
+            self.tabs_dict[1].chbox_list.append(action)
             # self.disk_tab.chbox_list.insert(i, action)
         # self.toolbutton.che
         self.toolbutton_2.setMenu(self.toolmenu_2)
@@ -315,7 +329,8 @@ class Ui_MainWindow(object):
         # self.verticalLayout_5.addWidget(self.ComboBox)
 
         # ------------------------------
-        self.disk_tab.line_edit = self.lineEdit_2
+        # self.disk_tab.line_edit = self.lineEdit_2
+        self.tabs_dict[1].line_edit = self.lineEdit_2
         # self.verticalLayout_5.addWidget(self.lineEdit_2)
         self.verticalLayout_4.addLayout(self.verticalLayout_5)
 
@@ -344,7 +359,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         # ------------------------------
-        self.host_tab.table_layout = self.verticalLayout_7
+        # self.host_tab.table_layout = self.verticalLayout_7
+        self.tabs_dict[2].table_layout = self.verticalLayout_7
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
@@ -355,12 +371,15 @@ class Ui_MainWindow(object):
         self.toolbutton_3 = QtWidgets.QToolButton(self.centralwidget)
         self.toolbutton_3.setText('Select Column ')
         self.toolmenu_3 = QtWidgets.QMenu(self.centralwidget)
-        for i in range(len(self.host_tab.table.col_flags)-1):
+        # for i in range(len(self.host_tab.values_table.col_flags)-1):
+        for i in range(len(self.tabs_dict[2].values_table.col_flags) - 1):
             action = self.toolmenu_3.addAction("Column " + str(i))
             action.setCheckable(True)
-            action.setChecked(self.host_tab.table.col_flags[i-1])
+            # action.setChecked(self.host_tab.values_table.col_flags[i - 1])
+            action.setChecked(self.tabs_dict[2].values_table.col_flags[i + 1])
             action.changed.connect(self.checkbox_clicked)
-            self.host_tab.chbox_list.append(action)
+            # self.host_tab.chbox_list.append(action)
+            self.tabs_dict[2].chbox_list.append(action)
         self.toolbutton_3.setMenu(self.toolmenu_3)
         self.toolbutton_3.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.verticalLayout_8.addWidget(self.toolbutton_3)
@@ -431,7 +450,8 @@ class Ui_MainWindow(object):
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.lineEdit_3.returnPressed.connect(self.line_edit_changed)
         # ------------------------------
-        self.host_tab.line_edit = self.lineEdit_3
+        # self.host_tab.line_edit = self.lineEdit_3
+        self.tabs_dict[2].line_edit = self.lineEdit_3
         # self.verticalLayout_8.addWidget(self.lineEdit_3)
         self.verticalLayout_7.addLayout(self.verticalLayout_8)
 
@@ -948,8 +968,21 @@ class Ui_MainWindow(object):
         self.actionExport.setObjectName("actionExport")
         self.actionExport.triggered['bool'].connect(self.export)
 
+        # self.toolbutton_x = QtWidgets.QToolButton(self.centralwidget)
+        # self.toolbutton_x.setText('Select Column ')
+        # self.toolmenu_x = QtWidgets.QMenu(self.centralwidget)
+        # for i in range(len(self.vm_tab.values_table.col_flags) - 1):
+        #     action = self.toolmenu_x.addAction("Column " + str(i))
+        #     action.setCheckable(True)
+        #     action.setChecked(self.vm_tab.values_table.col_flags[i - 1])
+        #     action.changed.connect(self.checkbox_clicked)
+        #     self.vm_tab.chbox_list.append(action)
+
         self.actionAsd = QtWidgets.QAction(MainWindow)
         self.actionAsd.setObjectName("actionAsd")
+
+        self.actionAsd.setCheckable(True)
+
         self.actionAsddd = QtWidgets.QAction(MainWindow)
         self.actionAsddd.setObjectName("actionAsddd")
         self.actionSdff = QtWidgets.QAction(MainWindow)
@@ -1093,104 +1126,131 @@ class Ui_MainWindow(object):
 
     def tab_changed(self, tab_number):
         self.current_tab = tab_number
-        if tab_number == 0 and (hasattr(self, 'tableWidget') is False):
-            self.vm_tab.print_table()
-            self.tableWidget = self.vm_tab.printed_table
-            self.vm_tab.printed_table.header.setObjectName("header")
-            self.vm_tab.printed_table.header.sectionClicked['int']. \
-                connect(self.header_clicked)
-        if tab_number == 1 and (hasattr(self, 'tableWidget_2') is False):
-            # print('disk')
-            # self.disk_tab.table.table_from_flags()
-            self.disk_tab.print_table()
-            self.tableWidget_2 = self.disk_tab.printed_table
-            self.disk_tab.printed_table.header.setObjectName("header_2")
-            self.disk_tab.printed_table.header.sectionClicked['int']. \
-                connect(self.header_clicked)
-        if tab_number == 2 and (hasattr(self, 'tableWidget_3') is False):
-            # print('host')
-            self.host_tab.print_table()
-            self.tableWidget_3 = self.host_tab.printed_table
-            self.host_tab.printed_table.header.setObjectName("header_3")
-            self.host_tab.printed_table.header.sectionClicked['int']. \
-                connect(self.header_clicked)
+        # print('tab:', self.current_tab)
 
-    @header_signal
+        # if self.tabs_dict[self.current_tab].printed_table:
+        self.tabs_dict[self.current_tab].print_table()
+        self.tabs_dict[self.current_tab].printed_table.\
+            header.sectionClicked['int'].connect(self.header_clicked)
+        self.tabs_dict[self.current_tab].printed_table.\
+            cellDoubleClicked['int', 'int'].connect(self.redirect)
+
+
+        # if tab_number == 0 and (hasattr(self, 'tableWidget') is False):
+        #     self.vm_tab.print_table()
+        #     self.tableWidget = self.vm_tab.printed_table
+        #     self.vm_tab.printed_table.header.setObjectName("header")
+        #     self.vm_tab.printed_table.header.sectionClicked['int']. \
+        #         connect(self.header_clicked)
+        #     self.vm_tab.printed_table.cellDoubleClicked['int', 'int'].\
+        #         connect(self.redirect)
+        # if tab_number == 1 and (hasattr(self, 'tableWidget_2') is False):
+        #     # print('disk')
+        #     # self.disk_tab.table.table_from_flags()
+        #     self.disk_tab.print_table()
+        #     self.tableWidget_2 = self.disk_tab.printed_table
+        #     self.disk_tab.printed_table.header.setObjectName("header_2")
+        #     self.disk_tab.printed_table.header.sectionClicked['int']. \
+        #         connect(self.header_clicked)
+        # if tab_number == 2 and (hasattr(self, 'tableWidget_3') is False):
+        #     # print('host')
+        #     self.host_tab.print_table()
+        #     self.tableWidget_3 = self.host_tab.printed_table
+        #     self.host_tab.printed_table.header.setObjectName("header_3")
+        #     self.host_tab.printed_table.header.sectionClicked['int']. \
+        #         connect(self.header_clicked)
+
     # def checkbox_clicked(self, number):
+    @header_signal
     def checkbox_clicked(self):
         sender = self.centralwidget.sender()
         # print('sender:', sender.objectName())
-        if sender in self.vm_tab.chbox_list:
-            self.vm_tab.checkbox_handle(sender=sender)
-        if sender in self.disk_tab.chbox_list:
-            self.disk_tab.checkbox_handle(sender=sender)
-        if sender in self.host_tab.chbox_list:
-            self.host_tab.checkbox_handle(sender=sender)
+
+        self.tabs_dict[self.current_tab].checkbox_handle(sender=sender)
+
+        # if sender in self.vm_tab.chbox_list:
+        #     self.vm_tab.checkbox_handle(sender=sender)
+        # if sender in self.disk_tab.chbox_list:
+        #     self.disk_tab.checkbox_handle(sender=sender)
+        # if sender in self.host_tab.chbox_list:
+        #     self.host_tab.checkbox_handle(sender=sender)
 
     @header_signal
     def line_edit_changed(self):
         sender = self.centralwidget.sender()
-        if sender.objectName() == 'lineEdit':
-            self.vm_tab.line_edit_handle(sender=sender)
-        if sender.objectName() == 'lineEdit_2':
-            self.disk_tab.line_edit_handle(sender=sender)
-        if sender.objectName() == 'lineEdit_3':
-            self.host_tab.line_edit_handle(sender=sender)
+        # print('text:', sender.text())
+
+        self.tabs_dict[self.current_tab].line_edit_handle(text=sender.text())
+
+        # if sender.objectName() == 'lineEdit':
+        #     self.vm_tab.line_edit_handle(sender=sender)
+        # if sender.objectName() == 'lineEdit_2':
+        #     self.disk_tab.line_edit_handle(sender=sender)
+        # if sender.objectName() == 'lineEdit_3':
+        #     self.host_tab.line_edit_handle(sender=sender)
 
     @header_signal
     def header_clicked(self, col):
-        sender = self.centralwidget.sender()
+        # sender = self.centralwidget.sender()
         # print(sender.objectName())
-        if sender.objectName() == 'header':
-            self.vm_tab.sort_column(col=col)
-        if sender.objectName() == 'header_2':
-            self.disk_tab.sort_column(col=col)
-        if sender.objectName() == 'header_3':
-            self.host_tab.sort_column(col=col)
+        # if sender.objectName() == 'header':
+        #     self.vm_tab.sort_column(col=col)
+        # if sender.objectName() == 'header_2':
+        #     self.disk_tab.sort_column(col=col)
+        # if sender.objectName() == 'header_3':
+        #     self.host_tab.sort_column(col=col)
+        self.tabs_dict[self.current_tab].sort_column(col=col)
 
     def menu_item_clicked(self, bool):
         sender = self.centralwidget.sender()
         # print('sender:', sender.objectName())
         if sender.objectName() == 'actionSave':
+            # create_config_file(
+            #     vm_tab=self.vm_tab, disk_tab=self.disk_tab,
+            #     host_tab=self.host_tab)
             create_config_file(
-                vm_tab=self.vm_tab, disk_tab=self.disk_tab,
-                host_tab=self.host_tab)
+                vm_tab=self.tabs_dict[0], disk_tab=self.tabs_dict[1],
+                host_tab=self.tabs_dict[2])
 
     @header_signal
     def refresh(self, clicked):
         sender = self.centralwidget.sender()
-        print(sender.objectName())
-        # import ovirtsdk4 as sdk
-        # connection = sdk.Connection(
-        #     username='admin@internal', password='qum5net', insecure=True,
-        #     url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
-        #         '/ovirt-engine/api',
-        #     # ca_file=ca_file,
-        # )
-        if sender.objectName() == 'btn_1':
-            # sender.setIcon(QtGui.QIcon(
-            #     'front/suplementary/images/x.png'))
-            # self.btn_1.setIconSize(QtCore.QSize(20, 20))
-            # self.btn_1.setEnabled(False)
-            # self.btn_1.setDisabled(True)
-            self.vm_tab.table = vm.Vm(
-                connection=self.connection, col_flags=self.vm_tab.table.col_flags)
-            self.vm_tab.print_table()
-            # self.btn_1.setIcon(QtGui.QIcon(
-            #     'front/suplementary/images/refresh.gif'))
-            # self.btn_1.setEnabled(True)
-            # self.btn_1.setDisabled(False)
-        if sender.objectName() == 'btn_2':
-            self.disk_tab.table = disk.Disk(
-                connection=self.connection, col_flags=self.disk_tab.table.col_flags)
-            self.disk_tab.print_table()
-        if sender.objectName() == 'btn_3':
-            self.host_tab.table = host.Host(
-                connection=self.connection, col_flags=self.host_tab.table.col_flags)
-            self.host_tab.print_table()
+        print('refresh:', sender.objectName())
 
-
-        # connection.close()
+        # # import ovirtsdk4 as sdk
+        # # connection = sdk.Connection(
+        # #     username='admin@internal', password='qum5net', insecure=True,
+        # #     url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
+        # #         '/ovirt-engine/api',
+        # #     # ca_file=ca_file,
+        # # )
+        #
+        # # self.tabs_dict[self.current_tab].values_table
+        #
+        # if sender.objectName() == 'btn_1':
+        #     # sender.setIcon(QtGui.QIcon(
+        #     #     'front/suplementary/images/x.png'))
+        #     # self.btn_1.setIconSize(QtCore.QSize(20, 20))
+        #     # self.btn_1.setEnabled(False)
+        #     # self.btn_1.setDisabled(True)
+        #     self.vm_tab.values_table = vm.Vm(
+        #         connection=self.connection, col_flags=self.vm_tab.values_table.col_flags)
+        #     self.vm_tab.print_table()
+        #     # self.btn_1.setIcon(QtGui.QIcon(
+        #     #     'front/suplementary/images/refresh.gif'))
+        #     # self.btn_1.setEnabled(True)
+        #     # self.btn_1.setDisabled(False)
+        # if sender.objectName() == 'btn_2':
+        #     self.disk_tab.values_table = disk.Disk(
+        #         connection=self.connection, col_flags=self.disk_tab.values_table.col_flags)
+        #     self.disk_tab.print_table()
+        # if sender.objectName() == 'btn_3':
+        #     self.host_tab.values_table = host.Host(
+        #         connection=self.connection, col_flags=self.host_tab.values_table.col_flags)
+        #     self.host_tab.print_table()
+        #
+        #
+        # # connection.close()
 
     def export(self):
         file_name = QtWidgets.QFileDialog.getSaveFileName(
@@ -1199,14 +1259,35 @@ class Ui_MainWindow(object):
             with open(file_name[0], 'w') as file:
                 writer = csv.writer(file)
                 if self.current_tab == 0:
-                    self.vm_tab.table.table_from_flags()
-                    writer.writerow(self.vm_tab.table.current_headers_list)
-                    writer.writerows(self.vm_tab.table.current_data_list)
+                    self.vm_tab.values_table.table_from_flags()
+                    writer.writerow(self.vm_tab.values_table.current_headers_list)
+                    writer.writerows(self.vm_tab.values_table.current_data_list)
                 if self.current_tab == 1:
-                    self.disk_tab.table.table_from_flags()
-                    writer.writerow(self.disk_tab.table.current_headers_list)
-                    writer.writerows(self.disk_tab.table.current_data_list)
+                    self.disk_tab.values_table.table_from_flags()
+                    writer.writerow(self.disk_tab.values_table.current_headers_list)
+                    writer.writerows(self.disk_tab.values_table.current_data_list)
                 if self.current_tab == 2:
-                    self.host_tab.table.table_from_flags()
-                    writer.writerow(self.host_tab.table.current_headers_list)
-                    writer.writerows(self.host_tab.table.current_data_list)
+                    self.host_tab.values_table.table_from_flags()
+                    writer.writerow(self.host_tab.values_table.current_headers_list)
+                    writer.writerows(self.host_tab.values_table.current_data_list)
+
+    def redirect(self, row, col):
+        sender = self.centralwidget.sender()
+        print("sender:", sender, "row:", row, "col:", col)
+
+        if col in self.tabs_dict[self.current_tab].redirect_dict:
+            target_tab = self.tabs_dict[self.current_tab].redirect_dict[col]
+
+            tab_names = {0: 'vm', 1: 'disks', 2: 'hosts'}
+
+            search_string = tab_names[self.current_tab] + ' = ' + \
+                            self.tabs_dict[self.current_tab].values_table.\
+                            current_data_list[row][0]
+            self.tabs_dict[target_tab].line_edit.setText(search_string)
+            self.tabs_dict[target_tab].line_edit_handle(text=search_string)
+
+            self.tabWidget.setCurrentIndex(target_tab)
+            self.tab_changed(tab_number=target_tab)
+
+
+

@@ -25,7 +25,7 @@ class InputDialog(QtWidgets.QWidget):
         # global_variables.USER_LOGIN = self.username_input.text()
         self.username_input.setPlaceholderText('username')
         self.username_input.returnPressed.connect(self.ok_btn_clicked)
-        self.password_input = QtWidgets.QLineEdit(self)
+        self.password_input = QtWidgets.QLineEdit('qum5net', self)
         self.password_input.setPlaceholderText('password')
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.returnPressed.connect(self.ok_btn_clicked)

@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt5 import QtCore, QtWidgets
 
 
 class Table(QTableWidget):
@@ -32,9 +33,16 @@ class Table(QTableWidget):
             for n, line in enumerate(data_list):
                 for m, col in enumerate(data_list[n]):
                     if col:
-                        item = QTableWidgetItem(str(col))
+                        if isinstance(col, list):
+                            item = QTableWidgetItem(
+                                str(col[0].id)+' ('+str(len(col)-1)+')')
+                        else:
+                            item = QTableWidgetItem(str(col))
                     else:
                         item = QTableWidgetItem('')
+                    # item.setFlags(
+                    #     QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+                    item.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.setItem(n, m, item)
 
 

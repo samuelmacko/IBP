@@ -1,6 +1,8 @@
 from back.low.bases import base, statisctics_base
 from ovirtsdk4 import types
 
+#todo asi zmazat
+
 
 class NetworkList(base.ListBase):
 

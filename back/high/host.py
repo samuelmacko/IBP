@@ -138,7 +138,7 @@ class Host(HighBase):
                      24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
 
         if filter.column in str_col and \
-            filter.operand is operator.eq and isinstance(filter.value, str):
+            filter.operand == '=' and isinstance(filter.value, str):
             return True
 
         if filter.column in float_col:
