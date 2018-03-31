@@ -34,6 +34,12 @@ class Comparison(object):
             return False
         elif other.operand is None:
             return False
+
+        elif isinstance(self.operand, list):
+            return any(row.id == other.operand for row in self.operand)
+        elif isinstance(other.operand, list):
+            return any(row.id == self.operand for row in other.operand)
+
         elif to_number(value=self.operand):
             return to_number(value=self.operand) \
                    == to_number(value=other.operand)

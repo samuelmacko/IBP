@@ -1,6 +1,7 @@
-import re
 import operator
-from back.high.bases.custom_comparsion import Comparison
+import re
+
+from back.suplementary.custom_comparsion import Comparison
 
 
 class FilterHandle(object):
@@ -87,6 +88,6 @@ class FilterHandle(object):
             # if filter.operand(row[filter.column], filter.value) is False:
             # if filter.operand(Comparison(row[filter.column]),
             #                   Comparison(filter.value)) is False:
-            if op(Comparison(row[filter.column]),
-                              Comparison(filter.value)) is False:
+            if op(Comparison(row[filter.column]), Comparison(filter.value)) \
+                    is False:
                 self.table.row_flags[i] = 0

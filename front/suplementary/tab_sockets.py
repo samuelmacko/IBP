@@ -1,4 +1,4 @@
-from back.high.bases.custom_comparsion import Comparison
+from back.suplementary.custom_comparsion import Comparison
 from front.suplementary.filter_handle import FilterHandle
 from front.table import Table
 
