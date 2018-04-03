@@ -20,4 +20,8 @@ class Network(base.SpecificBase):
             network_service(id=net_id)
         self._info = self._service.get()
 
+    def data_center(self):
+        # from back.low.data_centers import DataCenter
+        return self._connection.follow_link(self._info.data_center).name
+
 

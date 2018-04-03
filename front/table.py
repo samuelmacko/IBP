@@ -35,7 +35,9 @@ class Table(QTableWidget):
                     if col:
                         if isinstance(col, list):
                             item = QTableWidgetItem(
-                                str(col[0].id)+' ('+str(len(col)-1)+')')
+                                #todo na tvrdo id
+                                # str(col[0].id)+' ('+str(len(col)-1)+')')
+                                str(col[0]) + ' (' + str(len(col) - 1) + ')')
                         else:
                             item = QTableWidgetItem(str(col))
                     else:

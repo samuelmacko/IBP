@@ -14,7 +14,26 @@
 9. prebrat s lukasom ze nieje dory napad mat column checkboxy v topmenu
 
 --------------------------------------------------
-napady:
+otazky:
+1. v clusters, co znamena allocation mac adres?
+2. v clusters vsetko ostatne moze ostat? to vo viacerych
+3. ako riesit snapshots? tie su ku kazdej vm, dat ich vsetky do kopy a dat im
+nejake vlastne idecka?
+4. ako to riesit so statistikami vmiek v diskoch (napr.), ukazovat iba 1. alebo
+neukazovat vobec?
+5. treba do niektorych (cluster, data center, ...) pridavat aj networks?
+    niesu v zozname tabov, lebo ked ich treba vypisovat v niektorych taboch
+    tak treba aby aj network mala osobitny tab
+
+6. asi nejde storage_doamins/id/vms - neukazuje aj tam kde by malo
+    nejde ani templates, malo by ukazovat ale ukazuje prazdne
+
+7. ako zaokruhlovat b na MB? vm1 ma defined memory vo webadmine 1024 MB ale v
+    api ma 1073741824 b (1073.74 MB)
+8. ake je prepojenie medzi  data_centers a templates?
+9. je vztah medzi templatom a data centrom taky ze template ma take data centrum
+ake ma jeho cluster?
+
 
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png

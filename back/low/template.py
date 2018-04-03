@@ -20,21 +20,27 @@ class Template(base.SpecificBase):
         self._info = self._service.get()
 
     def status(self):
-        status = self._info.status
-        if status is types.TemplateStatus.ILLEGAL:
-            return 'illegal'
-        if status is types.TemplateStatus.LOCKED:
-            return 'locked'
-        if status is types.TemplateStatus.OK:
-            return 'ok'
+        return self._info.status.name
+        # status = self._info.status
+        # if status is types.TemplateStatus.ILLEGAL:
+        #     return 'illegal'
+        # if status is types.TemplateStatus.LOCKED:
+        #     return 'locked'
+        # if status is types.TemplateStatus.OK:
+        #     return 'ok'
+
+    def _cluster_obj(self):
+        return self._connection.follow_link(self._info.cluster)
 
     def cluster(self):
-        #todo
-        return None
+        return self._cluster_obj().name
 
     def data_center(self):
-        #todo
-        return None
+        from back.low.cluster import Cluster
+        return Cluster(
+            connection=self._connection, cl_id=self._cluster_obj().id).\
+            data_center()
+
 
     def os(self):
         return self._info.os.type
@@ -51,24 +57,19 @@ class Template(base.SpecificBase):
         for vm in vm_list:
             vm_template = Vm(connection=self._connection, vm_id=vm.id).\
                 template()
-            if vm_template and self._info.id == vm_template:
-                vms.append(vm)
-        if len(vms) > 0:
-            return vms
-        else:
-            return None
+            if vm_template and self.name() == vm_template:
+                vms.append(vm.name)
+        return vms
+
+    def _nics_obj(self):
+        return [nic for nic in self._connection.follow_link(self._info.nics)]
 
     def nics(self):
-        nics = self._connection.follow_link(self._info.nics)
-        nics_list = []
-        if nics:
-            for nic in nics:
-                nic = self._connection.follow_link(nic)
-                nics_list.append(nic)
-        if len(nics_list) > 0:
-            return nics_list
-        else:
-            return None
+        return [nic.name for nic in self._nics_obj()]
+
+    def vnics(self):
+        return [self._connection.follow_link(nic.vnic_profile).id
+                for nic in self._nics_obj()]
 
     def disks(self):
         disk_attachments = self._connection.\
@@ -77,9 +78,5 @@ class Template(base.SpecificBase):
         if disk_attachments:
             for attachment in disk_attachments:
                 disk = self._connection.follow_link(attachment.disk)
-                disks_list.append(disk)
-        # return disks_list
-        if len(disks_list) > 0:
-            return disks_list
-        else:
-            return None
+                disks_list.append(disk.name)
+        return disks_list

@@ -1,3 +1,4 @@
+from ovirtsdk4 import types
 from back.low.bases import base
 # from back.low.host import Host, HostList
 # from back.low.vm import Vm, VmList
@@ -28,7 +29,7 @@ class Cluster(base.SpecificBase):
 
     def data_center(self):
         #todo vracia meno a nie objekt
-        return self._connection.follow_link(self._info.datacenter).name
+        return self._connection.follow_link(self._info.data_center).name
 
     def hosts(self):
         from back.low.host import Host, HostList
@@ -39,10 +40,7 @@ class Cluster(base.SpecificBase):
                 connection=self._connection, host_id=host.id).cluster()
             if host_cluster and self._info.name == host_cluster:
                 hosts.append(host.name)
-        if len(hosts) > 0:
-            return hosts
-        else:
-            return None
+        return hosts
 
     def vms(self):
         from back.low.vm import Vm, VmList
@@ -53,17 +51,24 @@ class Cluster(base.SpecificBase):
                 cluster()
             if vm_cluster and self._info.name == vm_cluster:
                 vms.append(vm.name)
-        if len(vms) > 0:
-            return vms
-        else:
-            return None
+        return vms
 
-    def networks(self):
-        networks_list = []
-        networks = self._connection.follow_link(self._info.networks)
-        for network in networks:
-            networks_list.append(network.name)
-        if len(networks_list) > 0:
-            return networks_list
-        else:
-            return None
+    # def networks(self):
+    #     networks_list = []
+    #     networks = self._connection.follow_link(self._info.networks)
+    #     for network in networks:
+    #         networks_list.append(network.name)
+    #     if len(networks_list) > 0:
+    #         return networks_list
+    #     else:
+    #         return None
+
+    #todo asi moze byt aj ine ako on_error (href?)
+    def error_handling(self):
+        return self._info.error_handling.on_error.name
+
+    def cpu(self):
+        return str(self._info.cpu.architecture)+ ' ' +str(self._info.cpu.type)
+
+    def firewall(self):
+        return self._info.firewall_type.name

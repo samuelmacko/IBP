@@ -28,13 +28,14 @@ class Disk(base.SpecificBase):
     #     return self._info.name
 
     def status(self):
-        status = self._info.status
-        if status is types.DiskStatus.ILLEGAL:
-            return 'illegal'
-        if status is types.DiskStatus.LOCKED:
-            return 'locked'
-        if status is types.DiskStatus.OK:
-            return 'ok'
+        return self._info.status.name
+        # status = self._info.status
+        # if status is types.DiskStatus.ILLEGAL:
+        #     return 'illegal'
+        # if status is types.DiskStatus.LOCKED:
+        #     return 'locked'
+        # if status is types.DiskStatus.OK:
+        #     return 'ok'
 
     def actual_size(self):
         return str(self._info.actual_size)
@@ -45,33 +46,36 @@ class Disk(base.SpecificBase):
         # return self._info.provisioned_size
 
     def format(self):
-        format = self._info.format
-        if format is types.DiskFormat.RAW:
-            return 'raw'
-        if format is types.DiskFormat.COW:
-            return 'cow'
+        return self._info.format.name
+    #     format = self._info.format
+    #     if format is types.DiskFormat.RAW:
+    #         return 'raw'
+    #     if format is types.DiskFormat.COW:
+    #         return 'cow'
 
     def content_type(self):
-        content_type = self._info.content_type
-        if content_type is types.DiskContentType.DATA:
-            return 'data'
-        if content_type is types.DiskContentType.ISO:
-            return 'iso'
-        if content_type is types.DiskContentType.MEMORY_DUMP_VOLUME:
-            return 'memory dump volume'
-        if content_type is types.DiskContentType.MEMORY_METADATA_VOLUME:
-            return 'memory metadata volume'
-        if content_type is types.DiskContentType.OVF_STORE:
-            return 'ovf store'
+        return self._info.content_type.name
+        # content_type = self._info.content_type
+        # if content_type is types.DiskContentType.DATA:
+        #     return 'data'
+        # if content_type is types.DiskContentType.ISO:
+        #     return 'iso'
+        # if content_type is types.DiskContentType.MEMORY_DUMP_VOLUME:
+        #     return 'memory dump volume'
+        # if content_type is types.DiskContentType.MEMORY_METADATA_VOLUME:
+        #     return 'memory metadata volume'
+        # if content_type is types.DiskContentType.OVF_STORE:
+        #     return 'ovf store'
 
     def storage_type(self):
-        storage_type = self._info.storage_type
-        if storage_type is types.DiskStorageType.CINDER:
-            return 'cinder'
-        if storage_type is types.DiskStorageType.IMAGE:
-            return 'image'
-        if storage_type is types.DiskStorageType.LUN:
-            return 'lun'
+        return self._info.storage_type.name
+        # storage_type = self._info.storage_type
+        # if storage_type is types.DiskStorageType.CINDER:
+        #     return 'cinder'
+        # if storage_type is types.DiskStorageType.IMAGE:
+        #     return 'image'
+        # if storage_type is types.DiskStorageType.LUN:
+        #     return 'lun'
 
     def vms(self):
         vms = []
@@ -80,8 +84,7 @@ class Disk(base.SpecificBase):
             vm_disks = Vm(connection=self._connection, vm_id=vm.id).disks()
             for vm_disk in vm_disks:
                 if self._info.id == vm_disk.id:
-                    # vms.append(vm.name)
-                    vms.append(vm)
+                    vms.append(vm.name())
         return vms
 
 
