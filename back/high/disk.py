@@ -20,44 +20,82 @@ class Disk(HighBase):
 
     def construct_table(self):
         table = []
-        header = []
+        header = ['name']
 
         disks_list = DisksList(connection=self._connection).list()
 
         for n, disk_row in enumerate(disks_list):
+            self.row_flags.append(1)
+            table_row = []
 
             disk = disk_low(connection=self._connection, dk_id=disk_row.id)
-            # self.row_flags.append(1)
-            # table_row = []
 
-            vms = disk.vms()
-            if vms:
-                for vm in vms:
+            table_row.append(disk.name())
+
+            method_dict = OrderedDict([
+                ('status', disk.status), ('id', disk.id),
+                ('actual size', disk.actual_size),
+                ('provisioned size', disk.provisioned_size),
+                ('format', disk.format), ('content type', disk.content_type),
+                ('storage type', disk.storage_type)
+            ])
+            for method in method_dict.items():
+                if n ==0:
+                    header.append(method[0])
+                table_row.append(method[1]())
+
+            st_list = DiskStatisticsList(
+                connection=self._connection, dk_id=disk.id()). \
+                statistic_objects_list()
+            for i, value in enumerate(st_list):
+                if value:
                     if n == 0:
-                        header, row = self.create_row(
-                            vm=vm, disk=disk, first_row=True)
+                        header.append(st_list[i].name())
+                        # table.append(st_list[i].name())
+                    table_row.append(
+                        str(st_list[i].value()) +' '+ str(st_list[i].unit())
+                    )
 
-                    else:
-                        row = self.create_row(
-                            vm=vm, disk=disk, first_row=False)
-                    # table_row = row
-                    table.append(row)
-            else:
-                if n == 0:
-                    header, row = self.create_row(
-                        vm=None, disk=disk, first_row=True)
 
-                else:
-                    row = self.create_row(
-                        vm=None, disk=disk, first_row=False)
-                # table_row = row
-                table.append(row)
-            # table.append(table_row)
-
+            table.append(table_row)
 
         self.data_list = table
-        # self.current_data_list = self.data_list
         self.headers_list = header
+
+        # for n, disk_row in enumerate(disks_list):
+        #
+        #     disk = disk_low(connection=self._connection, dk_id=disk_row.id)
+        #     # self.row_flags.append(1)
+        #     # table_row = []
+        #
+        #     vms = disk.vms()
+        #     if vms:
+        #         for vm in vms:
+        #             if n == 0:
+        #                 header, row = self.create_row(
+        #                     vm=vm, disk=disk, first_row=True)
+        #
+        #             else:
+        #                 row = self.create_row(
+        #                     vm=vm, disk=disk, first_row=False)
+        #             # table_row = row
+        #             table.append(row)
+        #     else:
+        #         if n == 0:
+        #             header, row = self.create_row(
+        #                 vm=None, disk=disk, first_row=True)
+        #
+        #         else:
+        #             row = self.create_row(
+        #                 vm=None, disk=disk, first_row=False)
+        #         # table_row = row
+        #         table.append(row)
+        #     # table.append(table_row)
+        #
+        #
+        # self.data_list = table
+        # # self.current_data_list = self.data_list
+        # self.headers_list = header
 
     def create_row(self, vm, disk, first_row):
 
@@ -77,7 +115,7 @@ class Disk(HighBase):
         if vm:
             if first_row:
                 header.append('vm')
-            table_row.append(vm.name)
+            table_row.append(vm)
 
             vm_st_list = VmStatisticsList(
                 connection=self._connection, vm_id=vm.id). \

@@ -52,12 +52,9 @@ class Vm(base.SpecificBase):
 
     def host(self):
         if self._info.host:
-            return self._connection.follow_link(self._info.host)
-            # return ''
+            return self._connection.follow_link(self._info.host).name
         else:
-            # return self._connection.follow_link(self._info.host).name
             return None
-            # return ''
 
     def memory(self):
         # return str(self._info.memory)

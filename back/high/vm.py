@@ -38,19 +38,20 @@ class Vm(HighBase):
                 ('status', vm.status),
                 ('id', vm.id), ('clVersion', vm.cl_version), ('host', vm.host),
                 ('memory', vm.memory), ('maxMemory', vm.memory_max),
-                ('os', vm.os), ('template', vm.template)
+                ('os', vm.os), ('template', vm.template), ('disks', vm.disks),
+                ('NICs', vm.nics)
             ])
-            for i, method in enumerate(method_dict.items()):
+            for method in method_dict.items():
                 # if self._flags[i]:
                 if n == 0:
                     header.append(method[0])
                     # table.append(method[0])
-                if method[0] == 'host':
-                    if method[1]():
-                        table_row.append(method[1]().name)
-                    else:
-                        table_row.append('')
-                    continue
+                # if method[0] == 'host':
+                #     if method[1]():
+                #         table_row.append(method[1]().name)
+                #     else:
+                #         table_row.append('')
+                #     continue
                 table_row.append(method[1]())
 
             st_list = VmStatisticsList(
@@ -69,73 +70,73 @@ class Vm(HighBase):
             # disks = vm.disks()
 
             # if self._flags[18]:
-            if n == 0:
-                header.append('disk id')
+            # if n == 0:
+            #     header.append('disk id')
                 # table.append('disk id')
 
             # bootable_disk = vm.bootable_disk()
 
-            disks = vm.disks()
+            # disks = vm.disks()
+            #
+            # dk_st_names = ['data.current.read', 'data.current.write',
+            #                'disk.read.latency', 'disk.write.latency',
+            #                'disk.flush.latency']
+            #
+            # # if bootable_disk:
+            # if disks:
+            #     # table_row.append(bootable_disk.id)
+            #     table_row.append(disks)
+            #     # dk_list = DiskStatisticsList(
+            #     #     connection=self._connection, dk_id=bootable_disk.id).\
+            #     #     statistic_objects_list()
+            #     dk_list = DiskStatisticsList(
+            #         connection=self._connection, dk_id=disks[0].id). \
+            #         statistic_objects_list()
+            #     for i, value in enumerate(dk_list):
+            #         if value:
+            #             if n == 0:
+            #                 header.append(dk_st_names[i])
+            #                 # table.append(dk_list[i].name())
+            #             table_row.append(
+            #                 str(dk_list[i].value()) +' '+ str(dk_list[i].unit())
+            #             )
+            # else:
+            #     for i in range(6):
+            #         if n == 0:
+            #             header.append(dk_st_names[i])
+            #         # table_row.append('')
+            #         table_row.append(None)
 
-            dk_st_names = ['data.current.read', 'data.current.write',
-                           'disk.read.latency', 'disk.write.latency',
-                           'disk.flush.latency']
-
-            # if bootable_disk:
-            if disks:
-                # table_row.append(bootable_disk.id)
-                table_row.append(disks)
-                # dk_list = DiskStatisticsList(
-                #     connection=self._connection, dk_id=bootable_disk.id).\
-                #     statistic_objects_list()
-                dk_list = DiskStatisticsList(
-                    connection=self._connection, dk_id=disks[0].id). \
-                    statistic_objects_list()
-                for i, value in enumerate(dk_list):
-                    if value:
-                        if n == 0:
-                            header.append(dk_st_names[i])
-                            # table.append(dk_list[i].name())
-                        table_row.append(
-                            str(dk_list[i].value()) +' '+ str(dk_list[i].unit())
-                        )
-            else:
-                for i in range(6):
-                    if n == 0:
-                        header.append(dk_st_names[i])
-                    # table_row.append('')
-                    table_row.append(None)
-
-            nics = vm.nics()
-            nics_st_names = ['data.current.rx', 'data.current.tx',
-                             'data.current.rx.bps', 'data.current.tx.bps',
-                             'errors.total.rx', 'errors.total.tx',
-                             'data.total.rx', 'data.total.tx']
-
-            if nics:
-                if n == 0:
-                    header.append('nic id')
-                    # table.append('nic id')
-                table_row.append(nics[0].id)
-
-                nic_list = NICStatisticsList(
-                    connection=self._connection, nic_id=nics[0].id,
-                    vm_id=vm.id()).statistic_objects_list()
-
-                for i, value in enumerate(nic_list):
-                    if value:
-                        if n == 0:
-                            header.append(nics_st_names[i])
-                            # table.append(nic_list[i].name())
-                        table_row.append(
-                            str(nic_list[i].value()) +' '+ str(nic_list[i].unit())
-                        )
-            else:
-                for i in range(8):
-                    if n == 0:
-                        header.append(nics_st_names[i])
-                    # table_row.append('')
-                    table_row.append(None)
+            # nics = vm.nics()
+            # nics_st_names = ['data.current.rx', 'data.current.tx',
+            #                  'data.current.rx.bps', 'data.current.tx.bps',
+            #                  'errors.total.rx', 'errors.total.tx',
+            #                  'data.total.rx', 'data.total.tx']
+            #
+            # if nics:
+            #     if n == 0:
+            #         header.append('nic id')
+            #         # table.append('nic id')
+            #     table_row.append(nics[0].id)
+            #
+            #     nic_list = NICStatisticsList(
+            #         connection=self._connection, nic_id=nics[0].id,
+            #         vm_id=vm.id()).statistic_objects_list()
+            #
+            #     for i, value in enumerate(nic_list):
+            #         if value:
+            #             if n == 0:
+            #                 header.append(nics_st_names[i])
+            #                 # table.append(nic_list[i].name())
+            #             table_row.append(
+            #                 str(nic_list[i].value()) +' '+ str(nic_list[i].unit())
+            #             )
+            # else:
+            #     for i in range(8):
+            #         if n == 0:
+            #             header.append(nics_st_names[i])
+            #         # table_row.append('')
+            #         table_row.append(None)
 
 
             table.append(table_row)

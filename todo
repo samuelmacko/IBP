@@ -13,17 +13,15 @@
 8. nejde zoradovanie koli listu a bude treba vsetko prerobit na 1. prvok listu
 9. prebrat s lukasom ze nieje dory napad mat column checkboxy v topmenu
 
+10. pridat tab networks
+11. statistiky iba v danom tabe
+
 --------------------------------------------------
 otazky:
 1. v clusters, co znamena allocation mac adres?
 2. v clusters vsetko ostatne moze ostat? to vo viacerych
 3. ako riesit snapshots? tie su ku kazdej vm, dat ich vsetky do kopy a dat im
 nejake vlastne idecka?
-4. ako to riesit so statistikami vmiek v diskoch (napr.), ukazovat iba 1. alebo
-neukazovat vobec?
-5. treba do niektorych (cluster, data center, ...) pridavat aj networks?
-    niesu v zozname tabov, lebo ked ich treba vypisovat v niektorych taboch
-    tak treba aby aj network mala osobitny tab
 
 6. asi nejde storage_doamins/id/vms - neukazuje aj tam kde by malo
     nejde ani templates, malo by ukazovat ale ukazuje prazdne

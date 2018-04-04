@@ -19,48 +19,83 @@ class Host(HighBase):
 
     def construct_table(self):
         table = []
-        header = []
+        header = ['name']
 
         hosts_list = HostList(connection=self._connection).list()
 
         for n, host_row in enumerate(hosts_list):
-            host = host_low(connection=self._connection,
-                            host_id=host_row.id)
-            # self.row_flags.append(1)
-            # table_row = []
+            self.row_flags.append(1)
+            table_row = []
 
-            vms = host.vms()
-            if vms:
-                for vm in vms:
+            host = host_low(connection=self._connection, host_id=host_row.id)
+
+            table_row.append(host.name())
+
+            method_dict = OrderedDict([
+                ('status', host.status), ('id', host.id),
+                ('address', host.address), ('cluster', host.cluster),
+                ('nic', host.nics)
+            ])
+            for method in method_dict.items():
+                if n ==0:
+                    header.append(method[0])
+                table_row.append(method[1]())
+
+            st_list = HostStatisticsList(
+                connection=self._connection, host_id=host.id()). \
+                statistic_objects_list()
+            for i, value in enumerate(st_list):
+                if value:
                     if n == 0:
-                        header, row = self.create_row(
-                            vm=vm, host=host, first_row=True)
+                        header.append(st_list[i].name())
+                        # table.append(st_list[i].name())
+                    table_row.append(
+                        str(st_list[i].value()) + ' ' + str(st_list[i].unit())
+                    )
 
-                    else:
-                        row = self.create_row(
-                            vm=vm, host=host, first_row=False)
-                    # table_row = row
-                    table.append(row)
-                    # table_row.extend(row)
-            else:
-                if n == 0:
-                    header, row = self.create_row(
-                        vm=None, host=host, first_row=True)
-
-                else:
-                    row = self.create_row(
-                        vm=None, host=host, first_row=False)
-                # table_row = row
-                    table.append(row)
-            # table.append(table_row)
-            # table.extend(table_row)
+            table.append(table_row)
 
         self.data_list = table
-        # self.data_list.extend(table)
-        # self.current_data_list = self.data_list
         self.headers_list = header
-        # self.headers_list.extend('a')
-        # self.headers_list.extend(header)
+
+        # for n, host_row in enumerate(hosts_list):
+        #     host = host_low(connection=self._connection,
+        #                     host_id=host_row.id)
+        #     # self.row_flags.append(1)
+        #     # table_row = []
+        #
+        #     vms = host.vms()
+        #     if vms:
+        #         for vm in vms:
+        #             if n == 0:
+        #                 header, row = self.create_row(
+        #                     vm=vm, host=host, first_row=True)
+        #
+        #             else:
+        #                 row = self.create_row(
+        #                     vm=vm, host=host, first_row=False)
+        #             # table_row = row
+        #             table.append(row)
+        #             # table_row.extend(row)
+        #     else:
+        #         if n == 0:
+        #             header, row = self.create_row(
+        #                 vm=None, host=host, first_row=True)
+        #
+        #         else:
+        #             row = self.create_row(
+        #                 vm=None, host=host, first_row=False)
+        #         # table_row = row
+        #             table.append(row)
+        #     # table.append(table_row)
+        #     # table.extend(table_row)
+        #
+        # self.data_list = table
+        # # self.data_list.extend(table)
+        # # self.current_data_list = self.data_list
+        # self.headers_list = header
+        # # self.headers_list.extend('a')
+        # # self.headers_list.extend(header)
 
     def create_row(self, vm, host, first_row):
 

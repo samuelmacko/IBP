@@ -1022,7 +1022,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), _translate("MainWindow", "Data Centers"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), _translate("MainWindow", "Templates"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_8), _translate("MainWindow", "NICs"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_9), _translate("MainWindow", "Tab 9"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_9), _translate("MainWindow", "Networks"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), _translate("MainWindow", "Tab 10"))
         self.menuFile.setTitle(_translate("MainWindow", "file"))
         self.menuAsd_2.setTitle(_translate("MainWindow", "asd"))

@@ -6,7 +6,7 @@ import global_variables
 def create_config_file(vm_tab, disk_tab, host_tab):
     try:
         tab_list = [vm_tab, disk_tab, host_tab]
-        with open(global_variables.ROOT_FILE_PATH + '/config', 'w+')\
+        with open(global_variables.ROOT_FILE_PATH + '/config2', 'w+')\
                 as config_file:
             config_file.write(global_variables.USER_LOGIN + '\n')
             config_file.write(global_variables.FQDN + '\n')
@@ -21,14 +21,19 @@ def create_config_file(vm_tab, disk_tab, host_tab):
 class ConfigFile(object):
 
     def __init__(self):
-        self.vm_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                       1, 1, 1]
-        self.disk_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                         1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        # self.vm_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                1, 1, 1]
+        # self.disk_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        # self.host_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        #                  1, 1, 1, 1, 1, 1, 1]
+        self.vm_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                       1, 1, 1, 1, 1, 1, 1, 1, 1]
+        self.disk_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         self.host_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                         1, 1, 1, 1, 1, 1, 1]
+                         1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         self.load_flags()
 
     def load_flags(self):

@@ -25,6 +25,7 @@ class StatisticBase(base.SpecificBase):
         return self._info.type
 
     def unit(self):
+        # return self._info.unit.name
         unit = self._info.unit
         if unit == types.StatisticUnit.BITS_PER_SECOND:
             return 'b/s'
