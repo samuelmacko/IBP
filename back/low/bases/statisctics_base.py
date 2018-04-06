@@ -13,7 +13,7 @@ class StatisticsListBase(base.ListBase):
     #     pass
 
 
-class StatisticBase(base.SpecificBase):
+class StatisticBase(base.EntityBase):
 
     def __init__(self, connection):
         super(StatisticBase, self).__init__(connection=connection)
@@ -44,7 +44,8 @@ class StatisticBase(base.SpecificBase):
 
     def value(self):
         #todo poriesit ako to bude s viacerimi hodnotami
-        if len(self._info.values) > 0:
+        # if len(self._info.values) > 0:
+        if self._info.values:
             return self._info.values[0].datum
         else:
             return '--'

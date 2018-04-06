@@ -2,6 +2,7 @@ from back.low.bases import base, statisctics_base
 # from back.low.vm import Vm, VmList
 from ovirtsdk4 import types
 # import back.low.vm as Vm
+from back.suplementary.cell_item import CellItem
 
 
 class HostList(base.ListBase):
@@ -14,114 +15,78 @@ class HostList(base.ListBase):
 
 class Host(base.SpecificBase):
 
-    def __init__(self, connection, host_id):
-        super(Host, self).__init__(connection=connection)
+    def __init__(self, connection, id):
+        super(Host, self).__init__(connection=connection, id=id)
         self._service = connection.system_service().\
-            hosts_service().host_service(id=host_id)
+            hosts_service().host_service(id=id)
         self._info = self._service.get()
 
-    def status(self):
-        return self._info.status.name
-        # status = self._info.status
-        # if status is types.HostStatus.CONNECTING:
-        #     return 'connecting'
-        # if status is types.HostStatus.DOWN:
-        #     return 'down'
-        # if status is types.HostStatus.ERROR:
-        #     return 'error'
-        # if status is types.HostStatus.INITIALIZING:
-        #     return 'initializing'
-        # if status is types.HostStatus.INSTALLING:
-        #     return 'installing'
-        # if status is types.HostStatus.INSTALLING_OS:
-        #     return 'initializing os'
-        # if status is types.HostStatus.INSTALL_FAILED:
-        #     return 'install failed'
-        # if status is types.HostStatus.KDUMPING:
-        #     return 'kdumping'
-        # if status is types.HostStatus.MAINTENANCE:
-        #     return 'maintenance'
-        # if status is types.HostStatus.NON_OPERATIONAL:
-        #     return 'non operational'
-        # if status is types.HostStatus.NON_RESPONSIVE:
-        #     return 'non responsive'
-        # if status is types.HostStatus.PENDING_APPROVAL:
-        #     return 'pending approval'
-        # if status is types.HostStatus.PREPARING_FOR_MAINTENANCE:
-        #     return 'preparing for maintenance'
-        # if status is types.HostStatus.REBOOT:
-        #     return 'reboot'
-        # if status is types.HostStatus.UNASSIGNED:
-        #     return 'unassigned'
-        # if status is types.HostStatus.UP:
-        #     return 'up'
+    def _status(self):
+        name = 'Status'
+        return CellItem(name=name, value=self._info._status.name)
 
-    def address(self):
-        return self._info.address
+    def _address(self):
+        name = 'Address'
+        return CellItem(name=name, value=self._info._address)
 
-    def cluster(self):
-        #todo vracia meno a nie objekt
-        return self._connection.follow_link(self._info.cluster).name
+    def _cluster(self):
+        name = 'Cluster'
+        return CellItem(name=name,
+                        value=self._connection.follow_link(
+                            self._info._cluster).name)
 
-    def nics(self):
-        # nics = self._connection.follow_link(self._info.nics)
+    def _nics(self):
+        name = 'NICs'
+        # _nics = self._connection.follow_link(self._info._nics)
         # nics_list = []
-        # for nic in nics:
+        # for nic in _nics:
         #     nic = self._connection.follow_link(nic)
         #     nics_list.append(nic)
         # if len(nics_list) > 0:
         #     return nics_list
         # else:
         #     return None
-        nics = self._connection.follow_link(self._info.nics)
-        # if nics:
-        return [nic.name for nic in nics]
+        nics = self._connection.follow_link(self._info._nics)
+        # if _nics:
+        return CellItem(name=name, value=[nic.name for nic in nics])
         # else:
         #     return None
 
-    def vms(self):
+    def _vms(self):
+        name = 'VMs'
         # from back.low.vm import Vm, VmList
-        # vms = []
+        # _vms = []
         # vm_list = VmList(connection=self._connection).list()
         # for vm in vm_list:
-        #     vm_host = Vm(connection=self._connection, vm_id=vm.id).host()
+        #     vm_host = Vm(connection=self._connection, vm_id=vm.id)._host()
         #     if vm_host and self._info.id == vm_host.id:
-        #         vms.append(vm)
-        # if len(vms) > 0:
-        #     return vms
+        #         _vms.append(vm)
+        # if len(_vms) > 0:
+        #     return _vms
         # else:
         #     return None
 
         from back.low.vm import Vm, VmList
+        vms = []
         vm_list = VmList(connection=self._connection).list()
-        return [vm.name for vm in vm_list if self._info.name ==
-                Vm(connection=self._connection, vm_id=vm.id).host()]
+        for vm in vm_list:
+            vm_host = Vm(connection=self._connection, id=vm.id).host_obj()
+            if self._info.name == vm_host:
+                vms.append(vm.name)
+        return CellItem(name=name, value=vms)
 
+    def networks_obj(self):
+        network_attachments = self._connection.follow_link(
+            self._info.network_attachments)
+        return [self._connection.follow_link(network_att.network)
+                for network_att in network_attachments]
 
-class HostStatisticsList(statisctics_base.StatisticsListBase):
+    def _networks(self):
+        name = 'Networks'
+        return CellItem(name=name,
+                        value=[net.name for net in self.networks_obj()])
 
-    def __init__(self, connection, host_id):
-        super(HostStatisticsList, self).__init__(
-            connection=connection, id=host_id)
-        self._service = self._service. \
-            hosts_service().host_service(id=host_id).statistics_service()
-        self._list = self._service.list()
-
-    def statistic_objects_list(self):
-        statistic_objects = []
-        for i in range(17):
-            statistic_objects.append(
-                HostStatistic(connection=self._connection, host_id=self._id,
-                              st_id=self._list[i].id)
-            )
-        return statistic_objects
-
-
-class HostStatistic(statisctics_base.StatisticBase):
-
-    def __init__(self, connection, host_id, st_id):
-        super(HostStatistic, self).__init__(connection=connection)
-        self._service = self._service.hosts_service().\
-            host_service(id=host_id).statistics_service().\
-            statistic_service(id=st_id)
-        self._info = self._service.get()
+    def methods_list(self):
+        return [self.name, self.id, self._status, self._address,
+                self._cluster, self._nics, self._vms,
+                self._networks]

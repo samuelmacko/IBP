@@ -38,7 +38,7 @@ zaobalujucich rest api ovirtu - poskytuje prostriedky pre automatizaciu prace s 
 6.
 - mojim riesenim je tabulka v ktorej budu prehladne zobrazene vsetky potrebne parametre.
 - toto je zatial velmi hruby navrh finalneho vzhladu, uzivatel si z ponuky vyberie entitu 
-(napriklad VMka, host, cluster, storage a tak dalej) a potom tabulka zobrazi pozadovane data.
+(napriklad VMka, _host, _cluster, storage a tak dalej) a potom tabulka zobrazi pozadovane data.
 - tabulka bude data iba zobrazovat, nebude umoznovat menit ziadne parametre
 - kedze o kazdej entite je vela druhov informacii a keby sme ich chceli zobrazit vsetky musela by byt tabulka 
 neprakticky siroka tak si uzivatel bude moct vybrat ktore stlpce sa zobrazia

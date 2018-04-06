@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.15)  25 MAR 2018 15:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded _format=pdflatex 2017.11.15)  25 MAR 2018 15:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1210,7 +1210,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+Package: kvoptions 2011/06/30 v3.11 Key value _format for package options (HO)
 )
 \@linkdim=\dimen175
 \Hy@linkcounter=\count287
@@ -1365,11 +1365,11 @@ File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 \@vyskaobr=\skip82
 \@sirkaobr=\skip83
 
-<template-fig/VUT_symbol_barevne_CMYK_CZ.pdf, id=161, 167.13641pt x 165.87971pt
+<_template-fig/VUT_symbol_barevne_CMYK_CZ.pdf, id=161, 167.13641pt x 165.87971pt
 >
-File: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf Graphic file (type pdf)
- <use template-fig/VUT_symbol_barevne_CMYK_CZ.pdf>
-Package pdftex.def Info: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf used on in
+File: _template-fig/VUT_symbol_barevne_CMYK_CZ.pdf Graphic file (type pdf)
+ <use _template-fig/VUT_symbol_barevne_CMYK_CZ.pdf>
+Package pdftex.def Info: _template-fig/VUT_symbol_barevne_CMYK_CZ.pdf used on in
 put line 172.
 (pdftex.def)             Requested size: 116.65646pt x 115.17995pt.
 LaTeX Font Info:    Try loading font information for T1+fos on input line 172.
@@ -1387,11 +1387,11 @@ LaTeX Font Info:    Font shape `T1/fos/bx/n' in size <10> not available
 (Font)              Font shape `T1/fos/b/n' tried instead on input line 172.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./template-fig/VUT_symbol_
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./_template-fig/VUT_symbol_
 barevne_CMYK_CZ.pdf>]
 Overfull \hbox (0.92596pt too wide) in paragraph at lines 172--172
-\T1/lmr/m/n/10.95 Sem bu-dou zap-sána jed-notlivá klí£ová slova v £eském (slove
-n-ském) jazyce, odd-¥lená £árkami. 
+\T1/lmr/m/n/10.95 Sem bu-dou zap-sï¿½na jed-notlivï¿½ klï¿½ovï¿½ slova v ï¿½eskï¿½m (slove
+n-skï¿½m) jazyce, odd-ï¿½lenï¿½ ï¿½ï¿½rkami. 
  []
 
 [2] [3] (./projekt.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
@@ -1562,20 +1562,20 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ]
 Overfull \hbox (36.78644pt too wide) in paragraph at lines 57--58
-\T1/lmr/m/n/10.95 lu²ný parametr ²ablony v souboru pro-jekt.tex (nap°.: []\T1/l
+\T1/lmr/m/n/10.95 luï¿½nï¿½ parametr ï¿½ablony v souboru pro-jekt.tex (napï¿½.: []\T1/l
 mtt/m/n/10.95 documentclass[english]{fitthesis}
  []
 
 
 Overfull \hbox (2.49138pt too wide) in paragraph at lines 58--59
-\T1/lmr/m/n/10.95 znak·. Vhodný název m·ºe být nap°.: ``\T1/lmtt/m/n/10.95 xlog
+\T1/lmr/m/n/10.95 znakï¿½. Vhodnï¿½ nï¿½zev mï¿½ï¿½e bï¿½t napï¿½.: ``\T1/lmtt/m/n/10.95 xlog
 in00-Cisteni-a-extrakce-textu.tex\T1/lmr/m/n/10.95 ''.
  []
 
 [33]
 Overfull \hbox (0.1918pt too wide) in paragraph at lines 71--72
-[]\T1/lmr/m/n/10.95 Obsah práce se generuje stan-dard-ním p°íkazem \T1/lmtt/m/n
-/10.95 \tableofcontents \T1/lmr/m/n/10.95 (zahrnut v ²ablon¥).
+[]\T1/lmr/m/n/10.95 Obsah prï¿½ce se generuje stan-dard-nï¿½m pï¿½ï¿½kazem \T1/lmtt/m/n
+/10.95 \tableofcontents \T1/lmr/m/n/10.95 (zahrnut v ï¿½ablonï¿½).
  []
 
 
@@ -1583,14 +1583,14 @@ LaTeX Warning: Citation `fitWeb' on page 34 undefined on input line 85.
 
 [34]
 Overfull \hbox (5.41241pt too wide) in paragraph at lines 100--101
-[]\T1/lmr/m/n/10.95 P°enositelný open-source ed-i-tor vek-torové grafiky (SVG i
- PDF). Vynika-jící nástroj
+[]\T1/lmr/m/n/10.95 Pï¿½enositelnï¿½ open-source ed-i-tor vek-torovï¿½ grafiky (SVG i
+ PDF). Vynika-jï¿½cï¿½ nï¿½stroj
  []
 
 [35]
 Overfull \hbox (1.3396pt too wide) in paragraph at lines 122--123
-[]\T1/lmr/m/n/10.95 N¥které balí£ky jsou vyuºity p°ímo v ²ablon¥ (v dolní £ásti
- souboru fit-the-sis.cls). Nahléd-
+[]\T1/lmr/m/n/10.95 Nï¿½kterï¿½ balï¿½ky jsou vyuï¿½ity pï¿½ï¿½mo v ï¿½ablonï¿½ (v dolnï¿½ ï¿½ï¿½sti
+ souboru fit-the-sis.cls). Nahlï¿½d-
  []
 
 )
@@ -1613,10 +1613,10 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
-Here is how much of TeX's memory you used:
+Here is how much of TeX's _memory you used:
  22286 strings out of 493029
  360655 string characters out of 6136233
- 428651 words of memory out of 5000000
+ 428651 words of _memory out of 5000000
  25192 multiletter control sequences out of 15000+600000
  119688 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1640,5 +1640,5 @@ PDF statistics:
  729 PDF objects out of 1000 (max. 8388607)
  635 compressed objects within 7 object streams
  254 named destinations out of 1000 (max. 500000)
- 389 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 389 words of extra _memory for PDF output out of 10000 (max. 10000000)
 

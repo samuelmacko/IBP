@@ -11,7 +11,7 @@ import os
 
 from PyQt5 import QtCore, QtWidgets, QtGui
 
-from back.high import vm, disk, host
+from back.high import vms, disks, hosts
 from back.suplementary.config_file import create_config_file
 from front.suplementary.decorators import header_signal
 from front.suplementary.tab_sockets import (VmTab, DiskTab, HostTab)
@@ -1023,7 +1023,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), _translate("MainWindow", "Templates"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_8), _translate("MainWindow", "NICs"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_9), _translate("MainWindow", "Networks"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), _translate("MainWindow", "Tab 10"))
+        # self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), _translate("MainWindow", "Tab 10"))
         self.menuFile.setTitle(_translate("MainWindow", "file"))
         self.menuAsd_2.setTitle(_translate("MainWindow", "asd"))
         self.menuQwe.setTitle(_translate("MainWindow", "qwe"))
@@ -1063,7 +1063,7 @@ class Ui_MainWindow(object):
         #     self.disk_tab.printed_table.header.sectionClicked['int']. \
         #         connect(self.header_clicked)
         # if tab_number == 2 and (hasattr(self, 'tableWidget_3') is False):
-        #     # print('host')
+        #     # print('_host')
         #     self.host_tab.print_table()
         #     self.tableWidget_3 = self.host_tab.printed_table
         #     self.host_tab.printed_table.header.setObjectName("header_3")
@@ -1155,7 +1155,7 @@ class Ui_MainWindow(object):
         #         connection=self.connection, col_flags=self.disk_tab.values_table.col_flags)
         #     self.disk_tab.print_table()
         # if sender.objectName() == 'btn_3':
-        #     self.host_tab.values_table = host.Host(
+        #     self.host_tab.values_table = _host.Host(
         #         connection=self.connection, col_flags=self.host_tab.values_table.col_flags)
         #     self.host_tab.print_table()
         #
@@ -1197,7 +1197,7 @@ class Ui_MainWindow(object):
         if col in self.tabs_dict[self.current_tab].redirect_dict:
             target_tab = self.tabs_dict[self.current_tab].redirect_dict[col]
 
-            tab_names = {0: 'vm', 1: 'disks', 2: 'hosts'}
+            tab_names = {0: 'vm', 1: '_disks', 2: 'hosts'}
 
             search_string = tab_names[self.current_tab] + ' = ' + \
                             self.tabs_dict[self.current_tab].values_table.\

@@ -5,12 +5,17 @@ import time
 from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
-from back.high import vm, disk, host
+from back.high import vms, disks, hosts
 from back.suplementary.config_file import ConfigFile
 from front.input_dialog import InputDialog
 from front.main_window import Ui_MainWindow
 
-import global_variables
+from back.low.vm import Vm
+from back.low.disk import Disk
+from back.low.host import Host
+
+# import global_variables
+from global_variables import build_classes_dict
 
 
 # app = QApplication(sys.argv)
@@ -64,11 +69,14 @@ def main():
 
     flags = ConfigFile()
 
-    vm_table = vm.Vm(connection=connection, col_flags=flags.vm_tab)
+    vm_table = vms.Vm(connection=connection, col_flags=flags.vm_tab,
+                      build_classes=build_classes_dict['VM'])
     prog_bar.setValue(1)
-    disk_table = disk.Disk(connection=connection, col_flags=flags.disk_tab)
+    disk_table = disks.Disk(connection=connection, col_flags=flags.disk_tab,
+                            build_classes=build_classes_dict['Disk'])
     prog_bar.setValue(2)
-    host_table = host.Host(connection=connection, col_flags=flags.host_tab)
+    host_table = hosts.Host(connection=connection, col_flags=flags.host_tab,
+                            build_classes=build_classes_dict['Host'])
     prog_bar.setValue(3)
     # tplt_table =
 
