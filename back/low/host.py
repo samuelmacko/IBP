@@ -23,34 +23,26 @@ class Host(base.SpecificBase):
 
     def _status(self):
         name = 'Status'
-        return CellItem(name=name, value=self._info._status.name)
+        return CellItem(name=name, value=self._info.status.name)
 
     def _address(self):
         name = 'Address'
-        return CellItem(name=name, value=self._info._address)
+        return CellItem(name=name, value=self._info.address)
 
-    def _cluster(self):
+    def cluster_obj(self):
+        return self._connection.follow_link(self._info.cluster)
+
+    def cluster(self):
         name = 'Cluster'
-        return CellItem(name=name,
-                        value=self._connection.follow_link(
-                            self._info._cluster).name)
+        return CellItem(name=name, value=self.cluster_obj().name)
+
+    def nics_obj(self):
+        nics = self._connection.follow_link(self._info.nics)
+        return [nic for nic in nics]
 
     def _nics(self):
         name = 'NICs'
-        # _nics = self._connection.follow_link(self._info._nics)
-        # nics_list = []
-        # for nic in _nics:
-        #     nic = self._connection.follow_link(nic)
-        #     nics_list.append(nic)
-        # if len(nics_list) > 0:
-        #     return nics_list
-        # else:
-        #     return None
-        nics = self._connection.follow_link(self._info._nics)
-        # if _nics:
-        return CellItem(name=name, value=[nic.name for nic in nics])
-        # else:
-        #     return None
+        return CellItem(name=name, value=[nic.name for nic in self.nics_obj()])
 
     def _vms(self):
         name = 'VMs'
@@ -87,6 +79,7 @@ class Host(base.SpecificBase):
                         value=[net.name for net in self.networks_obj()])
 
     def methods_list(self):
-        return [self.name, self.id, self._status, self._address,
-                self._cluster, self._nics, self._vms,
-                self._networks]
+        return [
+            self.name, self.id, self._status, self._address, self.cluster,
+            self._nics, self._vms, self._networks
+        ]

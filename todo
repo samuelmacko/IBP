@@ -6,16 +6,10 @@
 4, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
     zly filter, please wait, ...
 5. vztah medzi _networks a _nics? kolko coho vmka napr?
-6. pouzit re.compile
 
-7. nejde zoradovanie koli listu a bude treba vsetko prerobit na 1. prvok listu
 8. prebrat s lukasom ze nieje dory napad mat column checkboxy v topmenu
 
-9. v disk-provosioned size ukazuje podla strinkgu nie podla cisla
-
 10. statistiky NICs
-11. self.statistics nastavuje stale an false, treba poriest aby sa bralo to
-    definovane v hogh/classe
 
 --------------------------------------------------
 otazky:
@@ -24,7 +18,7 @@ otazky:
 3. ako riesit snapshots? tie su ku kazdej vm, dat ich vsetky do kopy a dat im
 nejake vlastne idecka?
 
-6. asi nejde storage_doamins/id/_vms - neukazuje aj tam kde by malo
+6. asi nejde storage_doamins/id/vms - neukazuje aj tam kde by malo
     nejde ani templates, malo by ukazovat ale ukazuje prazdne
 
 7. ako zaokruhlovat b na MB? vm1 ma defined _memory vo webadmine 1024 MB ale v

@@ -1,5 +1,4 @@
 from back.high.bases.base import HighBase
-from back.suplementary.filter_restrictions import FilterRestrictions
 
 
 class StorageDomains(HighBase):
@@ -12,7 +11,4 @@ class StorageDomains(HighBase):
             self.col_flags = col_flags
         else:
             self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        self.filter_restrictions = FilterRestrictions(
-            str_col=[],
-            float_col=[]
-        )
+        self.filter_restrictions = {0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12}

@@ -21,33 +21,31 @@ def create_config_file(vm_tab, disk_tab, host_tab):
 class ConfigFile(object):
 
     def __init__(self):
-        # self.vm_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        #                1, 1, 1, 1, 1, 1, 1, 1, 1]
-        # self.disk_tab = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        # self.host_tab = [1, 1, 1, 1, 1, 1,
-        #                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        #                  1, 1, 1, 1, 1, 1, 1]
-        self.vm_tab = None
-        self.disk_tab = None
-        self.host_tab = None
+        self.tab_flags = [None] * 9
         self.load_flags()
 
     def load_flags(self):
         try:
             with open(global_variables.ROOT_FILE_PATH + '/config', 'r')\
                     as config_file:
-                for line_number, line in enumerate(config_file):
-                    if line_number < 2:
-                        continue
-                    flag_list = []
-                    for flag in line:
-                        if flag != '\n':
-                            flag_list.append(int(flag))
-                    if line_number == 2:
-                        self.vm_tab = flag_list
-                    elif line_number == 3:
-                        self.disk_tab = flag_list
-                    elif line_number == 4:
-                        self.host_tab = flag_list
+                for tab in self.tab_flags:
+
+                    for line_number, line in enumerate(config_file):
+                        if line_number < 2:
+                            continue
+                        flag_list = []
+                        for flag in line:
+                            if flag != '\n':
+                                flag_list.append(int(flag))
+                        if len(flag_list) > 0:
+                            tab = flag_list
+
+                    # for line_number, line in enumerate(config_file):
+                    #     if line_number < 2:
+                    #         continue
+                    #     flag_list = []
+                    #     for flag in line:
+                    #         if flag != '\n':
+                    #             flag_list.append(int(flag))
         except Exception as e:
             print(e)

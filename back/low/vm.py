@@ -24,7 +24,7 @@ class Vm(base.SpecificBase):
         name = 'Cluster version'
         cl = self._connection.follow_link(self._info._cluster)
         cl_version = Cluster.Cluster(connection=self._connection, id=cl.id).\
-            version()
+            version().value
         return CellItem(name=name, value=cl_version)
 
     def disks_obj(self):
@@ -107,15 +107,20 @@ class Vm(base.SpecificBase):
         name = 'OS'
         return CellItem(name=name, value=self._info._os.type)
 
+    def template_obj(self):
+        return self._connection.follow_link(self._info._template)
+
     def _template(self):
         name = 'Template'
-        template = self._connection.follow_link(self._info._template).name
+        template = self.template_obj().name
         # _template = self._connection.follow_link(self._info._template)
+
         if template == 'Blank':
             return CellItem(name=name)
             # return ''
         else:
             return CellItem(name=name, value=template)
+        # return CellItem(name=name, value=template)
 
     def _st_memory_installed(self):
         name = 'Installed _memory'
@@ -128,19 +133,31 @@ class Vm(base.SpecificBase):
         name = 'Status'
         return CellItem(name=name, value=self._info._status.name)
 
-    #todo
     def storage_domain(self):
-        pass
+        name = 'Storage domain'
+        from back.low.storage_domain import Storage, StorageList
+        storage_domains = []
+        storages_list = StorageList(connection=self._connection).list()
+        for storage in storages_list:
+            storage_vms = Storage(
+                connection=self._connection, id=storage.id).vms_obj()
+            for vm in storage_vms:
+                if vm and vm.id == self._info.id:
+                    storage_domains.append(storage.name)
+        return CellItem(name=name, value=storage_domains)
 
     #todo
     def data_center(self):
         pass
 
+    def cluster_obj(self):
+        return self._connection.follow_link(self._info.cluster)
+
     def _cluster(self):
         name = 'Cluster'
         return CellItem(
             name=name,
-            value=self._connection.follow_link(self._info._cluster).name
+            value=self.cluster_obj().name
         )
         # return self._connection.follow_link(self._info._cluster)
 
@@ -172,16 +189,17 @@ class Vm(base.SpecificBase):
         )
 
     def methods_list(self):
-        return [self.name, self.id, self._status, self._consoles,
-                self._cluster, self._cl_version, self._host, self._memory,
-                self._memory_max, self._os, self._template, self._disks,
-                self._nics, self._networks]
+        return [
+            self.name, self.id, self._status, self._consoles, self._cluster,
+            self._cl_version, self._host, self._memory, self._memory_max,
+            self._os, self._template, self._disks, self._nics, self._networks,
+            self.storage_domain
+        ]
 
-
-class VmStatistic(statisctics_base.StatisticBase):
-
-    def __init__(self, connection, obj_id, st_id):
-        super(VmStatistic, self).__init__(connection=connection)
-        self._service = self._service.vms_service().vm_service(id=obj_id).\
-            statistics_service().statistic_service(id=st_id)
-        self._info = self._service.get()
+# class VmStatistic(statisctics_base.StatisticBase):
+#
+#     def __init__(self, connection, obj_id, st_id):
+#         super(VmStatistic, self).__init__(connection=connection)
+#         self._service = self._service.vms_service().vm_service(id=obj_id).\
+#             statistics_service().statistic_service(id=st_id)
+#         self._info = self._service.get()

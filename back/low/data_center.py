@@ -12,7 +12,7 @@ class DataCenterList(base.ListBase):
 class DataCenter(base.SpecificBase):
 
     def __init__(self, connection, id):
-        super(DataCenter, self).__init__(connection=connection)
+        super(DataCenter, self).__init__(connection=connection, id=id)
         self._service = connection.system_service(). \
             data_centers_service().data_center_service(id=id)
         self._info = self._service.get()
@@ -24,40 +24,22 @@ class DataCenter(base.SpecificBase):
     def version(self):
         name = 'Version'
         return CellItem(
-            name=name, value=str(self._info.version.major) + '.' +
-                             str(self._info.version.minor)
+            name=name,
+            value=str(self._info.version.major) + '.' +
+                  str(self._info.version.minor)
         )
 
     def storage_domains(self):
         name = 'Storage domains'
         st_domains = self._connection.follow_link(self._info.storage_domains)
-        # st_domains_list = []
-        # for domain in st_domains:
-        #     domain = self._connection.follow_link(domain)
-        #     st_domains_list.append(domain)
-        # if len(st_domains_list) > 0:
-        #     return st_domains_list
-        # else:
-        #     return None
         return CellItem(
             name=name, value=[st_domain.name for st_domain in st_domains]
         )
 
-    # def _networks(self):
-    #     _networks = self._connection.follow_link(self._info._networks)
-    #     network_list = []
-    #     for network in _networks:
-    #         network = self._connection.follow_link(network)
-    #         network_list.append(network)
-    #     if len(network_list) > 0:
-    #         return network_list
-    #     else:
-    #         return None
-
     def networks(self):
         name = 'Networks'
-        networks = self._connection.follow_link(self._info._networks)
-        return CellItem(name=name, value=[network for network in networks])
+        networks = self._connection.follow_link(self._info.networks)
+        return CellItem(name=name, value=[network.name for network in networks])
 
     def clusters(self):
         name = 'Cluster'
@@ -66,6 +48,22 @@ class DataCenter(base.SpecificBase):
             name=name, value=[cluster.name for cluster in clusters]
         )
 
+    def templates(self):
+        name = 'Templates'
+        from back.low.template import Template, TemplateList
+        templates = []
+        templates_list = TemplateList(connection=self._connection).list()
+        for template in templates_list:
+            template_data_center = Template(
+                connection=self._connection, id=template.id
+            ).data_center_obj()
+            if (template_data_center
+                    and template_data_center.id == self._info.id):
+                templates.append(template.name)
+        return CellItem(name=name, value=templates)
+
     def methods_list(self):
-        return [self.name, self.id, self.status, self.version,
-                self.storage_domains, self.networks, self.clusters]
+        return [
+            self.name, self.id, self.status, self.version,
+            self.storage_domains, self.networks, self.clusters, self.templates
+        ]

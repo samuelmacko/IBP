@@ -14,7 +14,7 @@ class StorageList(base.ListBase):
 class Storage(base.SpecificBase):
 
     def __init__(self, connection, id):
-        super(Storage, self).__init__(connection=connection)
+        super(Storage, self).__init__(connection=connection, id=id)
         self._service = connection.system_service(). \
             storage_domains_service().storage_domain_service(id=id)
         self._info = self._service.get()
@@ -66,30 +66,38 @@ class Storage(base.SpecificBase):
         # return None
         return CellItem(
             name=name,
-            value=[DataCenter(connection=self._connection, id=dc.id).name()
+            value=[DataCenter(
+                connection=self._connection, id=dc.id).name().value
                    for dc in data_centers_list]
         )
 
+    def vms_obj(self):
+        return [vm for vm in self._connection.follow_link(self._info.vms)]
+
     def vms(self):
         name = 'VMs'
-        vms = self._connection.follow_link(self._info._vms)
-        return CellItem(name=name, value=[vm.name for vm in vms])
+        return CellItem(name=name, value=[vm for vm in self.vms_obj()])
 
     def disks(self):
         name = 'Disks'
         disks = self._connection.follow_link(self._info._disks)
         return CellItem(name=name, value=[disk.name for disk in disks])
 
+    def templates_obj(self):
+        templates = self._connection.follow_link(self._info.templates)
+        return [template for template in templates]
+
     def templates(self):
         name = 'Templates'
-        templates = self._connection.follow_link(self._info.templates)
         return CellItem(
             name=name,
-            value=[template.name for template in templates]
+            value=[template.name for template in self.templates_obj()]
         )
 
     def methods_list(self):
-        return [self.name, self.id, self.status, self.type, self.storage_type,
-                self.storage_address, self.format, self.available_space,
-                self.used_space, self.data_center, self.vms, self.disks,
-                self.templates]
+        return [
+            self.name, self.id, self.status, self.type, self.storage_type,
+            self.storage_address, self.format, self.available_space,
+            self.used_space, self.data_center, self.vms, self.disks,
+            self.templates
+        ]

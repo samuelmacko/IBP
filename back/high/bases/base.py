@@ -1,8 +1,3 @@
-# from back.suplementary.build_classes import BuildClasses
-# from back.low.vm import *
-# from back.low.disks import *
-from back.low.host import *
-from back.suplementary.filter_restrictions import FilterRestrictions
 
 
 class HighBase(object):
@@ -23,40 +18,6 @@ class HighBase(object):
 
         self.filter_restrictions = None
 
-        self.construct_table()
-
-    # def construct_table(self):
-    #     table = []
-    #     # header = ['name']
-    #     header = []
-    #
-    #     vms_list = VmList(connection=self._connection).list()
-    #
-    #     for n, vm_row in enumerate(vms_list):
-    #         self.row_flags.append(1)
-    #         table_row = []
-    #
-    #         # vm = vm_low(connection=self._connection, id=vm_row.id,
-    #         #             statistics_class=VmStatistic)
-    #         entity = self.build_classes(
-    #             connection=self._connection, id=vm_row.id,
-    #             statistics_class=VmStatistic
-    #         )
-    #
-    #         for method in entity.methods_list():
-    #             cell = method()
-    #             if n == 0:
-    #                 header.append(cell.name)
-    #             table_row.append(cell.value)
-    #         for statistic in entity.statistics():
-    #             if n == 0:
-    #                 header.append(statistic.name)
-    #             table_row.append(statistic.value)
-    #         table.append(table_row)
-    #
-    #     self.data_list = table
-    #     self.headers_list = header
-
     def construct_table(self):
         table = []
         header = []
@@ -75,6 +36,7 @@ class HighBase(object):
             for method in entity.methods_list():
                 cell = method()
                 if n == 0:
+                    print(cell.name, cell.value)
                     header.append(cell.name)
                 table_row.append(cell.value)
 
@@ -116,20 +78,14 @@ class HighBase(object):
         # return headers, data
 
     def validate_filter(self, filter):
-        # str_col = [1, 2, 3, 4, 7, 8, 18, 24]
-        # float_col = [5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21,
-        #              22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
-
-        if filter.column in self.filter_restrictions.str_col and \
-            filter.operand == '=' and isinstance(filter.value, str):
+        if (filter.column in self.filter_restrictions
+                and filter.operand == '='):
             # filter.operand is operator.eq and isinstance(filter.value, str):
             return True
 
-        if filter.column in self.filter_restrictions.float_col:
+        else:
             try:
                 float(filter.value)
                 return True
             except ValueError:
                 return False
-
-        return False

@@ -24,12 +24,12 @@ class Cluster(base.SpecificBase):
                         + str(self._info.version.minor)
         return CellItem(name=name, value=whole_version)
 
+    def data_center_obj(self):
+        return self._connection.follow_link(self._info.data_center)
+
     def data_center(self):
         name = 'Data center'
-        return CellItem(
-            name=name, value=self._connection.follow_link(
-                self._info.data_center).name
-        )
+        return CellItem(name=name, value=self.data_center_obj().name)
 
     def hosts(self):
         name = 'Hosts'
@@ -38,8 +38,8 @@ class Cluster(base.SpecificBase):
         host_list = HostList(connection=self._connection).list()
         for host in host_list:
             host_cluster = Host(
-                connection=self._connection, id=host.id)._cluster()
-            if host_cluster and self._info.name == host_cluster:
+                connection=self._connection, id=host.id).cluster_obj()
+            if host_cluster and self._info.id == host_cluster.id:
                 hosts.append(host.name)
         return CellItem(name=name, value=hosts)
 
@@ -50,20 +50,10 @@ class Cluster(base.SpecificBase):
         vm_list = VmList(connection=self._connection).list()
         for vm in vm_list:
             vm_cluster = Vm(connection=self._connection, id=vm.id).\
-                _cluster()
-            if vm_cluster and self._info.name == vm_cluster:
+                cluster_obj()
+            if vm_cluster and self._info.id == vm_cluster.id:
                 vms.append(vm.name)
         return CellItem(name=name, value=vms)
-
-    # def _networks(self):
-    #     networks_list = []
-    #     _networks = self._connection.follow_link(self._info._networks)
-    #     for network in _networks:
-    #         networks_list.append(network.name)
-    #     if len(networks_list) > 0:
-    #         return networks_list
-    #     else:
-    #         return None
 
     #todo asi moze byt aj ine ako on_error (href?)
     def error_handling(self):
@@ -86,16 +76,30 @@ class Cluster(base.SpecificBase):
 
     def networks_obj(self):
         return [network for network in
-                self._connection.follow_link(self._info._networks)]
+                self._connection.follow_link(self._info.networks)]
 
     def networks(self):
         name = 'Networks'
         return CellItem(
             name=name,
-            value=[network.name for network in self._info._networks]
+            value=[network.name for network in self.networks_obj()]
         )
 
+    def templates(self):
+        name = 'Templates'
+        from back.low.template import Template, TemplateList
+        templates_list = TemplateList(connection=self._connection).list()
+        for template in templates_list:
+            template_cluster = Template(
+                connection=self._connection, id=template.id
+            ).cluster_obj()
+            if template_cluster and template_cluster.id == self._info.id:
+                return CellItem(name=name, value=template_cluster.name)
+        return CellItem(name=name)
+
     def methods_list(self):
-        return [self.name, self.id, self.version, self.data_center, self.hosts,
-                self.vms, self.error_handling, self.cpu, self.firewall,
-                self.networks]
+        return [
+            self.name, self.id, self.version, self.data_center, self.hosts,
+            self.vms, self.error_handling, self.cpu, self.firewall,
+            self.networks, self.templates
+        ]

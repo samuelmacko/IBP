@@ -8,6 +8,8 @@ class FilterHandle(object):
 
     def __init__(self, table):
         self.table = table
+        # self.filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
+        self.filter_regex = r'\s*(\w+[A-Za-z\.\s]+\w+)\s*(>|<|=)\s*(\S+)\s*'
 
     # def table_from_flags(self):
     #     headers = []
@@ -44,11 +46,9 @@ class FilterHandle(object):
                 self.operand = operand
                 self.value = value
 
-        # 0
-
         # filter_regex = r'\s*(\S+)\s*(>|<|=)\s*(\S+)\s*'
-        filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
-        match = re.match(filter_regex, text, re.I)
+        # filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
+        match = re.match(self.filter_regex, text, re.I)
         #
         # print('1:', match.group(1))
         # print('2:', match.group(2))
@@ -63,7 +63,7 @@ class FilterHandle(object):
             attribute_column = None
             for i, header in enumerate(self.table.headers_list):
                 # print(header)
-                if attribute == header:
+                if attribute.lower() == header.lower():
                     attribute_column = i
                     break
 
@@ -78,16 +78,17 @@ class FilterHandle(object):
 
     def apply_filter(self, filter):
 
-        ops = {
-            '>': operator.gt, '<': operator.lt, '=': operator.eq}
+        ops = {'>': operator.gt, '<': operator.lt, '=': operator.eq}
         op = ops[filter.operand]
 
         # print('apply filter')
-        print('af:', filter.operand)
+        # print('af:', filter.operand)
         for i, row in enumerate(self.table.data_list):
             # if filter.operand(row[filter.column], filter.value) is False:
             # if filter.operand(Comparison(row[filter.column]),
             #                   Comparison(filter.value)) is False:
-            if op(Comparison(row[filter.column]), Comparison(filter.value)) \
-                    is False:
+            # if op(Comparison(row[filter.column]), Comparison(filter.value)) \
+            if op(
+                    Comparison(row[filter.column]), Comparison(filter.value)
+            ) is False:
                 self.table.row_flags[i] = 0

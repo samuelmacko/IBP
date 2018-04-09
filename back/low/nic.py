@@ -14,17 +14,22 @@ class NICsList(base.ListBase):
 class NIC(base.SpecificBase):
 
     def __init__(self, connection, id):
-        super(NIC, self).__init__(connection=connection)
+        super(NIC, self).__init__(connection=connection, id=id)
         self._service = self._service.vnic_profiles_service().\
             profile_service(id=id)
         self._info = self._service.get()
 
     def data_center(self):
         name = 'Data center'
+        from back.low.data_center import DataCenter
+        data_center = self._connection.follow_link(self._info.network).\
+            data_center
+
         return CellItem(
             name=name,
-            value=self._connection.follow_link(self._info.network).
-                data_center.name
+            value=DataCenter(
+                connection=self._connection, id=data_center.id
+            ).name().value
         )
 
     def network_obj(self):
@@ -44,14 +49,13 @@ class NIC(base.SpecificBase):
         for vm in vms_list:
             vm_vnics = Vm(connection=self._connection, id=vm.id).vnics_obj()
             for vnic in vm_vnics:
-                if vnic and vnic.id == self.id():
+                if vnic and vnic.id == self._info.id:
                     vms.append(vm)
         return vms
 
     def vms(self):
         name = 'VMs'
         return CellItem(name=name, value=[vm.name for vm in self._vms_obj()])
-
 
     def templates(self):
         name = 'Templates'
@@ -68,28 +72,53 @@ class NIC(base.SpecificBase):
             return CellItem(
                 name=name,
                 value=[vnic for vnic in templates_vnics
-                       if vnic and vnic.id == self.id()]
+                       if vnic and vnic.id == self._info.id]
             )
 
     def _vm_nic(self):
         # from back.low.vm import Vm
         for vm in self._vms_obj():
             for nic in Vm(connection=self._connection, id=vm.id).nics_obj():
-                if self._connection.follow_link(nic.vnic_profile).id == \
-                        self.id():
+                if (self._connection.follow_link(nic.vnic_profile).id ==
+                        self._info.id):
                     return nic
+        return None
 
     def mac_address(self):
         name = 'MAC address'
-        return CellItem(name=name, value=self._vm_nic().mac._address)
+        if self._vm_nic():
+            return CellItem(name=name, value=self._vm_nic().mac.address)
+        else:
+            return CellItem(name=name)
 
     def interface(self):
         name = 'Interface'
-        return CellItem(name=name, value=self._vm_nic().interface.name)
+        if self._vm_nic():
+            return CellItem(name=name, value=self._vm_nic().interface.name)
+        else:
+            return CellItem(name=name)
+
+    def hosts(self):
+        name = 'Hosts'
+        from back.low.host import Host, HostList
+        hosts = []
+        hosts_list = HostList(connection=self._connection).list()
+        for host in hosts_list:
+            host_nics = Host(
+                connection=self._connection, id=host.id).nics_obj()
+            for host_nic in host_nics:
+                if host_nic and host_nic.id == self._info.id:
+                    hosts.append(host.name)
+        return CellItem(name=name, value=hosts)
+
+    # def statistics(self):
+
 
     def methods_list(self):
-        return [self.name, self.id, self.data_center, self.network, self.vms,
-                self.templates, self.mac_address, self.interface]
+        return [
+            self.name, self.id, self.data_center, self.network, self.vms,
+            self.templates, self.mac_address, self.interface, self.hosts
+        ]
 
 # class NICStatisticsList(statisctics_base.StatisticsListBase):
 #

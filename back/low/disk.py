@@ -60,29 +60,35 @@ class Disk(base.SpecificBase):
                     vms.append(vm.name)
         return CellItem(name=name, value=vms)
 
-    # def statistics(self):
-    #     service = self._service.statistics_service()
-    #     statistics_list = service.list()
-    #
-    #     statistic_objects = []
-    #     for i in range(5):
-    #         statistic_objects.append(
-    #             DiskStatistic(
-    #                 connection=self._connection, obj_id=self.id().value,
-    #                 st_id=statistics_list[i].id)
-    #         )
-    #
-    #     statistics = []
-    #     for statistic in statistic_objects:
-    #         statistics.append(
-    #             CellItem(
-    #                 name=statistic.name(),
-    #                 value=str(statistic.value()) +' '+str(statistic.unit()))
-    #         )
-    #     return statistics
+    def storage_domain(self):
+        name = 'Storage domains'
+        from back.low.storage_domain import Storage
+        storage_domains = self._info.storage_domains
+        return CellItem(
+            name=name,
+            value=[
+                Storage(
+                    connection=self._connection, id=st_domain.id).name().value
+                for st_domain in storage_domains
+            ]
+        )
+
+    def template(self):
+        name = 'Template'
+        from back.low.template import Template, TemplateList
+        templates_list = TemplateList(connection=self._connection).list()
+        for template in templates_list:
+            template_disks = Template(
+                connection=self._connection, id=template.id
+            ).disks_obj()
+            for template_disk in template_disks:
+                if template_disk and template_disk.id == self._info.id:
+                    return CellItem(name=name, value=template.name)
+        return CellItem(name=name)
 
     def methods_list(self):
-        return [self.name, self.id, self._status,
-                self._actual_size, self._provisioned_size,
-                self._format, self._content_type, self._vms,
-                self._storage_type]
+        return [
+            self.name, self.id, self._status, self._actual_size,
+            self._provisioned_size, self._format, self._content_type,
+            self._vms, self._storage_type, self.storage_domain, self.template
+        ]
