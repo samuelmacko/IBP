@@ -1,6 +1,6 @@
 # from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit
 from PyQt5.QtGui import QIcon
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, Qt
 import global_variables
 
 import ovirtsdk4 as sdk
@@ -32,8 +32,11 @@ class InputDialog(QtWidgets.QWidget):
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.returnPressed.connect(self.ok_btn_clicked)
 
+        # self.url_input = QtWidgets.QLineEdit(
+        #     'https://10-37-137-19.rhev.lab.eng.brq.redhat.com'
+        #     '/ovirt-engine/api', self)
         self.url_input = QtWidgets.QLineEdit(
-            'https://10-37-137-19.rhev.lab.eng.brq.redhat.com'
+            'https://10-37-137-222.rhev.lab.eng.brq.redhat.com'
             '/ovirt-engine/api', self)
 
         # self.url_input = QtWidgets.QLineEdit(global_variables.FQDN, self)
@@ -41,22 +44,22 @@ class InputDialog(QtWidgets.QWidget):
         self.url_input.setPlaceholderText('url')
         self.url_input.returnPressed.connect(self.ok_btn_clicked)
 
-        self.layout_1 = QtWidgets.QVBoxLayout(self)
-        self.layout_1.addWidget(self.username_input)
-        self.layout_1.addWidget(self.password_input)
-        self.layout_1.addWidget(self.url_input)
+        self.layout_inputs = QtWidgets.QVBoxLayout(self)
+        self.layout_inputs.addWidget(self.username_input)
+        self.layout_inputs.addWidget(self.password_input)
+        self.layout_inputs.addWidget(self.url_input)
 
-        self.layout_2 = QtWidgets.QHBoxLayout()
+        self.layout_buttons = QtWidgets.QHBoxLayout()
 
         self.ok_btn = QtWidgets.QPushButton('ok', self)
         self.ok_btn.clicked.connect(self.ok_btn_clicked)
         self.cancel_btn = QtWidgets.QPushButton('cancel', self)
         self.cancel_btn.clicked.connect(self.cancel_btn_clicked)
 
-        self.layout_2.addWidget(self.ok_btn)
-        self.layout_2.addWidget(self.cancel_btn)
+        self.layout_buttons.addWidget(self.ok_btn)
+        self.layout_buttons.addWidget(self.cancel_btn)
 
-        self.layout_1.addLayout(self.layout_2)
+        self.layout_inputs.addLayout(self.layout_buttons)
 
         self.show()
 
@@ -81,6 +84,27 @@ class InputDialog(QtWidgets.QWidget):
             self.connection = connection
         else:
             print('chybne udaje')
+
+            # self.layout_message = QtWidgets.QHBoxLayout()
+            #
+            # self.label = QtWidgets.QLabel('')
+            # font = QtGui.QFont("Arial", 10, QtGui.QFont.Bold)
+            # self.label.setFont(font)
+            #
+            # self.layout_message.addWidget(self.label)
+            # # self.layout_inputs.addWidget(self.label)
+            # self.layout_inputs.addLayout(self.layout_message)
+            #
+            # self.label.setText('<font color="red">Wrong credentials</font>')
+
+            message_box = QtWidgets.QMessageBox(self)
+            message_box.setWindowTitle('Connection Error')
+            message_box.setText('Wrong credentials')
+            message_box.setStandardButtons(Qt.QMessageBox.Ok)
+
+            message_box.open()
+
+
             self.username_input.setText('')
             self.password_input.setText('')
             self.url_input.setText('')
@@ -91,14 +115,13 @@ class InputDialog(QtWidgets.QWidget):
 
     def cancel_btn_clicked(self, clicked):
         print('cancel')
-        self.username_input.setText('')
-        self.password_input.setText('')
-        self.url_input.setText('')
+        # self.username_input.setText('')
+        # self.password_input.setText('')
+        # self.url_input.setText('')
+        exit(0)
 
     def get_connection(self):
         return self.connection
 
     def closeEvent(self, QCloseEvent):
-        #fixme asi zle
         exit(0)
-

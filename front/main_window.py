@@ -5,6 +5,8 @@ from front.suplementary.decorators import header_signal
 from front.suplementary.tab_sockets import *
 import global_variables
 
+from PyQt5 import QtWidgets, QtGui, Qt, QtCore
+
 
 class Ui_MainWindow(object):
 
@@ -17,6 +19,9 @@ class Ui_MainWindow(object):
     def __init__(self, parent, connection, tables_list):
         self.parent = parent
         self.connection = connection
+        self.dir_name = os.path.dirname(__file__)
+
+        self.icon = QtGui.QIcon(global_variables.ROOT_FILE_PATH + '/garbage/x.png')
 
         # self.tabs_list = [
         #     VMsTab(table=vms_table, parent=parent),
@@ -46,7 +51,8 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
 
-        dir_name = os.path.dirname(__file__)
+        # dir_name = os.path.dirname(__file__)
+        # btn = QtWidgets.QPushButton()
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1500, 800)
@@ -86,10 +92,18 @@ class Ui_MainWindow(object):
             tab.line_edit.returnPressed.connect(self.line_edit_changed)
             tab.refresh_btn = QtWidgets.QPushButton(tab.tab_widget)
             tab.refresh_btn.clicked['bool'].connect(self.refresh)
+
+            # movie = QtGui.QMovie(dir_name + '/garbage/refres-moving.gif')
+            # label = QtWidgets.QLabel(self.parent)
+            # label.setMovie(movie)
+            # movie.start()
+
             tab.refresh_btn.setIcon(
-                QtGui.QIcon(dir_name + '/suplementary/images/refresh.gif')
+                QtGui.QIcon(self.dir_name + '/suplementary/images/refresh.gif')
             )
             tab.refresh_btn.setIconSize(QtCore.QSize(20, 20))
+
+            # tab.horizontal_layouts[1].addWidget(label)
 
             tab.horizontal_layouts[1].addWidget(tab.refresh_btn)
             tab.horizontal_layouts[1].addWidget(tab.line_edit)
@@ -219,49 +233,63 @@ class Ui_MainWindow(object):
                 vm_tab=self.tabs_list[0], disk_tab=self.tabs_list[1],
                 host_tab=self.tabs_list[2])
 
+    # @disable
     @header_signal
-    def refresh(self, clicked):
+    def refresh(self, clicked=None):
         sender = self.centralwidget.sender()
         print('refresh:', sender.objectName())
 
-        # # import ovirtsdk4 as sdk
-        # # connection = sdk.Connection(
-        # #     username='admin@internal', password='qum5net', insecure=True,
-        # #     url='https://10-37-137-222.rhev.lab.eng.brq.redhat.com' +
-        # #         '/ovirt-engine/api',
-        # #     # ca_file=ca_file,
-        # # )
-        #
-        # # self.tabs_list[self.current_tab].values_table
-        #
-        # if sender.objectName() == 'btn_1':
-        #     # sender.setIcon(QtGui.QIcon(
-        #     #     'front/suplementary/images/x.png'))
-        #     # self.btn_1.setIconSize(QtCore.QSize(20, 20))
-        #     # self.btn_1.setEnabled(False)
-        #     # self.btn_1.setDisabled(True)
-        #     self.vms_tab.values_table = vm.Vm(
-        #         connection=self.connection, col_flags=self.vms_tab.values_table.col_flags)
-        #     self.vms_tab.print_table()
-        #     # self.btn_1.setIcon(QtGui.QIcon(
-        #     #     'front/suplementary/images/refresh.gif'))
-        #     # self.btn_1.setEnabled(True)
-        #     # self.btn_1.setDisabled(False)
-        # if sender.objectName() == 'btn_2':
-        #     self.disks_tab.values_table = disk.Disk(
-        #         connection=self.connection, col_flags=self.disks_tab.values_table.col_flags)
-        #     self.disks_tab.print_table()
-        # if sender.objectName() == 'btn_3':
-        #     self.hosts_tab.values_table = _host.Host(
-        #         connection=self.connection, col_flags=self.hosts_tab.values_table.col_flags)
-        #     self.hosts_tab.print_table()
+        # self.tabs_list[self.current_tab].refresh_btn.setDisabled(True)
+        # self.tabs_list[self.current_tab].printed_table.header.setDisabled(True)
+        # self.tabWidget.setDisabled(True)
+        # self.tabs_list[self.current_tab].tool_menu.setDisabled(True)
+        self.parent.setDisabled(True)
+
+
+        message_box = QtWidgets.QMessageBox(self.parent)
+        message_box.setWindowTitle('Refreshing')
+        # message_box.setText('Please wait...')
+        message_box.setStandardButtons(Qt.QMessageBox.NoButton)
+        # self.message_box.setStandardButtons(Qt.QMessageBox.No)
+
+        message_box.addButton('Please wait...', QtWidgets.QMessageBox.YesRole)
+        # message_box.setWindowFlag(QtCore.Qt.WindowCloseButtonHint)
+
+        prog_bar = QtWidgets.QProgressBar(message_box)
+        prog_bar.setStyleSheet('QProgressBar::chunk {background: #9ACD32;}')
+        prog_bar.setGeometry(0, 10, message_box.width() + 35, 20)
+        prog_bar.setTextVisible(False)
+        prog_bar.setMaximum(
+            len(self.tabs_list[self.current_tab].values_table.data_list)
+        )
+        prog_bar.setValue(0)
+
+        message_box.open()
+
+        import time
+        t = time.time()
+        while time.time() < t + 0.5:
+            QtWidgets.QApplication.processEvents()
 
         self.tabs_list[self.current_tab].values_table = \
-            global_variables.table_blueprints[self.current_tab][1].\
-                entity_class(connection=self.connection)
+            global_variables.table_blueprints[self.current_tab][0](
+                connection=self.connection,
+                build_classes=global_variables.table_blueprints[
+                    self.current_tab][1]
+            )
+
+        # self.tabs_list[self.current_tab].values_table.construct_table()
+        for i in self.tabs_list[self.current_tab].\
+                values_table.construct_table():
+            prog_bar.setValue(i)
         self.tabs_list[self.current_tab].print_table()
 
+        self.parent.setDisabled(False)
+
+        message_box.close()
+
         # connection.close()
+
 
     def export(self):
         file_name = QtWidgets.QFileDialog.getSaveFileName(

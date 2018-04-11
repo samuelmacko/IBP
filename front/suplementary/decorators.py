@@ -1,3 +1,4 @@
+# from PyQt5 import QtWidgets, Qt
 
 
 def header_signal(func):

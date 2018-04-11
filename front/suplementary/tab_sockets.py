@@ -1,5 +1,5 @@
 from back.suplementary.custom_comparsion import Comparison
-from front.suplementary.filter_handle import FilterHandle
+from front.suplementary.filter_handle import FilterHandler
 from front.table import Table
 from PyQt5 import QtCore, QtWidgets, QtGui
 
@@ -76,11 +76,14 @@ class Tabs(object):
 
         # try:
         for single_filter in text.split(','):
-            filter_handler = FilterHandle(table=self.values_table)
+            filter_handler = FilterHandler(
+                table=self.values_table,
+                filter_restrictions=self.values_table.filter_restrictions
+            )
             filter = filter_handler.process_filter(text=single_filter)
 
-            if filter and self.values_table.validate_filter(filter=filter):
-            # if filter:
+            # if filter and self.values_table.validate_filter(filter=filter):
+            if filter:
                 filter_handler.apply_filter(filter=filter)
                 # headers, data = filter_handler.table_from_flags()
                 self.values_table.table_from_flags()

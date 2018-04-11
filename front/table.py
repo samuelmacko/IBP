@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 
 
 class Table(QTableWidget):
@@ -45,7 +45,10 @@ class Table(QTableWidget):
                     # item.setFlags(
                     #     QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
                     item.setFlags(QtCore.Qt.ItemIsEnabled)
+                    # if (n & 1) == 0:
+                    #     item.setBackground(QtCore.Qt.lightGray)
                     self.setItem(n, m, item)
+                    self.setAlternatingRowColors(True)
 
 
         # self.sortByColumn(1, 1)

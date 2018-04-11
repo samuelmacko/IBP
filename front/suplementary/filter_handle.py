@@ -4,38 +4,13 @@ import re
 from back.suplementary.custom_comparsion import Comparison
 
 
-class FilterHandle(object):
+class FilterHandler(object):
 
-    def __init__(self, table):
+    def __init__(self, table, filter_restrictions):
         self.table = table
         # self.filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
         self.filter_regex = r'\s*(\w+[A-Za-z\.\s]+\w+)\s*(>|<|=)\s*(\S+)\s*'
-
-    # def table_from_flags(self):
-    #     headers = []
-    #     data = []
-    #
-    #     for i, flag in enumerate(self.table.col_flags):
-    #         if flag == 1:
-    #             headers.append(self.table.headers_list[i])
-    #
-    #     # for j, row in enumerate(self.table.data_list):
-    #     #     data_row = []
-    #     #     for i, flag in enumerate(self.table.col_flags):
-    #     #         if flag == 1:
-    #     #             data_row.append(row[i])
-    #     #     if self.table.row_flags[j]:
-    #     #         data.append(data_row)
-    #
-    #     for j, row in enumerate(self.table.data_list):
-    #         if self.table.row_flags[j]:
-    #             data_row = []
-    #             for i, flag in enumerate(self.table.col_flags):
-    #                 if flag == 1:
-    #                     data_row.append(row[i])
-    #             data.append(data_row)
-    #
-    #     return headers, data
+        self.filter_restrictions = filter_restrictions
 
     def process_filter(self, text):
 
@@ -69,7 +44,8 @@ class FilterHandle(object):
 
             if attribute_column is not None:
                 filter = Filter(
-                    column=attribute_column, operand=operand, value=value)
+                    column=attribute_column, operand=operand, value=value
+                )
                 return filter
             else:
                 return None
@@ -78,17 +54,40 @@ class FilterHandle(object):
 
     def apply_filter(self, filter):
 
-        ops = {'>': operator.gt, '<': operator.lt, '=': operator.eq}
-        op = ops[filter.operand]
+        operators = {'>': operator.gt, '<': operator.lt, '=': operator.eq}
+        operation = operators[filter.operand]
 
-        # print('apply filter')
-        # print('af:', filter.operand)
         for i, row in enumerate(self.table.data_list):
-            # if filter.operand(row[filter.column], filter.value) is False:
-            # if filter.operand(Comparison(row[filter.column]),
-            #                   Comparison(filter.value)) is False:
-            # if op(Comparison(row[filter.column]), Comparison(filter.value)) \
-            if op(
+
+            if filter.column in self.filter_restrictions:
+                try:
+                    # int_val = int(filter.value)
+                    if int(filter.value) != len(row[filter.column]):
+                        self.table.row_flags[i] = 0
+                    continue
+                except ValueError:
+                    pass
+
+
+
+            if operation is operator.eq:
+
+                if isinstance(row[filter.column], list):
+                    found = False
+                    for cell_row in row[filter.column]:
+                        match = re.match(filter.value, cell_row, re.I)
+                        if match and match.group() == cell_row:
+                            found = True
+
+                    if not found:
+                        self.table.row_flags[i] = 0
+
+                else:
+                    match = re.match(filter.value, row[filter.column], re.I)
+                    if match is None or match.group() != row[filter.column]:
+                        self.table.row_flags[i] = 0
+
+            elif operation(
                     Comparison(row[filter.column]), Comparison(filter.value)
             ) is False:
                 self.table.row_flags[i] = 0

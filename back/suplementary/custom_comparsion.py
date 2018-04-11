@@ -64,15 +64,16 @@ class Comparison(object):
     def __eq__(self, other):
         if self.operand is None and other.operand is None:
             return True
-        elif self.operand is None:
-            return False
-        elif other.operand is None:
-            return False
 
         elif isinstance(self.operand, list):
             return any(row.id == other.operand for row in self.operand)
         elif isinstance(other.operand, list):
             return any(row.id == self.operand for row in other.operand)
+
+        elif self.operand is None:
+            return False
+        elif other.operand is None:
+            return False
 
         elif to_number(value=self.operand):
             return \

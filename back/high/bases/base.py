@@ -40,6 +40,8 @@ class HighBase(object):
                     header.append(cell.name)
                 table_row.append(cell.value)
 
+            # yield n
+
             # if self.build_classes.entity_class is Host:
             #     print('aaaaaaa')
             #     continue
@@ -53,6 +55,8 @@ class HighBase(object):
                     table_row.append(statistic.value)
 
             table.append(table_row)
+
+            yield n
 
         self.data_list = table
         self.headers_list = header

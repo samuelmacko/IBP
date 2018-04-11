@@ -3,6 +3,7 @@ import back.low.cluster as Cluster
 from back.low.bases import base, statisctics_base
 from ovirtsdk4 import types
 from back.suplementary.cell_item import CellItem
+from back.suplementary.conversion import to_MB
 
 
 class VmList(base.ListBase):
@@ -35,22 +36,11 @@ class Vm(base.SpecificBase):
 
     def _disks(self):
         name = 'Disks'
-        # if self.disks_obj():
         return CellItem(
             name=name, value=[disk.name for disk in self.disks_obj()]
         )
-        # else:
-        #     return None
 
     def bootable_disk(self):
-        # disk_attachments = self._connection. \
-        #     follow_link(self._info.disk_attachments)
-        # for attachment in disk_attachments:
-        #     if attachment.bootable:
-        #         return attachment
-        # return None
-        # return ''
-
         for disk in self.disks_obj():
             if disk.bootable:
                 return disk
@@ -73,31 +63,16 @@ class Vm(base.SpecificBase):
     def _memory(self):
         name = 'Memory'
         # return str(self._info._memory)
-        return CellItem(name=name, value=self._info._memory)
+        return CellItem(name=name, value=to_MB(self._info._memory))
 
     def _memory_max(self):
         name = 'Max _memory'
         # return str(self._info.memory_policy.max)
-        return CellItem(name=name, value=self._info.memory_policy.max)
+        return CellItem(name=name, value=to_MB(self._info.memory_policy.max))
 
     def nics_obj(self):
         nics = self._connection.follow_link(self._info._nics)
-
-        # if _nics:
         return [nic for nic in nics]
-        # else:
-        #     return None
-
-        # nics_list = []
-        # for nic in _nics:
-        #     nic = self._connection.follow_link(nic)
-        #     # nics_list.append(nic)
-        #     nics_list.append(nic.name)
-        # if len(nics_list) > 0:
-        #     return nics_list
-        # else:
-        #     return None
-        #     # return ''
 
     def _nics(self):
         name = 'NICs'
@@ -113,14 +88,10 @@ class Vm(base.SpecificBase):
     def _template(self):
         name = 'Template'
         template = self.template_obj().name
-        # _template = self._connection.follow_link(self._info._template)
-
         if template == 'Blank':
             return CellItem(name=name)
-            # return ''
         else:
             return CellItem(name=name, value=template)
-        # return CellItem(name=name, value=template)
 
     def _st_memory_installed(self):
         name = 'Installed _memory'
@@ -163,24 +134,23 @@ class Vm(base.SpecificBase):
 
     def _consoles(self):
         name = 'Consoles'
-        # return self._connection.\
-        #     follow_link(self._info.graphicsconsoles).protocol
         console_service = self._service.graphics_consoles_service()
-        # return console_service.list()
-        # if console_service.list():
         return CellItem(
             name=name,
-            value=[console.protocol.name
-                   for console in console_service.list()]
+            value=[console.protocol.name for console in console_service.list()]
         )
 
     def vnics_obj(self):
-        return [self._connection.follow_link(nic.vnic_profile)
-                for nic in self.nics_obj()]
+        return [
+            self._connection.follow_link(nic.vnic_profile)
+            for nic in self.nics_obj()
+        ]
 
     def networks_obj(self):
-        return [self._connection.follow_link(vnic.network)
-                for vnic in self.vnics_obj()]
+        return [
+            self._connection.follow_link(vnic.network)
+            for vnic in self.vnics_obj()
+        ]
 
     def _networks(self):
         name = 'Networks'
@@ -195,11 +165,3 @@ class Vm(base.SpecificBase):
             self._os, self._template, self._disks, self._nics, self._networks,
             self.storage_domain
         ]
-
-# class VmStatistic(statisctics_base.StatisticBase):
-#
-#     def __init__(self, connection, obj_id, st_id):
-#         super(VmStatistic, self).__init__(connection=connection)
-#         self._service = self._service.vms_service().vm_service(id=obj_id).\
-#             statistics_service().statistic_service(id=st_id)
-#         self._info = self._service.get()
