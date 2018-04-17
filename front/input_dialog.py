@@ -32,12 +32,12 @@ class InputDialog(QtWidgets.QWidget):
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.returnPressed.connect(self.ok_btn_clicked)
 
-        # self.url_input = QtWidgets.QLineEdit(
-        #     'https://10-37-137-19.rhev.lab.eng.brq.redhat.com'
-        #     '/ovirt-engine/api', self)
         self.url_input = QtWidgets.QLineEdit(
-            'https://10-37-137-222.rhev.lab.eng.brq.redhat.com'
+            'https://10-37-137-19.rhev.lab.eng.brq.redhat.com'
             '/ovirt-engine/api', self)
+        # self.url_input = QtWidgets.QLineEdit(
+        #     'https://10-37-137-222.rhev.lab.eng.brq.redhat.com'
+        #     '/ovirt-engine/api', self)
 
         # self.url_input = QtWidgets.QLineEdit(global_variables.FQDN, self)
 

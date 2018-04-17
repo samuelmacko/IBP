@@ -1,17 +1,4 @@
-1. odavat exceptny, napr notimplemented, pretypovanie na float  atd,
-    pocitat o tom
-2. ako je to so storage domainamy? kolko sd moze mat vmka? kolko vmiek moze mat
-    sd? to iste pre disky
-3. ako je to s certifikatom? treba? staci insecure?
-4, nejaky (label?) v do ktoreho bude vypuisovat: zle prihlasovacie udaje,
-    zly filter, please wait, ...
-5. vztah medzi networks a nics? kolko coho vmka napr?
-
-10. statistiky NICs
-
-12. prevod na MB
-
-13. fest sa rozpisat do bakalarky, regexy, search engine, ...
+1. statistiky NICs
 
 --------------------------------------------------
 otazky:

@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         self.connection = connection
         self.dir_name = os.path.dirname(__file__)
 
-        self.icon = QtGui.QIcon(global_variables.ROOT_FILE_PATH + '/garbage/x.png')
+        # self.icon = QtGui.QIcon(global_variables.ROOT_FILE_PATH + '/garbage/x.png')
 
         # self.tabs_list = [
         #     VMsTab(table=vms_table, parent=parent),
@@ -306,6 +306,7 @@ class Ui_MainWindow(object):
                     self.tabs_list[self.current_tab].values_table.
                         current_data_list)
 
+    @header_signal
     def redirect(self, row, col):
         sender = self.centralwidget.sender()
         print("sender:", sender, "row:", row, "col:", col)

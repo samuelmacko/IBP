@@ -31,7 +31,7 @@ class Tabs(object):
         # self.col = None
         self.column_order = {}
 
-    def print_table(self):
+    def print_table(self, sort=None):
         self.values_table.table_from_flags()
 
         # if self.table_layout.count() > 1:
@@ -39,8 +39,9 @@ class Tabs(object):
             # self.table_layout.removeWidget(self.printed_table)
             self.vertical_layouts.removeWidget(self.printed_table)
         self.printed_table = Table(
-                parent=self.parent, data_list=self.values_table.current_data_list,
-                headers_list=self.values_table.current_headers_list
+            parent=self.parent, data_list=self.values_table.current_data_list,
+            headers_list=self.values_table.current_headers_list,
+            sort=sort
         )
 
         # self.table_layout.addWidget(self.printed_table)
@@ -115,6 +116,10 @@ class Tabs(object):
         def temp(value):
             return Comparison(value[0][col_shift])
 
+        # self.printed_table.header.setSortIndicator(
+        #     col, self.column_order[col_shift]
+        # )
+
         rows_flags = zip(
             self.values_table.data_list, self.values_table.row_flags
         )
@@ -129,12 +134,17 @@ class Tabs(object):
         self.values_table.row_flags = [x[1] for x in sorted_rows_flags]
 
         # self.table.table_from_flags()
-        self.print_table()
+        # self.print_table()
 
-        self.printed_table.header.setSortIndicator(
-            col, self.column_order[col_shift])
-        # self.column_order = not self.column_order
+        # self.printed_table.header.setSortIndicator(
+        #     col, self.column_order[col_shift]
+        #     # col, True
+        # )
+
+
         self.column_order[col_shift] = not self.column_order[col_shift]
+
+        self.print_table(sort=(col, self.column_order[col_shift]))
 
     # def redirect(self, row, col):
     #     if col in self.redirect_dict:
@@ -147,7 +157,7 @@ class VMsTab(Tabs):
         super(VMsTab, self).__init__(table=table, parent=parent)
         self.redirect_dict = {
             4: (4, 5), 6: (2, 6), 10: (6, 8), 11: (1, 7), 12: (7, 4),
-            13: (8, 6)
+            13: (8, 6), 14: (3, 10)
         }
 
 
@@ -155,7 +165,7 @@ class DisksTab(Tabs):
 
     def __init__(self, table, parent):
         super(DisksTab, self).__init__(table=table, parent=parent)
-        self.redirect_dict = {7: (0, 11)}
+        self.redirect_dict = {7: (0, 11), 9: (3, 11), 10: (6, 10)}
 
 
 class HostsTab(Tabs):
@@ -176,14 +186,16 @@ class ClustersTab(Tabs):
 
     def __init__(self, table, parent):
         super(ClustersTab, self).__init__(table=table, parent=parent)
-        self.redirect_dict = {3: (5, 6), 4: (2, 4), 5: (0, 4), 9: (8, 4)}
+        self.redirect_dict = {
+            3: (5, 6), 4: (2, 4), 5: (0, 4), 9: (8, 4), 10: (6, 3)
+        }
 
 
 class DataCentersTab(Tabs):
 
     def __init__(self, table, parent):
         super(DataCentersTab, self).__init__(table=table, parent=parent)
-        self.redirect_dict = {4: (3, 9), 5: (8, 2), 6: (4, 3)}
+        self.redirect_dict = {4: (3, 9), 5: (8, 2), 6: (4, 3), 7: (6, 5)}
 
 
 class TemplatesTab(Tabs):
@@ -191,7 +203,8 @@ class TemplatesTab(Tabs):
     def __init__(self, table, parent):
         super(TemplatesTab, self).__init__(table=table, parent=parent)
         self.redirect_dict = {
-            3: (4, 10), 5: (5, 7), 8: (0, 10), 9: (7, 5), 10: (1, 10)
+            3: (4, 10), 5: (5, 7), 8: (0, 10), 9: (7, 5), 10: (1, 10),
+            11: (8, 7), 12: (3, 12)
         }
 
 

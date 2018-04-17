@@ -74,17 +74,29 @@ class FilterHandler(object):
 
                 if isinstance(row[filter.column], list):
                     found = False
-                    for cell_row in row[filter.column]:
+                    for n, cell_row in enumerate(row[filter.column]):
                         match = re.match(filter.value, cell_row, re.I)
                         if match and match.group() == cell_row:
                             found = True
+
+                            tmp = row[filter.column][0]
+                            row[filter.column][0] = row[filter.column][n]
+                            row[filter.column][n] = tmp
+
+                            break
 
                     if not found:
                         self.table.row_flags[i] = 0
 
                 else:
-                    match = re.match(filter.value, row[filter.column], re.I)
-                    if match is None or match.group() != row[filter.column]:
+                    if filter.value and row[filter.column]:
+                        match = re.match(
+                            filter.value, row[filter.column], re.I
+                        )
+                        if match is None \
+                                or match.group() != row[filter.column]:
+                            self.table.row_flags[i] = 0
+                    else:
                         self.table.row_flags[i] = 0
 
             elif operation(

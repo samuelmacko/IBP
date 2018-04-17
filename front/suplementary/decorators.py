@@ -4,8 +4,10 @@
 def header_signal(func):
     def wrap(self, *args):
         # sender = self.centralwidget.sender()
-        if len(args) > 0:
+        if len(args) == 1:
             func(self, args[0])
+        elif len(args) == 2:
+            func(self, args[0], args[1])
         else:
             func(self)
 

@@ -4,18 +4,19 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 
 class Table(QTableWidget):
 
-    def __init__(self, parent, data_list, headers_list):
+    def __init__(self, parent, data_list, headers_list, sort=None):
         super(Table, self).__init__(parent)
         self.header = self.horizontalHeader()
-        # self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
-        # self.header.setSortIndicatorShown(True)
-        self.order = 0
+        self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.header.setSortIndicatorShown(True)
+        self.sort = sort
+        # self.order = 0
         self._set_data(data_list=data_list, headers_list=headers_list)
 
     def _set_data(self, data_list, headers_list):
 
         self.resize(500, 500)
-        self.setSortingEnabled(True)
+        # self.setSortingEnabled(True)
 
         self.setRowCount(0)
         self.setColumnCount(len(headers_list))
@@ -52,6 +53,8 @@ class Table(QTableWidget):
 
 
         # self.sortByColumn(1, 1)
-        # self.sort
+        # self.setSortingEnabled(False)
+        if self.sort:
+            self.header.setSortIndicator(self.sort[0], self.sort[1])
 
         self.show()
