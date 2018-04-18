@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.15)  10 APR 2018 00:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.15)  17 APR 2018 10:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1530,7 +1530,7 @@ ware so-lu-tions, us-ing a community-
 
 [24] [25] [26]
 Chapter 4.
-<ovirt.png, id=522, 1008.76875pt x 555.07375pt>
+<ovirt.png, id=526, 1008.76875pt x 555.07375pt>
 File: ovirt.png Graphic file (type png)
  <use ovirt.png>
 Package pdftex.def Info: ovirt.png used on input line 428.
@@ -1542,34 +1542,29 @@ Overfull \hbox (21.45995pt too wide) in paragraph at lines 428--429
 
 [27
 
- <./ovirt.png>] <tabulka.jpg, id=530, 1925.1925pt x 1085.05376pt>
+ <./ovirt.png>] [28] <tabulka.jpg, id=555, 1925.1925pt x 1085.05376pt>
 File: tabulka.jpg Graphic file (type jpg)
 
 <use tabulka.jpg>
-Package pdftex.def Info: tabulka.jpg used on input line 477.
-(pdftex.def)             Requested size: 481.29695pt x 271.26277pt.
-
-Overfull \hbox (48.81516pt too wide) in paragraph at lines 477--478
- [][] 
- []
-
-[28] [29 <./tabulka.jpg>]
+Package pdftex.def Info: tabulka.jpg used on input line 480.
+(pdftex.def)             Requested size: 385.03168pt x 217.0069pt.
+ [29 <./tabulka.jpg>]
 Chapter 5.
 [30
 
-]
+] [31] [32] [33]
 Chapter 6.
 )
 No file projekt.bbl.
 \c@ttl@toc@chapters=\count305
-(./projekt-30-prilohy-appendices.tex [31
+(./projekt-30-prilohy-appendices.tex [34
 
 ]
 Appendix A.
 LaTeX Font Info:    Try loading font information for T1+lmtt on input line 21.
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [32
+) [35
 
 ]
 Overfull \hbox (36.78644pt too wide) in paragraph at lines 57--58
@@ -1583,22 +1578,22 @@ Overfull \hbox (2.49138pt too wide) in paragraph at lines 58--59
 in00-Cisteni-a-extrakce-textu.tex\T1/lmr/m/n/10.95 ''.
  []
 
-[33]
+[36]
 Overfull \hbox (0.1918pt too wide) in paragraph at lines 71--72
 []\T1/lmr/m/n/10.95 Obsah práce se generuje stan-dard-ním p°íkazem \T1/lmtt/m/n
 /10.95 \tableofcontents \T1/lmr/m/n/10.95 (zahrnut v ²ablon¥).
  []
 
 
-LaTeX Warning: Citation `fitWeb' on page 34 undefined on input line 85.
+LaTeX Warning: Citation `fitWeb' on page 37 undefined on input line 85.
 
-[34]
+[37]
 Overfull \hbox (5.41241pt too wide) in paragraph at lines 100--101
 []\T1/lmr/m/n/10.95 P°enositelný open-source ed-i-tor vek-torové grafiky (SVG i
  PDF). Vynika-jící nástroj
  []
 
-[35]
+[38]
 Overfull \hbox (1.3396pt too wide) in paragraph at lines 122--123
 []\T1/lmr/m/n/10.95 N¥které balí£ky jsou vyuºity p°ímo v ²ablon¥ (v dolní £ásti
  souboru fit-the-sis.cls). Nahléd-
@@ -1609,7 +1604,7 @@ Overfull \hbox (1.3396pt too wide) in paragraph at lines 122--123
 \openout5 = `projekt.ptc'.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 304.
- [36]
+ [39]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 304.
  (./projekt.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 304.
@@ -1622,10 +1617,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 22301 strings out of 493029
- 360823 string characters out of 6136233
- 428651 words of memory out of 5000000
- 25198 multiletter control sequences out of 15000+600000
+ 22336 strings out of 493029
+ 361146 string characters out of 6136233
+ 430090 words of memory out of 5000000
+ 25207 multiletter control sequences out of 15000+600000
  119688 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,8n,44p,10404b,504s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1643,10 +1638,10 @@ usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pu
 blic/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm
 /lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
-Output written on projekt.pdf (39 pages, 1324730 bytes).
+Output written on projekt.pdf (42 pages, 1336277 bytes).
 PDF statistics:
- 746 PDF objects out of 1000 (max. 8388607)
- 651 compressed objects within 7 object streams
- 261 named destinations out of 1000 (max. 500000)
+ 789 PDF objects out of 1000 (max. 8388607)
+ 691 compressed objects within 7 object streams
+ 287 named destinations out of 1000 (max. 500000)
  410 words of extra memory for PDF output out of 10000 (max. 10000000)
 

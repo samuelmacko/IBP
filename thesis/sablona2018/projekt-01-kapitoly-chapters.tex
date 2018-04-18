@@ -16,7 +16,7 @@ To further explain basics of virtualization I would like to start by brief expla
 
 Virtualization allows creating multiple entities of operating system and application layers on single HW layer. This is done by inserting additional layer of system software between operating system and lower layers. This virtualization layer is called hypervisor or VMM (virtual machine monitor) and there are two main types of it:
 \begin{itemize}
-\item Type I hypervisor (or bare-metal/native hypervispor): runs directly on host system's hardware with highest level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer through operating system thus can utilize full potential it. Some of them need special privileged virtual machine called Domain-0 from which it can be managed and controlled.
+\item Type I hypervisor (or bare-metal/native hypervispor) \label{type_i_hyp} runs directly on host system's hardware with highest level of privilege and has full control over application layer running on top of it. Type I hypervisors have generally better performance than type II hypervisors because they don't have to communicate with hardware layer through operating system thus can utilize full potential it. Some of them need special privileged virtual machine called Domain-0 from which it can be managed and controlled.
 
 \begin{figure}[H]
 \centering
@@ -24,7 +24,7 @@ Virtualization allows creating multiple entities of operating system and applica
 \caption{Type I hypervisor}
 \end{figure}
 
-\item Type II hypervisor (or hosted hypervisor): runs on top of the host operating system in an application layer. This means that hypervisor doesn't require specific drivers for I/O operations and allows running the virtual environment within already existing environment. It is less efficient than type I hyperisor because communication between virtual machines and hardware transitions also through operating system but on the same level as hypervisor can run applications directly on host operating system.
+\item Type II hypervisor (or hosted hypervisor) \label{type_ii_hyp}: runs on top of the host operating system in an application layer. This means that hypervisor doesn't require specific drivers for I/O operations and allows running the virtual environment within already existing environment. It is less efficient than type I hyperisor because communication between virtual machines and hardware transitions also through operating system but on the same level as hypervisor can run applications directly on host operating system.
 
 \begin{figure}[H]
 \centering
@@ -67,7 +67,7 @@ Virtualization technology is spreading rapidly and today there are several archi
 \item Other types of virtualization
 \end{enumerate}
 
-\subsection{Full virtualization}
+\subsection{Full virtualization} \label{full_virt}
 Provides a total virtualization of hardware which means that every virtual entity runs as it is running on a physical hardware completely unaware that its platform is being virtualized. When a virtual machine wants to access hardware it accesses virtual hardware provided by a hypervisor which finally accesses physical hardware. Hypervisor thus acts as the only bridge between virtual machine and physical hardware. This is a reason why the full virtualization is in terms of performance behind non-virtualized machines.
 \subsubsection{Software assisted virtualization}
 Historically, the first full virtualization solution introduced in 1969. With this approach, every part of a physical hardware is virtuallized which has advantage in fact that every operating system or application can be run completely without modifications. On the other hand every operation made by operating system of virtual machine needs to be simulated and checked if it doesn't conflict with any other virtual machine or hypervisor which makes this process very resource-expensive.
@@ -91,7 +91,7 @@ Introduced by IBM in 1972. This approach reduces the problem of massive overhead
 Introduced in 1972 by IBM, this technique was implemented to increase performance of virtualized environment closer to non-virtualized. To use paravirtualization, kernel of the operating system needs to be modified, mainly it needs to have replaced all privileged operation running only in ring 0 by so called 'hypercalls'. Hypercalls allow guest operating system to send system calls directly to the hypervisor without the need of hardware simulation. Virtual machine can therefore access some part of the hardware straight without going through virtualized hardware on the top of hypervisor which greatly increases performance of some operations. This only works for some parts of the hardware, for other parts, virtual machine still needs to use virtualized hardware. Paravirtualized virtual machine is 'aware' of the fact that it is being virtualized which gives it ability to use hypercalls. On the other hand, as mentioned above, in order to use this technique, operating system needs to be altered in a non-trivial way which typically limits its use to a Linux based operating systems because they allow such source code modifications.
 Paravirtualization was popularized by Xen hypervisor, today, most virtualization solutions use it as a norm (for example Red Hat Xen, VMware's family and others).
 
-\subsection{Operating system virtualization}
+\subsection{Operating system virtualization} \label{os_virt}
 Also known as shared kernel virtualization, introduces 'light-weight' virtualization. To understand this concept, first we need to have at least very basic understanding of what are kernel and root file system and what are their roles. Kernel is central part of the operating system, which mediates communication between other parts of operating system and physical hardware. Root file system contains all the files, libraries and practically all utilities necessary for operating system to work properly. In shared kernel virtualization every virtual machine has its own root file system but uses host operating system's kernel which they share among each other. Kernel has the ability to dynamically switch the current root file system to a different one without the need to reboot the whole system (technique also known as 'chroot'). In this case, virtual machines are referred to as 'containers' due to the fact that they are not completely separated but share host machine's kernel. Shared kernel means very little overhead compared to other virtualization concepts and thus higher performance rate. Despite its light-weight nature, this concept also supports advanced features such as isolating memory space, regulating memory, network, CPU and I/O usage, some implementations even allow live migration. Biggest advantage of container-virtualization is superior efficiency and very little overhead compared to other types of virtualization because it doesn't have to emulate all the hardware. Interactions between software and hardware are handled by operating system's kernel inside container. Major disadvantage of this technique is that container's operating system must be compatible with kernel on which it runs (container operating system must be designed for type and version of kernel that is being shared). Further, container environments cannot execute some top-level actions, mount or dismount file systems and so on whereas fully virtualized solution gives us fully independent environment in which isn't user restricted in any way.
 Well known solutions are Linux VServer, Jail for FreeBSD, Zone for Solaris, Virtuozzo for Windows, Rosetta for Mac OS and others.
 
@@ -110,7 +110,7 @@ Main idea is to create multiple virtual sub-networks (channels) that run on sing
 \item External: used in Virtual local area networks (VLAN) and Virtual private networks (VPN).
 \end{enumerate}
 
-\subsubsection{Application virtualization}
+\subsubsection{Application virtualization} \label{app_virt}
 This technique separates the application layer from the underlying operating system layer which means that application runs in 'encapsulated' state independently from operating system. Application is put into a capsule which contains copies of all shared resources that application would need to run as well as all DLLs (dynamically linked libraries), drivers, registry entries and so on. 
 
 In practical terms it means:
@@ -129,7 +129,7 @@ Some well known examples are Wine which is used to run Microsoft Windows applica
 \end{figure}
 
 
-\subsubsection{Desktop virtualization}
+\subsubsection{Desktop virtualization} \label{desktop_virt}
 Similarly as application virtualization it separates desktop environment from underlying physical computer. Desktop virtualization functions on a client-server model. Client desktop environments run on virtual machines stored on servers and can access them via client device which can be standard PC, tablet, thin client which is specialized device capable of displaying virtual desktop environment or others. This technique is growing on popularity mainly because of cloud computing. It allows us to access desktop from any device or location (in practical terms it means that we can work in same environment from anywhere without the need to bring 'work computer'). By using desktop virtalization we can use cheaper client desktop devices because far less processing power is required. Of course, businesses need to first invest into server hardware so it is capable of storing and streaming desired quantities of desktop environments but will save money in a long run by cheaper user devices. Desktop environments are stored on central server so they can be also centrally managed and controlled which increases security of whole system. Disadvantage is that streaming desktop environments to plenty of end users is very demanding on network infrastructure. Desktop virtualization is mostly used by companies with a lot of off-shore employees.
 
 \subsubsection{Storage virtualization}
@@ -152,7 +152,7 @@ In this chapter we will go through the following virtualization implementations.
 \item Wine
 \end{enumerate}
 
-\section{Xen Project}
+\section{Xen Project} \label{xen}
 Is well known type I hypervisor which means it runs directly on the host hardware. Xen Project is widely used as base for a number of open-source and commercial applications providing server and desktop virtualization, infrastructure as a service (IaaS), security applications, embedded and hardware appliances and so on. Worlds biggest clouds today also run on Xen Project hypervisor base. All operating systems based on recent Linux kernel are capable of running Xen project and have packages containing hypervisor and basic tools.
 
 Xen is managed by a special privileged virtual machine called Domain-0 or Dom0, privileged means that it has device drivers and direct access to physical hardware. Domain-0 is a specially modified Linux kernel which is started by Xen hypervisor during initial stage of system start-up(!). Its role is to manage and control every other unprivileged virtual machine (also called Domain-Us or DomU) that is running on the hypervisor. Domain-0 exposes control interface to the user and Xen project hypervisor cannot run without it. Through user interface in form of toolstack (or control stack) user can create, delete or configure virtual machines, toolstack can by driven by command line console, graphical interface or cloud orchestration stack (for example OpenStack or CloudStack).
@@ -197,7 +197,7 @@ Features:
 \end{enumerate}
 
 
-\section{VirtualBox}
+\section{VirtualBox} \label{virtualbox}
 VirtualBox is a type II hypervisor currently being developed by Oracle Corporation. Oracle VM VirtualBox runs on Microsoft Windows, Mac OS X, Linux and Oracle Solaris systems and supports wide range of guest operating systems. With thousands of downloads each day it is the most popular cross-platform open-source virtualization solution.
 
 Here are some of VirtualBox's main features:
@@ -224,7 +224,7 @@ highly reduces overhead.
 User Mode Linux (UML) allows us to run Linux kernels as user mode processes under a host Linux kernel thus allowing us to run multiple independent virtual machines. Main difference between UML and other virtualization technologies is that UML is more of a virtual OS than virtual machine. Other solutions like VMWare are real virtual machines in that they emulate physical hardware and any operating system that runs on physical platform can also run on emulated one. Advantage of this solution is that guest OS is host OS-independent, meaning that any OS able to run on hardware is able to run on top of VMWare. On the other hand, UML is basically just Linux kernel modified to run in user space, UML guest can run only on Linux platform which is serious limitation but being more of virtual OS has other advantages. Solutions such as Xen, BSD jail or Solaris zones are integrated into host operating system but UML runs as a process. This has some performance costs but gives UML host OS version independence. UML has many real-world uses but it's most popular use-case is kernel development and debugging as it was its original purpose, for that can be used normal process-level tools like gdb, gporf (profiling) or gcov (coverage testing). Another popular uses are driver development, safe kernel testing and education due its simpler nature than other solutions.
 
 
-\section{Docker Container}
+\section{Docker Container} \label{docker}
 Docker container is a operating system level technology established  and promoted by Docker Inc.
 
 Docker uses a technology called namespaces. When we run a container, Docker creates a set of namespaces for it. These namespaces provide a layer of isolation. Each aspect of a container runs in a separate namespace and its access is limited to that namespace.
@@ -320,7 +320,7 @@ Serves as a complete platform for implementing and managing virtual machine infr
 \end{enumerate}
 
 \subsection{VMware ThinApp}
-VMware ThinApp is VMware's solution for application virtualization. ThinApp uses a build process to package application files and registry settings into a single application container that can be executed on a variety of operating systems without installation. Applications can be executed from a user's desktop, a network path, or removable media. Applications run entirely in user mode under the security context of the currently logged in user. To virtualize an application ThinApp uses a Capture and Build process which consists of two components:
+VMware ThinApp is VMware's solution for application virtualization (see \ref{app_virt}). ThinApp uses a build process to package application files and registry settings into a single application container that can be executed on a variety of operating systems without installation. Applications can be executed from a user's desktop, a network path, or removable media. Applications run entirely in user mode under the security context of the currently logged in user. To virtualize an application ThinApp uses a Capture and Build process which consists of two components:
 \begin{enumerate}
 \item Setup Capture: The Setup Capture wizard guides the process of capturing the application and applying administrator-supplied configurations specific to the package. Setup Capture takes a prescan snapshot, allows the administrator to install and configure the application, and takes a postscan snapshot. The difference between the prescan and postscan snapshots, which represents the application, is placed in the project directory.
 \item The process by which the project directories and configuration settings are compressed and embedded into the package.
@@ -330,13 +330,13 @@ VMware ThinApp is VMware's solution for application virtualization. ThinApp uses
 Citrix Systems, Inc. is an American multinational software company that provides server, application and desktop virtualization, networking, software as a service (SaaS), and cloud computing technologies. The company began by developing remote access products for Microsoft operating systems. It licensed source code from Microsoft and has been in partnership with the company throughout its history. Citrix came to prominence in the 1990s as a leader in thin client technology, purpose built for accessing remote servers. The company had its first initial public offering in 1995 and, with few competitors, experienced large revenue increases between 1995 and 1999. Between 2005 and 2012, Citrix acquired more than a dozen other companies, allowing it to expand into server and desktop virtualization, as well as others.
 
 \subsection{XenServer}
-XenServer is the complete server virtualization platform from Citrix. The XenServer package contains everything needed to create and manage a deployment of virtual x86 computers running on Xen, the open-source paravirtualizing hypervisor with near-native performance. XenServer is optimized for both Windows and Linux virtual servers. XenServer runs directly on server hardware without requiring an underlying operating system (type I hypervisor). There are two methods by which to administer XenServer: XenCenter and the XenServer Command-Line Interface (CLI). XenCenter is a graphical, Windows-based user interface. XenCenter allows you to manage XenServer hosts, pools and shared storage, and to deploy, manage and monitor VMs from your Windows desktop machine. Key features include creating virtual machine templates from snapshots, XenMotion which allows us to live migrate VMs between hosts. XenServer 7 provides support for high-performance enhanced 3D graphics, with the widest variety of GPU pass-through and virtualized GPU vendor options. Only XenServer includes support for Intel’s Virtual Graphics Technology (GVT-g), a CPU embedded GPU with no extra hardware required to facilitate enhanced graphics workloads. Starting with Citrix XenServer 7, the Enterprise version includes Direct Inspect APIs which allow third-party vendors to secure the OS.
+XenServer is the complete server virtualization platform from Citrix. The XenServer package contains everything needed to create and manage a deployment of virtual x86 computers running on Xen (see \ref{xen}), the open-source paravirtualizing hypervisor with near-native performance. XenServer is optimized for both Windows and Linux virtual servers. XenServer runs directly on server hardware without requiring an underlying operating system (type I hypervisor - see \ref{type_i_hyp}). There are two methods by which to administer XenServer: XenCenter and the XenServer Command-Line Interface (CLI). XenCenter is a graphical, Windows-based user interface. XenCenter allows you to manage XenServer hosts, pools and shared storage, and to deploy, manage and monitor VMs from your Windows desktop machine. Key features include creating virtual machine templates from snapshots, XenMotion which allows us to live migrate VMs between hosts. XenServer 7 provides support for high-performance enhanced 3D graphics, with the widest variety of GPU pass-through and virtualized GPU vendor options. Only XenServer includes support for Intel’s Virtual Graphics Technology (GVT-g), a CPU embedded GPU with no extra hardware required to facilitate enhanced graphics workloads. Starting with Citrix XenServer 7, the Enterprise version includes Direct Inspect APIs which allow third-party vendors to secure the OS.
 
 \subsection{XenDesktop}
 XenDesktop is a desktop virtualization software platform developed and sold by Citrix Systems, that allows multiple users to access and operate Microsoft Windows desktops. These desktops are installed at a centralized server separate from the devices from which they are accessed. Citrix XenDesktop contains a powerful profile management tool that manages profiles independently from the OS and delivers required profile data on-demand. XenDesktop also includes Citrix Receiver, a universal client built for virtually any device including Windows, Mac, Linux, iOS, Android, Chrome OS, Blackberry and for environments that desire a clientless HTML5 web Receiver. XenDesktop includes a Windows app store delivered by Citrix StoreFront to provide a single aggregation point for all IT user services. Users may subscribe to applications, desktops, or data services from any device and have access to those same services, even when already in use from any other device.
 
 \subsection{XenApp}
-Citrix XenApp is application virtualization software that allows Windows applications access via individual devices from a shared server or a Cloud system. We can have applications installed on a XenApp server in a data center and launch them on any device (laptop/tablet/etc.). Application can be accessed from range of operating systems but streamed applications have to run on Windows.
+Citrix XenApp is application virtualization software (see \ref{app_virt}) that allows Windows applications access via individual devices from a shared server or a Cloud system. We can have applications installed on a XenApp server in a data center and launch them on any device (laptop/tablet/etc.). Application can be accessed from range of operating systems but streamed applications have to run on Windows.
 
 
 \section{Oracle}
@@ -447,25 +447,28 @@ The nodes are Linux distributions with VDSM and libvirt installed, along with so
 \section{Disadvantages of Web Admin}
 oVirt's admin portal is called Web Admin and it is web based UI application running on top of the engine. Sysadmins use it to perform advanced actions. It is powerful tool for managing oVirt environment but gaining some types of information is unpractical and unnecessarily complicated.
 
-Here are few examples of data administrators work with that should be easier and faster to acquire:
+Here are just few examples of data administrators work with that should be easier and faster to acquire:
 \begin{enumerate}
-\item situation 1
+\item which hosts contain unupgraded virtual machines?
 \begin{enumerate}
-\item step 1
-\item step 2
-\item step 3
+\item Go to 'Compute' -> 'Hosts' tab
+\item Choose specific host
+\item Go to subtab 'Virtual Machines' to see which VMs run on that host
+\item Go to 'Compute' -> 'Virtual Machines' tab
+\item Choose specific virtual machine
+\item In 'General' tab see compatibility version
+This has to be done for every virtual machine and every host.
 \end{enumerate}
-\item situation 2
+\item which storage domains does particular virtual machine use?
 \begin{enumerate}
-\item step 1
-\item step 2
-\item step 3
+\item Go to 'Storage' -> 'Domains' tab'
+\item Go to 'Virtual Machines' subtab to see which VMs run on this storage domain. Remember or write down if virtual machine we are interested in is there and than do the same for every other storage domain.
 \end{enumerate}
-\item situation 3
+\item which virtual machine highest pressure on the network?
 \begin{enumerate}
-\item step 1
-\item step 2
-\item step 3
+\item Go to 'Compute' -> 'Virtual Machines' tab
+\item Go to 'Network Interfaces' subtab
+\item Open 'Statistics' sub-subtab. Then do this for every virtual machine and remember which was using the virtual network interface the most.
 \end{enumerate}
 \end{enumerate}
 
@@ -474,24 +477,76 @@ My solution to mentioned problem is a desktop application providing all the rele
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{tabulka.jpg}
+\includegraphics[scale=0.2]{tabulka.jpg}
 \caption{My solution}
 \end{figure}
 
 Key features:
 \begin{enumerate}
 \item hiding and showing columns
-\item filtering by multiple filters at the same time
+\item filtering
 \item sorting columns
 \item export table to .csv file
+\item multiple columns are linked to other columns in different tabs for easy access.
 \end{enumerate}
 
 
 \chapter{Implementation}
+Project is implemented in programming language Python version 3.6 and PyQT5 and referential environment is operating system Fedora version 27.
 
 \section{Back-end}
+Application uses Python-SDK tool to extract all the data. The oVirt Python-SDK is an automatically generated software development kit for the oVirt engine API. This allows us to develop Python-based applications for automating a variety of complex administrative tasks in oVirt.
+
+Application flow:
+\begin{enumerate}
+\item Application searches for config file.
+\item After putting in login information, connection to the target virtual machine we want to inspect is established. Connection is kept during whole runtime of application. 
+\item Low-level objects extract all the data needed from oVirt API.
+\item High-level objects process raw data from low-level objects and form them into data structures containing refined data for all entities.
+\item Tab-level objects wrap high-level objects interface and process data structures into form containing everything needed to be displayed. This includes adding row and column flags, adding filter restrictions, creating data structure for front end elements and others.
+\item Tab-level objects are displayed to the user by the front-end module.
+\end{enumerate}
+Division of flow into hierarchy of different level modules is very important. oVirt is live and very quickly developing project. In the future, it is certain that some groups of data supported by this application will become obsolete and not needed anymore and on the other hand, there will come the demand for a new data. Whole application architecture is build with that in mind. To add or to remove column from entity, we only need to modify low-level class of given entity in trivial manner. To remove or add entirely new entity into the table, we only need to create low-level class of that entity which is simple, because if strictly follows the base low-level class. After that we create high-level class of that entity in which we only set filter restrictions, switch expressing if we want to include statistics and other attributes that cannot be set automatically. In the tab-level class we set links redirection and that is all, new entity is created, added and shown in the table. Application is very easily customizable in terms of entities it supports and data shown in each of them which will be valuable in the long run.
+
+Supported features and functionality:
+\subsubsection{Refresh}
+Refresh functionality loads up to date data from API. As mentioned, connection is kept during whole run time of application. This is due to refresh functionality. If we closed connection after initial extraction of data, we would have to establish new connection every time we would want to refresh any tab which would considerably slow down process of getting new data. After losing the connection, application keeps on functioning properly but isn't able to update. Application doesn't support automatic refresh, it needs to be evoked by clicking 'refresh button'. This is due to demand of administrators I collaborated with. While investigating some failure they don't have an exclusive access to the failed virtual machine. Someone else can, for safety's sake, turn it off, restart it, delete it or something else and in that case, admins will lose the data they were working with. Automatic refresh is also very taxing and slow operation. In an environment with tens or hundreds of virtual machines, disks, etc. loading new set of data every couple of seconds would greatly slow down the application and would put unnecessary pressure on the network connection. It is also not necessary, if admins require latest data they can simply press the refresh button.
+
+\subsubsection{Hiding and showing columns}
+Entities have very many attributes and working in very large tables is impractical mainly because of horizontal scrolling. To make it easier, we can select only some currently relevant columns to be shown while other will be hidden. This configuration can be saved into 'config' file which will be loaded upon next start of the application so we don't have to always set it manually. If needed, we can still filter by hidden columns.
+
+\subsubsection{Filtering}
+Resolving filters is done by simple search engine. It supports filtering by multiple filters at the same time. Filters are in AND relationship (OR was not required by admins as there is no real use case in admin's work for it). Filters are case insensitive, and consist of these three parts: 'searched column' 'operator' 'value'. 'Searched column' is name of the column we want to filter by. 'Operator' can be '=' (equals), '>' (greater than) or '<' (less than). Columns are divided into two categories: columns containing string data (names of entities and various variables) and columns containing numeric data (values). 'Value' is value we want to filter by, it supports all Python regular expressions. Some cells contain not only one value but list of multiple values while showing only the first one and in brackets number of others. Example: one virtual machine 'vm1' uses three disks: 'Disk1', 'Disk2' and 'Disk3'. In cell is shown 'Disk1 (2)'. We can filter these kinds of cells by string regular expression or by number. If we filter them by number (disks = 2) result will be all virtual machines with 2 disks. In this manner we can similarly use '>' and '<'.  If we use filter 'disks = Disk2' result will be virtual machine 'vm1' and cell will now show 'Disk2 (2)'. Columns containing numeric data are simply filtered by value. We don;t have to include unit in the filter, engine will filter by column unit. This significantly simplifies some of admins work tasks. Here are some of supported queries useful in real-world scenarios:
+\begin{enumerate}
+\item A (tu pridu query)
+\item B
+\item C
+\end{enumerate}
+
+\subsubsection{Flags}
+Application uses large set of data. To manipulate with it as little as necessary two sets of flags are used: row flags, and column flags. Filtering and hiding columns doesn't affect data, it only changes row and column flags accordingly and when printed for the user, application only prints data marked as printable by these flags. This way we only need one table of data instead of two: 'all data table' and 'currently shown data table' or even worse, constantly deleting unfit data and loading them back from the API. Not only it noticeably reduces the amount of memory needed but it increases performance as well. Flags can be stored in the 'config' file and loaded upon next start of the application so we don't have to adjust it every time and can make it more personalized.
+
+\subsubsection{Export}
+Exporting to .csv files: this is great tool for archiving data. We can choose which tables we want co save, filters and hidden columns also affect exported .csv file.
+
+\subsubsection{Links between columns}
+Some entities are in 'many to many' relationships. For example, one virtual machine can use multiple disks and similarly, one disk can contain multiple virtual machines. This relationship is hard to express in simple text table. Solution works like this: in 'Virtual machines' tab, only first disk used by any particular virtual machine is shown. In same cell there is number in brackets, this number represents number of other disks that virtual machine uses. To make it apparent, cells containing links to other tabs have light blue color. If we double click on that cell we are redirected into 'Disks' tab with only disks with virtual machine which we were redirected from shown. This way we can very simply see for example all the statistics of disks that one virtual machine is running on.
+
+\subsubsection{Insecure mode}
+Communication between application and API is not additionally secured. Added security layers are not necessary as in order to connect to the API we have to be connected into Red Hat's private virtual network (VPN) in the first place, so the communication is already secure.
+
+\subsubsection{Ordering}
+Every column can be ordered in ascending or descending order which is indicated by small arrow icon in the header of the column. Ordering and filtering use special 'custom comparison' mechanism. Table is structured in a way that cells can contain strings, integer numbers, floating point numbers, numbers with various units or without one, lists of multiple data or a special value 'None' (which is Python equivalent of 'null'). 'Custom comparison' mechanism uses operands '=', '<', '>' and can compare strings, numbers in diverse forms, lists and 'None' with each other. One limitation is that list can't be used with operators '<' and '>' which wouldn't make sense in the context of given application, they can only use '='. Here are some examples:
+\begin{enumerate}
+\item 'vm2' == ['vm1', 'vm2', 'vm3'] -> True (and 'vm2' will switch positions with 'vm1')
+\item 'vm1' > None -> True
+\item 10.2 MB < 5.245 MB -> False
+\end{enumerate}
 
 \section{Front-end}
+Front end part of application uses PyQT5 module which is Python wrapper around C++ library QT5. Main focus is on simplicity and clearness of the user interface. In the spotlight is the most important part of the whole application - the table of data. Whole idea of the application is to be an effective and well functioning working tool for system administrators, so main goal is to make it minimalistic and intuitive.
+
+Every entity is displayed in separate tab which includes drop-down menu of checkboxes for showing/hiding columns, refresh button, line edit for entering filters and table of data. In table, every virtual machine, disk, etc. printed into row and its data are in columns.
 
 
 \chapter{Evaluation}
