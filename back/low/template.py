@@ -1,6 +1,7 @@
-from back.low.bases import base, statisctics_base
+
+
+from back.low.bases import base
 from back.low.vm import Vm, VmList
-from ovirtsdk4 import types
 from back.suplementary.cell_item import CellItem
 
 

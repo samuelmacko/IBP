@@ -1,5 +1,7 @@
+
+
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore
 
 
 class Table(QTableWidget):
@@ -10,21 +12,17 @@ class Table(QTableWidget):
         self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
         self.header.setSortIndicatorShown(True)
         self.sort = sort
-        # self.order = 0
         self._set_data(data_list=data_list, headers_list=headers_list)
 
     def _set_data(self, data_list, headers_list):
 
         self.resize(500, 500)
-        # self.setSortingEnabled(True)
 
         self.setRowCount(0)
         self.setColumnCount(len(headers_list))
         self.setHorizontalHeaderLabels(headers_list)
 
         self.header.setSectionResizeMode(QHeaderView.ResizeToContents)
-        # self.header.setSortIndicatorShown(True)
-        # self.header.setSortIndicator(1, 1)
 
         if data_list:
             self.setRowCount(len(data_list))
@@ -36,24 +34,15 @@ class Table(QTableWidget):
                     if col:
                         if isinstance(col, list):
                             item = QTableWidgetItem(
-                                #todo na tvrdo id
-                                # str(col[0].id)+' ('+str(len(col)-1)+')')
                                 str(col[0]) + ' (' + str(len(col) - 1) + ')')
                         else:
                             item = QTableWidgetItem(str(col))
                     else:
                         item = QTableWidgetItem('')
-                    # item.setFlags(
-                    #     QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
                     item.setFlags(QtCore.Qt.ItemIsEnabled)
-                    # if (n & 1) == 0:
-                    #     item.setBackground(QtCore.Qt.lightGray)
                     self.setItem(n, m, item)
                     self.setAlternatingRowColors(True)
 
-
-        # self.sortByColumn(1, 1)
-        # self.setSortingEnabled(False)
         if self.sort:
             self.header.setSortIndicator(self.sort[0], self.sort[1])
 

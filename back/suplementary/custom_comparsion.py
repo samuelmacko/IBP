@@ -17,26 +17,10 @@ class Comparison(object):
         elif other.operand is None:
             return False
         elif to_number(value=self.operand):
-            print(
-                float(to_number(value=self.operand)), '<',
-                float(to_number(value=other.operand)), '=',
-                float(to_number(value=self.operand)) \
-                < float(to_number(value=other.operand))
-                  )
             return \
                 float(to_number(value=self.operand))\
                 < float(to_number(value=other.operand))
-            # print(
-            #     int(to_number(value=self.operand)), '<',
-            #     int(to_number(value=other.operand)), '=',
-            #     int(to_number(value=self.operand)) \
-            #     < int(to_number(value=other.operand))
-            # )
-            # return \
-            #     int(to_number(value=self.operand)) \
-            #     < int(to_number(value=other.operand))
         else:
-            print('eeeellssseee: lt', self.operand, other.operand)
             return self.operand < other.operand
 
     def __gt__(self, other):
@@ -45,20 +29,10 @@ class Comparison(object):
         elif other.operand is None:
             return True
         elif to_number(value=self.operand):
-            print('gggttt')
-            print(
-                float(to_number(value=self.operand)), '>',
-                float(to_number(value=other.operand)), '=',
-                float(to_number(value=self.operand)) \
-                > float(to_number(value=other.operand))
-            )
-            # return \
-                # to_number(value=self.operand) > to_number(value=other.operand)
             return \
                 float(to_number(value=self.operand)) \
                 > float(to_number(value=other.operand))
         else:
-            print('eeeellssseee: gt', self.operand, other.operand)
             return self.operand > other.operand
 
     def __eq__(self, other):
@@ -83,20 +57,8 @@ class Comparison(object):
 
 
 def to_number(value):
-    # split_value = value.split(' ')
-    # if split_value:
-    #     try:
-    #         float_value = float(split_value[0])
-    #         return float_value
-    #     except ValueError:
-    #         return split_value
-    # else:
-    #     return False
 
     try:
-        # integer = int(value)
-        # # print('int:', integer)
-        # return integer
         return int(value)
     except ValueError:
         try:
@@ -107,8 +69,3 @@ def to_number(value):
                 return float(value)
         except ValueError:
             return False
-        # if (' ' in value):
-        #     split_value = value.split(' ')
-        #     return float(split_value[0])
-        # else:
-        #     return False

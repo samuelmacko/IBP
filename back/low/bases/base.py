@@ -1,3 +1,5 @@
+
+
 from back.suplementary.cell_item import CellItem
 from ovirtsdk4 import types
 
@@ -76,7 +78,6 @@ class Statistic(EntityBase):
         return self._info.type
 
     def unit(self):
-        # return self._info.unit.name
         unit = self._info.unit
         if unit == types.StatisticUnit.BITS_PER_SECOND:
             return 'b/s'
@@ -94,8 +95,6 @@ class Statistic(EntityBase):
             return 's'
 
     def value(self):
-        #todo poriesit ako to bude s viacerimi hodnotami
-        # if len(self._info.values) > 0:
         if self._info.values:
             return self._info.values[0].datum
         else:

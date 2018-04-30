@@ -1,10 +1,9 @@
+
+
 from back.suplementary.custom_comparsion import Comparison
 from front.suplementary.filter_handle import FilterHandler
+from front.suplementary.compute_shift import compute_shift
 from front.table import Table
-from PyQt5 import QtCore, QtWidgets, QtGui
-
-
-# from front.main_window import Ui_MainWindow as mw
 
 
 class Tabs(object):
@@ -24,19 +23,14 @@ class Tabs(object):
         self.tool_btn = None
         self.tool_menu = None
         self.refresh_btn = None
-
-        # self.redirects = {}
         self.redirect_dict = None
 
-        # self.col = None
         self.column_order = {}
 
     def print_table(self, sort=None):
         self.values_table.table_from_flags()
 
-        # if self.table_layout.count() > 1:
         if self.vertical_layouts.count() > 1:
-            # self.table_layout.removeWidget(self.printed_table)
             self.vertical_layouts.removeWidget(self.printed_table)
         self.printed_table = Table(
             parent=self.parent, data_list=self.values_table.current_data_list,
@@ -44,29 +38,20 @@ class Tabs(object):
             sort=sort
         )
 
-        # self.table_layout.addWidget(self.printed_table)
         self.vertical_layouts.addWidget(self.printed_table)
 
     def checkbox_handle(self, sender):
-        # print('check box handle')
         for i, ch_box in enumerate(self.chbox_list):
             if sender == ch_box and i < len(self.chbox_list):
-                # if self.values_table.col_flags[i+1] == 1:
-                #     self.values_table.col_flags[i + 1] = 0
-                # else:
-                #     self.values_table.col_flags[i + 1] = 1
                 if self.values_table.col_flags[i] == 1:
                     self.values_table.col_flags[i] = 0
                 else:
                     self.values_table.col_flags[i] = 1
 
-        # self.table.table_from_flags()
         self.print_table()
 
     def line_edit_handle(self, text):
-        # print('line edit handle')
-        # text = sender.text()
-        print('txt:', text)
+        # print('txt:', text)
         self.values_table.row_flags = [
             1 for _ in range(len(self.values_table.row_flags))
         ]
@@ -75,7 +60,6 @@ class Tabs(object):
             self.print_table()
             return
 
-        # try:
         for single_filter in text.split(','):
             filter_handler = FilterHandler(
                 table=self.values_table,
@@ -83,42 +67,36 @@ class Tabs(object):
             )
             filter = filter_handler.process_filter(text=single_filter)
 
-            # if filter and self.values_table.validate_filter(filter=filter):
             if filter:
                 filter_handler.apply_filter(filter=filter)
-                # headers, data = filter_handler.table_from_flags()
                 self.values_table.table_from_flags()
-            # else:
-            #     raise Exception
             else:
                 print('wrong filter')
         self.print_table()
-        # except Exception as e:
-        #     print('wrong filter:', e)
 
     def sort_column(self, col):
-        print('col:', col)
+        # print('col:', col)
 
-        shift = -1
-        for i, flag in enumerate(self.values_table.col_flags):
-            if flag:
-                shift += 1
-            if shift == col:
-                col_shift = i
-                break
-        # col_shift = col
+        # shift = -1
+        # for i, flag in enumerate(self.values_table.col_flags):
+        #     if flag:
+        #         shift += 1
+        #     if shift == col:
+        #         col_shift = i
+        #         break
+
+        col_shift = compute_shift(
+            col_flags=self.values_table.col_flags,
+            current_col=col
+        )
 
         if col_shift not in self.column_order:
             self.column_order[col_shift] = True
 
-        print('col_shift:', col_shift)
+        # print('col_shift:', col_shift)
 
         def temp(value):
             return Comparison(value[0][col_shift])
-
-        # self.printed_table.header.setSortIndicator(
-        #     col, self.column_order[col_shift]
-        # )
 
         rows_flags = zip(
             self.values_table.data_list, self.values_table.row_flags
@@ -126,29 +104,12 @@ class Tabs(object):
         sorted_rows_flags = sorted(
             rows_flags, key=temp, reverse=self.column_order[col_shift]
         )
-        # print('sorted_row_flags:', sorted_rows_flags)
-        # rows_flags.sort(
-        #     rows_flags, key=temp, reverse=self.column_order[col_shift]
-        # )
         self.values_table.data_list = [x[0] for x in sorted_rows_flags]
         self.values_table.row_flags = [x[1] for x in sorted_rows_flags]
-
-        # self.table.table_from_flags()
-        # self.print_table()
-
-        # self.printed_table.header.setSortIndicator(
-        #     col, self.column_order[col_shift]
-        #     # col, True
-        # )
-
 
         self.column_order[col_shift] = not self.column_order[col_shift]
 
         self.print_table(sort=(col, self.column_order[col_shift]))
-
-    # def redirect(self, row, col):
-    #     if col in self.redirect_dict:
-
 
 
 class VMsTab(Tabs):

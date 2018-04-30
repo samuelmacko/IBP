@@ -1,3 +1,5 @@
+
+
 from . import base
 from ovirtsdk4 import types
 
@@ -8,9 +10,6 @@ class StatisticsListBase(base.ListBase):
         super(StatisticsListBase, self).__init__(connection=connection)
         self._connection = connection
         self._id = id
-
-    # def statistic_objects_list(self, flags):
-    #     pass
 
 
 class StatisticBase(base.EntityBase):
@@ -25,7 +24,6 @@ class StatisticBase(base.EntityBase):
         return self._info.type
 
     def unit(self):
-        # return self._info.unit.name
         unit = self._info.unit
         if unit == types.StatisticUnit.BITS_PER_SECOND:
             return 'b/s'
@@ -43,8 +41,6 @@ class StatisticBase(base.EntityBase):
             return 's'
 
     def value(self):
-        #todo poriesit ako to bude s viacerimi hodnotami
-        # if len(self._info.values) > 0:
         if self._info.values:
             return self._info.values[0].datum
         else:

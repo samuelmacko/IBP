@@ -1,5 +1,7 @@
+
+
 from back.low.bases import base
-from back.low.data_center import DataCenterList, DataCenter
+from back.low.data_center import DataCenterList
 from back.suplementary.cell_item import CellItem
 
 
@@ -33,7 +35,6 @@ class Storage(base.SpecificBase):
 
     def storage_address(self):
         name = 'Storage address'
-        # return self._info.storage._address
         return CellItem(
             name=name,
             value=self._info.storage._address + self._info.storage.path
@@ -55,15 +56,6 @@ class Storage(base.SpecificBase):
         name = 'Data center'
         from back.low.data_center import DataCenter
         data_centers_list = DataCenterList(connection=self._connection).list()
-        # for data_center in data_centers_list:
-        #     dc_storages = DataCenter(
-        #         connection=self._connection, dc_id=data_center.id).\
-        #         storage_domains()
-        #     if dc_storages:
-        #         for dc_storage in dc_storages:
-        #             if self._info.id == dc_storage.id:
-        #                 return data_center
-        # return None
         return CellItem(
             name=name,
             value=[DataCenter(

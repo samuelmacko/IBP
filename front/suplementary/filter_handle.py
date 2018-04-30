@@ -1,3 +1,5 @@
+
+
 import operator
 import re
 
@@ -8,7 +10,6 @@ class FilterHandler(object):
 
     def __init__(self, table, filter_restrictions):
         self.table = table
-        # self.filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
         self.filter_regex = r'\s*(\w+[A-Za-z\.\s]+\w+)\s*(>|<|=)\s*(\S+)\s*'
         self.filter_restrictions = filter_restrictions
 
@@ -21,23 +22,15 @@ class FilterHandler(object):
                 self.operand = operand
                 self.value = value
 
-        # filter_regex = r'\s*(\S+)\s*(>|<|=)\s*(\S+)\s*'
-        # filter_regex = r'\s*(w+|\w+\s{0,1}\w+)\s*(>|<|=)\s*(\S+)\s*'
         match = re.match(self.filter_regex, text, re.I)
-        #
-        # print('1:', match.group(1))
-        # print('2:', match.group(2))
-        # print('3:', match.group(3))
 
         if match:
             attribute = match.group(1)
-            # operand = ops[match.group(2)]
             operand = match.group(2)
             value = match.group(3)
 
             attribute_column = None
             for i, header in enumerate(self.table.headers_list):
-                # print(header)
                 if attribute.lower() == header.lower():
                     attribute_column = i
                     break
@@ -61,7 +54,6 @@ class FilterHandler(object):
 
             if filter.column in self.filter_restrictions:
                 try:
-                    # int_val = int(filter.value)
                     if int(filter.value) != len(row[filter.column]):
                         self.table.row_flags[i] = 0
                     continue

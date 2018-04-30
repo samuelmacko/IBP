@@ -1,7 +1,7 @@
-# from back.low.cluster import Cluster
+
+
 import back.low.cluster as Cluster
-from back.low.bases import base, statisctics_base
-from ovirtsdk4 import types
+from back.low.bases import base
 from back.suplementary.cell_item import CellItem
 from back.suplementary.conversion import to_MB
 
@@ -52,7 +52,6 @@ class Vm(base.SpecificBase):
         else:
             return None
 
-
     def _host(self):
         name = 'Host'
         if self.host_obj():
@@ -62,12 +61,10 @@ class Vm(base.SpecificBase):
 
     def _memory(self):
         name = 'Memory'
-        # return str(self._info._memory)
         return CellItem(name=name, value=to_MB(self._info._memory))
 
     def _memory_max(self):
         name = 'Max _memory'
-        # return str(self._info.memory_policy.max)
         return CellItem(name=name, value=to_MB(self._info.memory_policy.max))
 
     def nics_obj(self):
@@ -130,14 +127,15 @@ class Vm(base.SpecificBase):
             name=name,
             value=self.cluster_obj().name
         )
-        # return self._connection.follow_link(self._info._cluster)
 
     def _consoles(self):
-        name = 'Consoles'
+        name = 'Console'
         console_service = self._service.graphics_consoles_service()
         return CellItem(
             name=name,
-            value=[console.protocol.name for console in console_service.list()]
+            value=[
+                console.protocol.name for console in console_service.list()
+            ][0]
         )
 
     def vnics_obj(self):

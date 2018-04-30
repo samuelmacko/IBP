@@ -8,8 +8,6 @@ class HighBase(object):
         self.row_flags = []
         self.data_list = None
         self.headers_list = None
-        # self.data_list = []
-        # self.headers_list = []
         self.current_data_list = []
         self.current_headers_list = []
 
@@ -21,7 +19,6 @@ class HighBase(object):
     def construct_table(self):
         table = []
         header = []
-        # print('ent:', len(entity.statistics())) nie tuna
         entity_list = self.build_classes.list_class(
             connection=self._connection).list()
 
@@ -39,15 +36,6 @@ class HighBase(object):
                     print(cell.name, cell.value)
                     header.append(cell.name)
                 table_row.append(cell.value)
-
-            # yield n
-
-            # if self.build_classes.entity_class is Host:
-            #     print('aaaaaaa')
-            #     continue
-
-            # aaa = entity.statistics()
-            # for statistic in aaa:
             if self.statistics:
                 for statistic in entity.statistics():
                     if n == 0:
@@ -62,8 +50,6 @@ class HighBase(object):
         self.headers_list = header
 
     def table_from_flags(self):
-        # headers = []
-        # data = []
         self.current_headers_list = []
         self.current_data_list = []
 
@@ -79,12 +65,10 @@ class HighBase(object):
                         data_row.append(row[i])
                 self.current_data_list.append(data_row)
 
-        # return headers, data
 
     def validate_filter(self, filter):
         if (filter.column in self.filter_restrictions
                 and filter.operand == '='):
-            # filter.operand is operator.eq and isinstance(filter.value, str):
             return True
 
         else:

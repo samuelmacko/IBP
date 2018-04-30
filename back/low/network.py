@@ -1,4 +1,6 @@
-from back.low.bases import base, statisctics_base
+
+
+from back.low.bases import base
 from ovirtsdk4 import types
 from back.suplementary.cell_item import CellItem
 
@@ -21,7 +23,6 @@ class Network(base.SpecificBase):
 
     def data_center(self):
         name = 'Data center'
-        # from back.low.data_centers import DataCenter
         return CellItem(
             name=name,
             value=self._connection.follow_link(self._info.data_center).name

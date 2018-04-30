@@ -1,39 +1,22 @@
+
+
 import csv
 import os
 from back.suplementary.config_file import create_config_file
 from front.suplementary.decorators import header_signal
 from front.suplementary.tab_sockets import *
 import global_variables
+from front.suplementary.compute_shift import compute_shift
 
 from PyQt5 import QtWidgets, QtGui, Qt, QtCore
 
 
 class Ui_MainWindow(object):
 
-    # def __init__(self, parent, data_list, flags, connection, headers_list):
-    # def __init__(
-    #         self, parent, connection, vms_table, disks_table, hosts_table,
-    #         st_domains_table, clusters_table, data_centers_table,
-    #         templates_table, nics_table, networks_table
-    # ):
     def __init__(self, parent, connection, tables_list):
         self.parent = parent
         self.connection = connection
         self.dir_name = os.path.dirname(__file__)
-
-        # self.icon = QtGui.QIcon(global_variables.ROOT_FILE_PATH + '/garbage/x.png')
-
-        # self.tabs_list = [
-        #     VMsTab(table=vms_table, parent=parent),
-        #     DisksTab(table=disks_table, parent=parent),
-        #     HostsTab(table=hosts_table, parent=parent),
-        #     StorageDomainsTab(table=st_domains_table, parent=parent),
-        #     ClustersTab(table=clusters_table, parent=parent),
-        #     DataCentersTab(table=data_centers_table, parent=parent),
-        #     TemplatesTab(table=templates_table, parent=parent),
-        #     NICsTab(table=nics_table, parent=parent),
-        #     NetworksTab(table=networks_table, parent=parent)
-        # ]
 
         self.tabs_list = [
             VMsTab(table=tables_list[0], parent=parent),
@@ -50,10 +33,6 @@ class Ui_MainWindow(object):
         self.current_tab = None
 
     def setupUi(self, MainWindow):
-
-        # dir_name = os.path.dirname(__file__)
-        # btn = QtWidgets.QPushButton()
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1500, 800)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -64,7 +43,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        # self.tabWidget.setObjectName("tabWidget")
 
 
         for tab in self.tabs_list:
@@ -72,7 +50,6 @@ class Ui_MainWindow(object):
             tab.tab_widget = QtWidgets.QWidget()
             tab.horizontal_layouts[0] = QtWidgets.QHBoxLayout(tab.tab_widget)
             tab.vertical_layouts = QtWidgets.QVBoxLayout()
-            # self.tabs_list[0].table_layout = self.tabs_list[0].vertical_layouts
             tab.horizontal_layouts[1] = QtWidgets.QHBoxLayout()
             tab.tool_btn = QtWidgets.QToolButton(self.centralwidget)
             tab.tool_btn.setText('Select Column ')
@@ -93,30 +70,17 @@ class Ui_MainWindow(object):
             tab.refresh_btn = QtWidgets.QPushButton(tab.tab_widget)
             tab.refresh_btn.clicked['bool'].connect(self.refresh)
 
-            # movie = QtGui.QMovie(dir_name + '/garbage/refres-moving.gif')
-            # label = QtWidgets.QLabel(self.parent)
-            # label.setMovie(movie)
-            # movie.start()
-
             tab.refresh_btn.setIcon(
                 QtGui.QIcon(self.dir_name + '/suplementary/images/refresh.gif')
             )
             tab.refresh_btn.setIconSize(QtCore.QSize(20, 20))
 
-            # tab.horizontal_layouts[1].addWidget(label)
-
             tab.horizontal_layouts[1].addWidget(tab.refresh_btn)
             tab.horizontal_layouts[1].addWidget(tab.line_edit)
-            # self.tabs_list[0].vertical_layouts. \
-            #     addWidget(self.tabs_list[0].tool_btn)
             tab.horizontal_layouts[0].addLayout(tab.vertical_layouts)
             tab.vertical_layouts.addLayout(tab.horizontal_layouts[1])
-            # self.tabs_list[0].vertical_layouts. \
-            #     addWidget(self.tabs_list[0].horizontal_layouts[1])
 
             self.tabWidget.addTab(tab.tab_widget, "")
-
-            # break
 
 
         self.tab_changed(tab_number=0)
@@ -130,10 +94,6 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
-        self.menuAsd_2 = QtWidgets.QMenu(self.menubar)
-        self.menuAsd_2.setObjectName("menuAsd_2")
-        self.menuQwe = QtWidgets.QMenu(self.menuAsd_2)
-        self.menuQwe.setObjectName("menuQwe")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -145,27 +105,9 @@ class Ui_MainWindow(object):
         self.actionExport = QtWidgets.QAction(MainWindow)
         self.actionExport.setObjectName("actionExport")
         self.actionExport.triggered['bool'].connect(self.export)
-        self.actionAsd = QtWidgets.QAction(MainWindow)
-        self.actionAsd.setObjectName("actionAsd")
-
-        self.actionAsd.setCheckable(True)
-
-        self.actionAsddd = QtWidgets.QAction(MainWindow)
-        self.actionAsddd.setObjectName("actionAsddd")
-        self.actionSdff = QtWidgets.QAction(MainWindow)
-        self.actionSdff.setObjectName("actionSdff")
-        self.actionSdfsf = QtWidgets.QAction(MainWindow)
-        self.actionSdfsf.setObjectName("actionSdfsf")
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionExport)
-        self.menuFile.addAction(self.actionAsd)
-        self.menuQwe.addAction(self.actionSdff)
-        self.menuQwe.addAction(self.actionSdfsf)
-        self.menuAsd_2.addAction(self.menuQwe.menuAction())
-        self.menuAsd_2.addSeparator()
-        self.menuAsd_2.addAction(self.actionAsddd)
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuAsd_2.menuAction())
 
         self.tabWidget.tabBarClicked['int'].connect(self.tab_changed)
 
@@ -176,7 +118,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        # self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_widget), _translate("MainWindow", "Virtual Machines"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[0].tab_widget), _translate("MainWindow", "Virtual Machines"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[1].tab_widget), _translate("MainWindow", "Disks"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[2].tab_widget), _translate("MainWindow", "Hosts"))
@@ -186,20 +127,13 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[6].tab_widget), _translate("MainWindow", "Templates"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[7].tab_widget), _translate("MainWindow", "NICs"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs_list[8].tab_widget), _translate("MainWindow", "Networks"))
-        # self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), _translate("MainWindow", "Tab 10"))
+
         self.menuFile.setTitle(_translate("MainWindow", "file"))
-        # self.menuAsd_2.setTitle(_translate("MainWindow", "asd"))
-        self.menuQwe.setTitle(_translate("MainWindow", "qwe"))
         self.actionSave.setText(_translate("MainWindow", "save"))
         self.actionExport.setText(_translate("MainWindow", "export"))
-        # self.actionAsd.setText(_translate("MainWindow", "asd"))
-        self.actionAsddd.setText(_translate("MainWindow", "asddd"))
-        self.actionSdff.setText(_translate("MainWindow", "sdff"))
-        self.actionSdfsf.setText(_translate("MainWindow", "sdfsf"))
 
     def tab_changed(self, tab_number):
         self.current_tab = tab_number
-        # print('tab_widget:', self.current_tab)
 
         self.tabs_list[self.current_tab].print_table()
         self.tabs_list[self.current_tab].printed_table.\
@@ -210,14 +144,12 @@ class Ui_MainWindow(object):
     @header_signal
     def checkbox_clicked(self):
         sender = self.centralwidget.sender()
-        # print('sender:', sender.objectName())
 
         self.tabs_list[self.current_tab].checkbox_handle(sender=sender)
 
     @header_signal
     def line_edit_changed(self):
         sender = self.centralwidget.sender()
-        # print('text:', sender.text())
 
         self.tabs_list[self.current_tab].line_edit_handle(text=sender.text())
 
@@ -227,33 +159,20 @@ class Ui_MainWindow(object):
 
     def menu_item_clicked(self, bool):
         sender = self.centralwidget.sender()
-        # print('sender:', sender.objectName())
         if sender.objectName() == 'actionSave':
-            create_config_file(
-                vm_tab=self.tabs_list[0], disk_tab=self.tabs_list[1],
-                host_tab=self.tabs_list[2])
+            create_config_file(tabs_list=self.tabs_list)
 
-    # @disable
     @header_signal
     def refresh(self, clicked=None):
-        sender = self.centralwidget.sender()
-        print('refresh:', sender.objectName())
-
-        # self.tabs_list[self.current_tab].refresh_btn.setDisabled(True)
-        # self.tabs_list[self.current_tab].printed_table.header.setDisabled(True)
-        # self.tabWidget.setDisabled(True)
-        # self.tabs_list[self.current_tab].tool_menu.setDisabled(True)
+        # sender = self.centralwidget.sender()
         self.parent.setDisabled(True)
 
 
         message_box = QtWidgets.QMessageBox(self.parent)
         message_box.setWindowTitle('Refreshing')
-        # message_box.setText('Please wait...')
         message_box.setStandardButtons(Qt.QMessageBox.NoButton)
-        # self.message_box.setStandardButtons(Qt.QMessageBox.No)
 
         message_box.addButton('Please wait...', QtWidgets.QMessageBox.YesRole)
-        # message_box.setWindowFlag(QtCore.Qt.WindowCloseButtonHint)
 
         prog_bar = QtWidgets.QProgressBar(message_box)
         prog_bar.setStyleSheet('QProgressBar::chunk {background: #9ACD32;}')
@@ -278,7 +197,6 @@ class Ui_MainWindow(object):
                     self.current_tab][1]
             )
 
-        # self.tabs_list[self.current_tab].values_table.construct_table()
         for i in self.tabs_list[self.current_tab].\
                 values_table.construct_table():
             prog_bar.setValue(i)
@@ -287,8 +205,6 @@ class Ui_MainWindow(object):
         self.parent.setDisabled(False)
 
         message_box.close()
-
-        # connection.close()
 
 
     def export(self):
@@ -310,6 +226,13 @@ class Ui_MainWindow(object):
     def redirect(self, row, col):
         sender = self.centralwidget.sender()
         print("sender:", sender, "row:", row, "col:", col)
+
+        col = compute_shift(
+            col_flags=self.tabs_list[self.current_tab].values_table.col_flags,
+            current_col=col
+        )
+
+        print('shifted col:', col)
 
         if col in self.tabs_list[self.current_tab].redirect_dict:
             target_tab = self.tabs_list[self.current_tab].redirect_dict[col][0]

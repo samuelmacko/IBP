@@ -1,5 +1,6 @@
-from back.low.bases import base, statisctics_base
-from ovirtsdk4 import types
+
+
+from back.low.bases import base
 from back.low.vm import Vm, VmList
 from back.suplementary.cell_item import CellItem
 
@@ -10,9 +11,6 @@ class DisksList(base.ListBase):
         super(DisksList, self).__init__(connection=connection)
         self._service = self._service.disks_service()
         self._list = self._service.list()
-
-    # def disks_list(self):
-    #     return self._list
 
 
 class Disk(base.SpecificBase):
@@ -29,12 +27,10 @@ class Disk(base.SpecificBase):
     def _actual_size(self):
         name = 'Actual size'
         return CellItem(name=name, value=str(self._info._actual_size))
-        # return self._info._actual_size
 
     def _provisioned_size(self):
         name = 'Provisioned size'
         return CellItem(name=name, value=str(self._info._provisioned_size))
-        # return self._info._provisioned_size
 
     def _format(self):
         name = 'Format'
@@ -55,7 +51,6 @@ class Disk(base.SpecificBase):
         for vm in vm_list:
             vm_disks = Vm(connection=self._connection, id=vm.id).disks_obj()
             for vm_disk in vm_disks:
-                # if self._info.id == vm_disk.id:
                 if vm_disk and self._info.id == vm_disk.id:
                     vms.append(vm.name)
         return CellItem(name=name, value=vms)
