@@ -83,6 +83,15 @@ class InputDialog(QtWidgets.QWidget):
         password = self.password_input.text()
         url = self.url_input.text()
 
+        if '@' not in username:
+            username += '@internal'
+
+        if url[:8] != 'https://':
+            url = 'https://' + url
+
+        if url[-17:] != '/ovirt-engine/api':
+            url += '/ovirt-engine/api'
+
         connection = sdk.Connection(
             username=username, password=password, insecure=True, url=url
         )
@@ -96,10 +105,9 @@ class InputDialog(QtWidgets.QWidget):
 
             message_box.open()
 
-
-            self.username_input.setText('')
-            self.password_input.setText('')
-            self.url_input.setText('')
+            # self.username_input.setText('')
+            # self.password_input.setText('')
+            # self.url_input.setText('')
 
         global_variables.USER_LOGIN = self.username_input.text()
         global_variables.FQDN = self.url_input.text()
