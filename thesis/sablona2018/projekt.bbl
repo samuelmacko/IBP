@@ -1,0 +1,98 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{Retrieved from: }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{apache_cloud_stack}
+{vv~}{ll}{, f.}{, jj}: {\it Apache Cloudstack: Open Source Cloud Computing.}
+  [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://cloudstack.apache.org/}
+
+\bibitem{docker}
+{vv~}{ll}{, f.}{, jj}: {\it Docker - Build, Ship, and Run Any App, Anywhere}.
+  [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.docker.com/}
+
+\bibitem{microsoft}
+{vv~}{ll}{, f.}{, jj}: {\it Microsoft - Official Home Page}. [Online; visited
+  02.05.2018].
+\newline\urlprefix\url{https://www.microsoft.com/en-us/}
+
+\bibitem{citrix}
+{vv~}{ll}{, f.}{, jj}: {\it Mobilize Your Business with Secure App and Data
+  Delivery - Citrix}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.citrix.com/}
+
+\bibitem{oci}
+{vv~}{ll}{, f.}{, jj}: {\it Open Containers Initiative}. [Online; visited
+  02.05.2018].
+\newline\urlprefix\url{https://www.opencontainers.org/}
+
+\bibitem{open_stack}
+{vv~}{ll}{, f.}{, jj}: {\it Open source oftware for creating private and public
+  clouds.} [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.openstack.org/}
+
+\bibitem{oracle}
+{vv~}{ll}{, f.}{, jj}: {\it Oracle | Integrated Cloud Applications and Platform
+  Services}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.oracle.com/index.html}
+
+\bibitem{virtual_box}
+{vv~}{ll}{, f.}{, jj}: {\it Oracle VM VirtualBox}. [Online; visited
+  02.05.2018].
+\newline\urlprefix\url{https://www.virtualbox.org/}
+
+\bibitem{ovirt}
+{vv~}{ll}{, f.}{, jj}: {\it oVirt}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.ovirt.org/}
+
+\bibitem{redhat}
+{vv~}{ll}{, f.}{, jj}: {\it Red Hat - We make open source technologies for the
+  enterprise}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.redhat.com/en}
+
+\bibitem{rhev}
+{vv~}{ll}{, f.}{, jj}: {\it Virtualization for the enterprise}. [Online;
+  visited 02.05.2018].
+\newline\urlprefix\url{https://www.redhat.com/en/technologies/virtualization/enterprise-virtualization}
+
+\bibitem{xen_project}
+{vv~}{ll}{, f.}{, jj}: {\it Virtualization: Issues, security threats, and
+  solutions}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.xenproject.org/}
+
+\bibitem{wmvare}
+{vv~}{ll}{, f.}{, jj}: {\it VMware - Official site}. [Online; visited
+  02.05.2018].
+\newline\urlprefix\url{https://www.vmware.com/}
+
+\bibitem{kvm}
+{vv~}{ll}{, f.}{, jj}: {\it What is KVM?} [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.redhat.com/en/topics/virtualization/what-is-KVM}
+
+\bibitem{wine}
+{vv~}{ll}{, f.}{, jj}: {\it Wine Developer's Guide/Architecture Overview -
+  WineHQ Wiki}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://wiki.winehq.org/Wine_Developer%27s_Guide/Architecture_Overview}
+
+\bibitem{git}
+{vv~}{ll}{, f.}{, jj}: {\it xmacko10/IBP:bakalarka}. [Online; visited
+  02.05.2018].
+\newline\urlprefix\url{https://www.ovirt.org/}
+
+\bibitem{user_mode_linux}
+{vv~}{ll}{, f.}{, jj}: \emph{{\it User Mode Linux}}. Prentice Hall. 2006. ISBN
+  978-0131865051.
+
+\bibitem{virt_book}
+{vv~}{ll}{, f.}{, jj}: \emph{{\it Virtualization - The Complete Cornerstone
+  Guide to Virtualization Best Practices}}. Emereo Publishing. 2009. ISBN
+  978-1-921523-91-5.
+
+\end{thebibliography}
