@@ -232,7 +232,7 @@ class Ui_MainWindow(object):
             current_col=col
         )
 
-        print('shifted col:', col)
+        # print('shifted col:', col)
 
         if col in self.tabs_list[self.current_tab].redirect_dict:
             target_tab = self.tabs_list[self.current_tab].redirect_dict[col][0]

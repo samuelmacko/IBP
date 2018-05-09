@@ -1,4 +1,4 @@
-
+#! /usr/bin/env python3
 
 import os
 import sys
@@ -71,7 +71,7 @@ def main():
 
     splash_screen.finish(window)
 
-    app.exec()
+    app.exec_()
 
     connection.close()
 

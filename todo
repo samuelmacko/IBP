@@ -1,5 +1,7 @@
 1. statistiky NICs
 
+2. vystup do yamlu - pkubica
+
 --------------------------------------------------
 otazky:
 1. v clusters, co znamena allocation mac adres?
@@ -18,6 +20,8 @@ ake ma jeho _cluster?
 
 --------------------------------------------------
 napady:
+
+1. dobra stranka na rpmko: https://rpm-packaging-guide.github.io/
 
 --------------------------------------------------
 1. zajimavy screenshot https://www.starwindsoftware.com/blog/wp-content/uploads/2017/10/RVTools-and-vCPU-TAB.png

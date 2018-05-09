@@ -3,13 +3,24 @@
 class Comparison(object):
 
     def __init__(self, operand):
-        if operand:
-            if isinstance(operand, list):
+        # if operand:
+        #
+        #     if isinstance(operand, list):
+        #         self.operand = operand[0].lower()
+        #     else:
+        #         self.operand = operand.lower()
+        # else:
+        #     self.operand = operand
+
+        if isinstance(operand, list):
+
+            if len(operand) > 0:
                 self.operand = operand[0].lower()
             else:
-                self.operand = operand.lower()
+                self.operand = None
         else:
             self.operand = operand
+
 
     def __lt__(self, other):
         if self.operand is None:
@@ -57,7 +68,6 @@ class Comparison(object):
 
 
 def to_number(value):
-
     try:
         return int(value)
     except ValueError:
