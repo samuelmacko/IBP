@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=ovirt inventory
+Comment=application for presenting red hat virtualization inventory
+Exec=/usr/lib/ibp/main.py
+Icon=/usr/lib/ibp/ovirt-icon-256.png
+Terminal=false
+Categories=GTK;GNOME;Utility;
