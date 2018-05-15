@@ -60,6 +60,16 @@
 \contentsline {chapter}{\numberline {8}Conclusion}{36}{chapter.8}
 \contentsline {chapter}{Bibliography}{37}{chapter*.18}
 \ttl@starttoc {chapters@1}
-\contentsline {chapter}{\numberline {A}Jak pracovat s touto \IeC {\v s}ablonou}{39}{appendix.A}
-\contentsline {paragraph}{Pozor na \IeC {\v c}\IeC {\'\i }slov\IeC {\'a}n\IeC {\'\i } str\IeC {\'a}nek!}{40}{section*.20}
+\contentsline {chapter}{\numberline {A}Building and usage}{39}{appendix.A}
+\contentsline {section}{\numberline {A.1}Introduction}{39}{section.A.1}
+\contentsline {section}{\numberline {A.2}Building}{39}{section.A.2}
+\contentsline {section}{\numberline {A.3}Usage}{39}{section.A.3}
+\contentsline {subsection}{\numberline {A.3.1}Logging in}{39}{subsection.A.3.1}
+\contentsline {subsection}{\numberline {A.3.2}Hide/show columns}{39}{subsection.A.3.2}
+\contentsline {subsection}{\numberline {A.3.3}Refresh}{39}{subsection.A.3.3}
+\contentsline {subsection}{\numberline {A.3.4}Filter}{40}{subsection.A.3.4}
+\contentsline {subsection}{\numberline {A.3.5}Ordering}{40}{subsection.A.3.5}
+\contentsline {subsection}{\numberline {A.3.6}Redirecting}{40}{subsection.A.3.6}
+\contentsline {subsection}{\numberline {A.3.7}Export to .csv}{40}{subsection.A.3.7}
+\contentsline {subsection}{\numberline {A.3.8}Save}{40}{subsection.A.3.8}
 \contentsfinish 

@@ -10,6 +10,7 @@ _format.name$ is an unknown function---line 959 of file bib-styles/englishiso.bs
 _format.name$ is an unknown function---line 970 of file bib-styles/englishiso.bst
 _format.name$ is an unknown function---line 978 of file bib-styles/englishiso.bst
 Database file #1: projekt-20-literatura-bibliography.bib
+Warning--I didn't find a database entry for "Knuth"
 Warning--I didn't find a database entry for "fitWeb"
 _format.name$ is an unknown function---line 1428 of file bib-styles/englishiso.bst
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
@@ -267,7 +268,7 @@ Gerard Blokdijk, Ivanka Menken
 while executing---line 1595 of file bib-styles/englishiso.bst
 You've used 18 entries,
             3143 wiz_defined-function locations,
-            719 strings with 7144 characters,
+            721 strings with 7154 characters,
 and the built_in function-call counts, 5332 in all, are:
 = -- 356
 > -- 126
