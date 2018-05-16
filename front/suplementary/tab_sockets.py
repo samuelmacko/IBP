@@ -1,5 +1,6 @@
 
 
+from PyQt5 import QtWidgets, Qt
 from back.suplementary.custom_comparsion import Comparison
 from front.suplementary.filter_handle import FilterHandler
 from front.suplementary.compute_shift import compute_shift
@@ -51,7 +52,6 @@ class Tabs(object):
         self.print_table()
 
     def line_edit_handle(self, text):
-        # print('txt:', text)
         self.values_table.row_flags = [
             1 for _ in range(len(self.values_table.row_flags))
         ]
@@ -71,19 +71,17 @@ class Tabs(object):
                 filter_handler.apply_filter(filter=filter)
                 self.values_table.table_from_flags()
             else:
-                print('wrong filter')
+
+                message_box = QtWidgets.QMessageBox(self.parent)
+                message_box.setWindowTitle('Wrong filter')
+                message_box.setText('Wrong filter')
+                message_box.setStandardButtons(Qt.QMessageBox.Ok)
+
+                message_box.open()
+
         self.print_table()
 
     def sort_column(self, col):
-        # print('col:', col)
-
-        # shift = -1
-        # for i, flag in enumerate(self.values_table.col_flags):
-        #     if flag:
-        #         shift += 1
-        #     if shift == col:
-        #         col_shift = i
-        #         break
 
         col_shift = compute_shift(
             col_flags=self.values_table.col_flags,
@@ -92,8 +90,6 @@ class Tabs(object):
 
         if col_shift not in self.column_order:
             self.column_order[col_shift] = True
-
-        # print('col_shift:', col_shift)
 
         def temp(value):
             return Comparison(value[0][col_shift])
@@ -173,7 +169,7 @@ class NICsTab(Tabs):
 
     def __init__(self, table, parent):
         super(NICsTab, self).__init__(table=table, parent=parent)
-        self.redirect_dict = {2: (5, None), 3: (8, 3), 4: (0, 12), 5: (6, 9)}
+        self.redirect_dict = {3: (8, 3), 4: (0, 12), 5: (6, 9)} #2: (5, None)
 
 
 class NetworksTab(Tabs):

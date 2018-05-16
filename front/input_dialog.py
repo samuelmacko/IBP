@@ -2,7 +2,6 @@
 
 from PyQt5 import QtWidgets, QtCore, Qt
 import global_variables
-
 import ovirtsdk4 as sdk
 
 
@@ -29,26 +28,13 @@ class InputDialog(QtWidgets.QWidget):
             self.username_input = QtWidgets.QLineEdit(self)
             self.url_input = QtWidgets.QLineEdit(self)
 
-
-        # self.username_input = QtWidgets.QLineEdit(self)
-        # self.username_input = QtWidgets.QLineEdit('admin@internal', self)
         self.username_input.setPlaceholderText('username')
         self.username_input.returnPressed.connect(self.ok_btn_clicked)
         self.password_input = QtWidgets.QLineEdit(self)
 
-        # self.password_input = QtWidgets.QLineEdit('qum5net', self)
         self.password_input.setPlaceholderText('password')
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.returnPressed.connect(self.ok_btn_clicked)
-
-        # self.url_input = QtWidgets.QLineEdit(self)
-        # self.url_input = QtWidgets.QLineEdit(
-        #     'https://10-37-137-19.rhev.lab.eng.brq.redhat.com'
-        #     '/ovirt-engine/api', self)
-        # self.url_input = QtWidgets.QLineEdit(
-        #     'https://10-37-137-222.rhev.lab.eng.brq.redhat.com'
-        #     '/ovirt-engine/api', self)
-
 
         self.url_input.setPlaceholderText('url')
         self.url_input.returnPressed.connect(self.ok_btn_clicked)
@@ -104,10 +90,6 @@ class InputDialog(QtWidgets.QWidget):
             message_box.setStandardButtons(Qt.QMessageBox.Ok)
 
             message_box.open()
-
-            # self.username_input.setText('')
-            # self.password_input.setText('')
-            # self.url_input.setText('')
 
         global_variables.USER_LOGIN = self.username_input.text()
         global_variables.FQDN = self.url_input.text()

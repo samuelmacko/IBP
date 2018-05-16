@@ -1,0 +1,105 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{Retrieved from: }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{apache_cloud_stack}
+{Apache CloudStack}: {\it Apache Cloudstack: Open Source Cloud Computing.}
+  [Online; visited 21.04.2018].
+\newline\urlprefix\url{https://cloudstack.apache.org/}
+
+\bibitem{citrix}
+{Citrix}: {\it Mobilize Your Business with Secure App and Data Delivery -
+  Citrix}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.citrix.com/}
+
+\bibitem{docker}
+{Docker}: {\it Docker - Build, Ship, and Run Any App, Anywhere}. [Online;
+  visited 24.04.2018].
+\newline\urlprefix\url{https://www.docker.com/}
+
+\bibitem{virt_book}
+{Gerard Blokdijk, Ivanka Menken}: \emph{{\it Virtualization - The Complete
+  Cornerstone Guide to Virtualization Best Practices}}. Emereo Publishing.
+  2009. ISBN 978-1-921523-91-5.
+
+\bibitem{git}
+{GitHub}: {\it xmacko10/IBP:Bachelor's Thesis}. [Online; visited 14.05.2018].
+\newline\urlprefix\url{https://github.com/xmacko10/IBP}
+
+\bibitem{user_mode_linux}
+{Jeff Dike}: \emph{{\it User Mode Linux}}. Prentice Hall. 2006. ISBN
+  978-0131865051.
+
+\bibitem{virt:iss_sec_thr_sol}
+{Michael Pearce, Sherali Zeadally, Ray Hunt}: {\it Virtualization: Issues,
+  security threats, and solutions}. [Online; visited 05.03.2018].
+\newline\urlprefix\url{http://www.profsandhu.com/cs6393_s14/csur_virt_2013.pdf}
+
+\bibitem{microsoft}
+{Microsoft}: {\it Microsoft - Official Home Page}. [Online; visited
+  05.05.2018].
+\newline\urlprefix\url{https://www.microsoft.com/en-us/}
+
+\bibitem{oracle}
+{Oracle}: {\it Oracle | Integrated Cloud Applications and Platform Services}.
+  [Online; visited 04.05.2018].
+\newline\urlprefix\url{https://www.oracle.com/index.html}
+
+\bibitem{ovirt}
+{oVirt}: {\it oVirt}. [Online; visited 08.05.2018].
+\newline\urlprefix\url{https://www.ovirt.org/}
+
+\bibitem{sec_and_virt:survey}
+{Patrice Clemente, Jonathan Rouzaud-Cornaba}: {\it Security and Virtualization:
+  a Survey}. [Online; visited 05.03.2018].
+\newline\urlprefix\url{https://hal.archives-ouvertes.fr/file/index/docid/995214/filename/RR-2010-06.pdf}
+
+\bibitem{open_stack}
+{Rackspace Cloud Computing}: {\it Open source oftware for creating private and
+  public clouds.} [Online; visited 21.04.2018].
+\newline\urlprefix\url{https://www.openstack.org/}
+
+\bibitem{redhat}
+{Red Hat}: {\it Red Hat - We make open source technologies for the enterprise}.
+  [Online; visited 07.05.2018].
+\newline\urlprefix\url{https://www.redhat.com/en}
+
+\bibitem{rhev}
+{Red Hat}: {\it Virtualization for the enterprise}. [Online; visited
+  07.05.2018].
+\newline\urlprefix\url{https://www.redhat.com/en/technologies/virtualization/enterprise-virtualization}
+
+\bibitem{kvm}
+{Red Hat}: {\it What is KVM?} [Online; visited 22.04.2018].
+\newline\urlprefix\url{https://www.redhat.com/en/topics/virtualization/what-is-KVM}
+
+\bibitem{oci}
+{The Linux Foundation}: {\it Open Containers Initiative}. [Online; visited
+  24.04.2018].
+\newline\urlprefix\url{https://www.opencontainers.org/}
+
+\bibitem{virtual_box}
+{VirtualBox}: {\it Oracle VM VirtualBox}. [Online; visited 22.04.2018].
+\newline\urlprefix\url{https://www.virtualbox.org/}
+
+\bibitem{wmvare}
+{VMware}: {\it VMware - Official site}. [Online; visited 02.05.2018].
+\newline\urlprefix\url{https://www.vmware.com/}
+
+\bibitem{wine}
+{WineHQ}: {\it Wine Developer's Guide/Architecture Overview - WineHQ Wiki}.
+  [Online; visited 26.04.2018].
+\newline\urlprefix\url{https://wiki.winehq.org/Wine_Developer%27s_Guide/Architecture_Overview}
+
+\bibitem{xen_project}
+{Xen Project}: {\it The Xen Project, the powerful open source industry standard
+  for virtualization}. {[Online; visited 21.04.2018]}.
+\newline\urlprefix\url{{https://www.xenproject.org/}}
+
+\end{thebibliography}

@@ -12,6 +12,5 @@ class NICs(HighBase):
         if col_flags:
             self.col_flags = col_flags
         else:
-            self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1,]
-                              # 1, 1, 1, 1, 1, 1, 1, 1]
+            self.col_flags = [1, 1, 1, 1, 1, 1, 1, 1, 1]
         self.filter_restrictions = {0, 1, 2, 3, 4, 5, 6, 7, 8}

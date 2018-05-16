@@ -7,7 +7,6 @@ from front.suplementary.decorators import header_signal
 from front.suplementary.tab_sockets import *
 import global_variables
 from front.suplementary.compute_shift import compute_shift
-
 from PyQt5 import QtWidgets, QtGui, Qt, QtCore
 
 
@@ -43,7 +42,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-
 
         for tab in self.tabs_list:
 
@@ -82,9 +80,7 @@ class Ui_MainWindow(object):
 
             self.tabWidget.addTab(tab.tab_widget, "")
 
-
         self.tab_changed(tab_number=0)
-
 
         self.horizontalLayout.addWidget(self.tabWidget)
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
@@ -164,7 +160,6 @@ class Ui_MainWindow(object):
 
     @header_signal
     def refresh(self, clicked=None):
-        # sender = self.centralwidget.sender()
         self.parent.setDisabled(True)
 
 
@@ -206,7 +201,6 @@ class Ui_MainWindow(object):
 
         message_box.close()
 
-
     def export(self):
         file_name = QtWidgets.QFileDialog.getSaveFileName(
             self.parent, 'Open file', '/home')
@@ -224,15 +218,11 @@ class Ui_MainWindow(object):
 
     @header_signal
     def redirect(self, row, col):
-        sender = self.centralwidget.sender()
-        print("sender:", sender, "row:", row, "col:", col)
 
         col = compute_shift(
             col_flags=self.tabs_list[self.current_tab].values_table.col_flags,
             current_col=col
         )
-
-        # print('shifted col:', col)
 
         if col in self.tabs_list[self.current_tab].redirect_dict:
             target_tab = self.tabs_list[self.current_tab].redirect_dict[col][0]
@@ -249,4 +239,3 @@ class Ui_MainWindow(object):
 
             self.tabs_list[self.current_tab].line_edit.setText(search_string)
             self.tabs_list[target_tab].line_edit_handle(text=search_string)
-

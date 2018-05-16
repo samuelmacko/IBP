@@ -2,7 +2,6 @@
 
 import operator
 import re
-
 from back.suplementary.custom_comparsion import Comparison
 
 
@@ -59,8 +58,6 @@ class FilterHandler(object):
                     continue
                 except ValueError:
                     pass
-
-
 
             if operation is operator.eq:
 

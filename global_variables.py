@@ -26,8 +26,8 @@ try:
         USER_LOGIN = config_file.readline()[:-1]
         FQDN = config_file.readline()[:-1]
 
-except Exception as e:
-    print(e)
+except Exception:
+    pass
 
 table_blueprints = [
     (vms.Vm, BuildClasses(entity_class=Vm, list_class=VmList)),

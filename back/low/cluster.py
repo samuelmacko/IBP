@@ -57,7 +57,6 @@ class Cluster(base.SpecificBase):
                 vms.append(vm.name)
         return CellItem(name=name, value=vms)
 
-    #todo asi moze byt aj ine ako on_error (href?)
     def error_handling(self):
         name = 'Error handling'
         return CellItem(

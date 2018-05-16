@@ -1,4 +1,4 @@
-# Application for presenting Red Hat Virtualization inventory
+# Application for presenting a Red Hat Virtualization inventory
 
 ## Introduction
 __ovirt-inventory__ is an application for easy access to the RHEV inventory.
@@ -18,20 +18,20 @@ After launch, input dialog containing three input fields is displayed.
 - __url__ field expecting _FQDN_ of the target virtual machine
 
 ### Hide/show columns
-By checking or unchecking checkboxes in `Select Column`, drop-down menu user can hide or show table columns.
+By checking or unchecking checkboxes in `Select Column` drop-down menu, user can hide or show table columns.
 
 ### Refresh
-By pressing _Refresh Button_ user can load up-to-date data.
+By pressing the _Refresh Button_, user can load up-to-date data.
 
 ### Filter
-User can write custom filters into an filter field. Filter needs to be in format `column name` `<|>|=` `value`.
+User can write custom filters into a filter field. Filter needs to be in format `column name` `<|>|=` `value`.
 Filter supports evaluating multiple filters at the same time. All sub-filters are in `AND` relation and need to be separated from each other by `,`.
 
 ### Ordering
-User can order items in columns in ascending and descending order by clicking on column he wants to order.
+User can order items in columns in ascending or descending order by clicking on the column header he wants to order.
 
 ### Redirecting
-Some table cells contain multiple values (for example one _virtual machine_ can contain multiple _disks_). In that case, the cell displays first item followed by the number in parentheses 
+Some table cells contain multiple values (for example one _virtual machine_ can contain multiple _disks_). In that case, cell displays the first item followed by the number in parentheses
 expressing how many other items are in that cell. By double clicking such cell, user is redirected to the corresponding tab and right filter is applied.
 
 ### Export to .csv
@@ -43,7 +43,3 @@ These information will be saved in a `config` file:
 - user name
 - domain
 - checkboxes from all the tables 
-
-
-
-

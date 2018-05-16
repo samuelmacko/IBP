@@ -3,14 +3,6 @@
 class Comparison(object):
 
     def __init__(self, operand):
-        # if operand:
-        #
-        #     if isinstance(operand, list):
-        #         self.operand = operand[0].lower()
-        #     else:
-        #         self.operand = operand.lower()
-        # else:
-        #     self.operand = operand
 
         if isinstance(operand, list):
 
@@ -20,7 +12,6 @@ class Comparison(object):
                 self.operand = None
         else:
             self.operand = operand
-
 
     def __lt__(self, other):
         if self.operand is None:

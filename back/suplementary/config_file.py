@@ -13,8 +13,8 @@ def create_config_file(tabs_list):
                 for chb in tab.values_table.col_flags:
                     config_file.write(str(chb))
                 config_file.write('\n')
-    except Exception as e:
-        print(e)
+    except Exception:
+        pass
 
 
 class ConfigFile(object):
@@ -30,23 +30,16 @@ class ConfigFile(object):
                 for line_number, line in enumerate(config_file):
                     if line_number < 2:
                         continue
-                # for tab in self.tab_flags:
 
-                    # for line_number, line in enumerate(config_file):
                     for tab in self.tab_flags:
-                        # if line_number < 2:
-                        #     continue
                         flag_list = []
                         for flag in line:
                             if flag != '\n':
                                 flag_list.append(int(flag))
                         if len(flag_list) > 0:
                             self.tab_flags[line_number - 2] = flag_list
-                            # tab = flag_list
-                            # self.tab_flags[line_number] = flag_list
 
             return self.tab_flags
 
-        except Exception as e:
-            print('aaaaaaa')
-            print(e)
+        except Exception:
+            pass

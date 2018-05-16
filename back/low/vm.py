@@ -64,7 +64,7 @@ class Vm(base.SpecificBase):
         return CellItem(name=name, value=to_MB(self._info._memory))
 
     def _memory_max(self):
-        name = 'Max _memory'
+        name = 'Max memory'
         return CellItem(name=name, value=to_MB(self._info.memory_policy.max))
 
     def nics_obj(self):
@@ -91,7 +91,7 @@ class Vm(base.SpecificBase):
             return CellItem(name=name, value=template)
 
     def _st_memory_installed(self):
-        name = 'Installed _memory'
+        name = 'Installed memory'
         return CellItem(
             name=name,
             value=self._connection.follow_link(self._info.statistics)
@@ -113,10 +113,6 @@ class Vm(base.SpecificBase):
                 if vm and vm.id == self._info.id:
                     storage_domains.append(storage.name)
         return CellItem(name=name, value=storage_domains)
-
-    #todo
-    def data_center(self):
-        pass
 
     def cluster_obj(self):
         return self._connection.follow_link(self._info.cluster)
