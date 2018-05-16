@@ -8,7 +8,7 @@ To run __ovirt-inventory__, user needs `python3` and `ovirt-engine` repository a
 1. User can clone git repository containing source codes from [here](https://github.com/xmacko10/IBP).
 	
     In that case, user also needs to install `python3-qt5` and `python3-ovirt-engine-sdk4`.
-2. User can use a `RPM` file available [here]() which will install everything needed.
+2. User can use a `RPM` file available [here](https://github.com/xmacko10/IBP) which will install everything needed.
 
 ## Usage
 ### Logging in
